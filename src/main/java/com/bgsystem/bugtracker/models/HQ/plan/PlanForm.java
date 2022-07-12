@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Column;
+import javax.validation.constraints.Min;
 import java.util.Set;
 
 @Data
@@ -17,12 +18,16 @@ public class PlanForm {
 
     private String name;
 
+    @Min(0)
     private Double price;
 
+    @Min(1)
     private Long userLimit;
 
+    @Min(1)
     private Double diskLimit;
 
+    @Min(1)
     private Long maxProjects;
 
     private Long mainHQ;
