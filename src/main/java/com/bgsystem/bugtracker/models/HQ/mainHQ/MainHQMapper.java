@@ -6,6 +6,7 @@ import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceMapper;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -13,15 +14,19 @@ import java.util.stream.Collectors;
 @Service
 public class MainHQMapper implements DefaultMapper<MainHQDTO, MainHQMiniDTO, MainHQForm, MainHQEntity> {
 
+    @Lazy
     @Autowired
     private PlanMapper planMapper;
 
+    @Lazy
     @Autowired
     private ClientMapper clientMapper;
 
+    @Lazy
     @Autowired
     private InvoiceMapper invoiceMapper;
 
+    @Lazy
     @Autowired
     private EmployeeMapper employeeMapper;
 

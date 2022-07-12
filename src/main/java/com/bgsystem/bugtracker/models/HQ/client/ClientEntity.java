@@ -16,7 +16,6 @@ import java.util.Set;
 
 @Table (name = "client")
 @Entity
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor

@@ -8,10 +8,8 @@ import java.util.Set;
 
 @Table (name ="admin")
 @Entity
-@Builder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class AdminEntity extends User {
 

@@ -4,6 +4,7 @@ import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -11,9 +12,11 @@ import java.util.stream.Collectors;
 @Service
 public class PlanMapper implements DefaultMapper <PlanDTO, PlanMiniDTO, PlanForm, PlanEntity>{
 
+    @Lazy
     @Autowired
     private InvoiceMapper invoiceMapper;
 
+    @Lazy
     @Autowired
     private BusinessMapper businessMapper;
 
