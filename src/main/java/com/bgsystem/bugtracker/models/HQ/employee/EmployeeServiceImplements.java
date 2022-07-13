@@ -65,6 +65,23 @@ public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundE
         employeeRepository.save(toInsert);
 
         return mapper.toSmallDTO(toInsert);
+    }
+
+    @Override
+    public EmployeeDTO delete(Long id) throws ElementNotFoundExeption {
+
+        EmployeeEntity toDelete = employeeRepository.findById(id).orElseThrow(() -> new ElementNotFoundExeption("The employee is not found"));
+
+        EmployeeDTO employeeDTO = mapper.toDTO(toDelete);
+
+        employeeDTO.setRoles(toDelete.getRoles());
+
+        //Bug: is necessary to sout the roles of the employee to return the correct DTO
+        employeeDTO.getRoles().forEach(role -> System.out.println("EmployeeServiceImplements delete() - role: " + role));
+
+        repository.delete(toDelete);
+
+        return employeeDTO;
 
     }
 }

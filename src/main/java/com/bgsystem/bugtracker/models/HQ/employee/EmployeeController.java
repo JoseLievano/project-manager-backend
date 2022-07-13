@@ -13,4 +13,5 @@ public class EmployeeController extends DefaultController <EmployeeDTO, Employee
     protected EmployeeController(DefaultService<EmployeeDTO, EmployeeMiniDTO, EmployeeForm, Long> service) {
         super(service);
     }
+
 }

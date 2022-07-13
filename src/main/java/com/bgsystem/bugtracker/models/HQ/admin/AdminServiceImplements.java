@@ -50,6 +50,23 @@ public class AdminServiceImplements extends DefaultServiceImplements <AdminDTO, 
 
         repository.save(toInsert);
         return mapper.toSmallDTO(toInsert);
+    }
+
+    @Override
+    public AdminDTO delete(Long id) throws ElementNotFoundExeption {
+
+        AdminEntity toDelete = repository.findById(id).orElseThrow(() -> new ElementNotFoundExeption("The admin is not found"));
+
+        AdminDTO adminDTO = mapper.toDTO(toDelete);
+
+        adminDTO.setRoles(toDelete.getRoles());
+
+        //Bug: is necessary to sout the adminDTO roles to return the correct DTO
+        adminDTO.getRoles().forEach(role -> System.out.println("AdminServiceImplements delete() -> " + role));
+
+        repository.delete(toDelete);
+
+        return adminDTO;
 
     }
 }
