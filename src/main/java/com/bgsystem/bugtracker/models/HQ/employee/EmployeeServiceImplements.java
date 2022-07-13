@@ -3,12 +3,16 @@ package com.bgsystem.bugtracker.models.HQ.employee;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
+import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQEntity;
+import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQRepository;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class EmployeeServiceImplements extends DefaultServiceImplements<EmployeeDTO, EmployeeMiniDTO, EmployeeForm, EmployeeEntity, Long> {
 
     @Autowired
@@ -16,6 +20,9 @@ public class EmployeeServiceImplements extends DefaultServiceImplements<Employee
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MainHQRepository mainHQRepository;
 
     public EmployeeServiceImplements(EmployeeRepository repository, EmployeeMapper mapper) {
         super(repository, mapper);
@@ -44,6 +51,15 @@ public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundE
         //Set the role
         Set<String> roles = Set.of("ROLE_EMPLOYEE");
         toInsert.setRoles(roles);
+
+        //Insert the MainHQ in the employee
+        MainHQEntity mainHQEntity = mainHQRepository.findAll().get(0);
+
+        if (mainHQEntity == null) {
+            throw new ElementNotFoundExeption("The MainHQ is not found in our DB");
+        }else {
+            toInsert.setMainHQEntity(mainHQEntity);
+        }
 
         //Save the employee in the DB
         employeeRepository.save(toInsert);

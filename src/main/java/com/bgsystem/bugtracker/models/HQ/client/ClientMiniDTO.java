@@ -25,8 +25,6 @@ public class ClientMiniDTO {
 
     private String username;
 
-    private String password;
-
     private Boolean isActive;
 
     private Date dateCreated;

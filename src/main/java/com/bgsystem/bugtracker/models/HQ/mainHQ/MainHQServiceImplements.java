@@ -7,6 +7,7 @@ import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -26,15 +27,17 @@ public class MainHQServiceImplements extends DefaultServiceImplements<MainHQDTO,
             throw new InvalidInsertDeails("Form is invalid");
         }
 
-        //Check if MainHQ already exists in the DB
-        Set< MainHQEntity> mainHQEntity = mainHQRepository.findByName(form.getName());
+        //Check if there is already a mainHQ in the DB
+        List<MainHQEntity> mainHQExistenceCheck = repository.findAll();
 
-        if (mainHQEntity.size() > 0) {
-            throw new ElementAlreadyExist("MainHQ already exists");
+        if (mainHQExistenceCheck.size() > 0) {
+            throw new ElementAlreadyExist("There is already a mainHQ");
         }
 
         MainHQEntity entity = mapper.toEntity(form);
+
         entity = repository.save(entity);
+
         return mapper.toSmallDTO(entity);
 
     }

@@ -24,7 +24,7 @@ public class EmployeeEntity extends User {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "main_hq_entity_id", nullable = false)
+    @JoinColumn(name = "main_hq_entity_id")
     private MainHQEntity mainHQEntity;
 
     @Builder(builderMethodName = "employeeBuilder")

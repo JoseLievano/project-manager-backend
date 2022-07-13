@@ -3,6 +3,8 @@ package com.bgsystem.bugtracker.models.HQ.invoice;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
+import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQEntity;
+import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQRepository;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDT
 
     @Autowired
     private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private MainHQRepository mainHQRepository;
 
     public InvoiceServiceImplements(InvoiceRepository repository, InvoiceMapper mapper) {
         super(repository, mapper);
@@ -34,6 +39,15 @@ public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDT
         }
 
         InvoiceEntity toInsert = mapper.toEntity(form);
+
+        //Insert the MainHQ in the invoice
+        MainHQEntity mainHQEntity = mainHQRepository.findAll().get(0);
+
+        if (mainHQEntity == null) {
+            throw new ElementNotFoundExeption("The MainHQ is not found in our DB");
+        }else {
+            toInsert.setMainHQEntity(mainHQEntity);
+        }
 
         repository.save(toInsert);
 

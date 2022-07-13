@@ -3,6 +3,8 @@ package com.bgsystem.bugtracker.models.HQ.client;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
+import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQEntity;
+import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQRepository;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,9 @@ public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO,
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private MainHQRepository mainHQRepository;
 
     public ClientServiceImplements(ClientRepository repository, ClientMapper mapper) {
         super(repository, mapper);
@@ -47,9 +52,37 @@ public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO,
         Set<String> roles = Set.of("ROLE_CLIENT");
         toInsert.setRoles(roles);
 
+        //Insert the MainHQ in the client
+        MainHQEntity mainHQEntity = mainHQRepository.findAll().get(0);
+
+        if (mainHQEntity == null) {
+            throw new ElementNotFoundExeption("The MainHQ is not found in our DB");
+        }else {
+            toInsert.setMainHQEntity(mainHQEntity);
+        }
+
         repository.save(toInsert);
 
         return mapper.toSmallDTO(toInsert);
+    }
+
+    @Override
+    public ClientDTO delete(Long id) throws ElementNotFoundExeption {
+
+        ClientEntity toDelete = repository.findById(id).orElseThrow(() -> new ElementNotFoundExeption("The client with id: " + id + " is not found"));
+
+        ClientDTO clientDTO = mapper.toDTO(toDelete);
+
+        clientDTO.setRoles(toDelete.getRoles());
+
+        //Bug: Is necessary to sout the roles of the client to return the correct DTO
+        //If not, then the client will be deleted but the roles will be null
+        clientDTO.getRoles().forEach(role -> System.out.println("ClientServiceImplements delete() -> client roles: " + role));
+
+        repository.delete(toDelete);
+
+
+        return clientDTO;
 
     }
 }
