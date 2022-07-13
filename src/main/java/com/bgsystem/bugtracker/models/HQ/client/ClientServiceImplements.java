@@ -41,8 +41,11 @@ public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO,
 
         //Encode the password
         clientForm.setPassword(passwordEncoder.encode(clientForm.getPassword()));
-
         ClientEntity toInsert = mapper.toEntity(clientForm);
+
+        //Set the role
+        Set<String> roles = Set.of("ROLE_CLIENT");
+        toInsert.setRoles(roles);
 
         repository.save(toInsert);
 

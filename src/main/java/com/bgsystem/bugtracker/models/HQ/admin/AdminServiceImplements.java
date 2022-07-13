@@ -44,12 +44,11 @@ public class AdminServiceImplements extends DefaultServiceImplements <AdminDTO, 
 
         //Converts form to an Admin Entity
         AdminEntity toInsert = mapper.toEntity(userForm);
-
         //Set the role
-        toInsert.getRoles().add("ROLE_ADMIN");
+        Set<String> roles = Set.of("ROLE_ADMIN");
+        toInsert.setRoles(roles);
 
         repository.save(toInsert);
-
         return mapper.toSmallDTO(toInsert);
 
     }

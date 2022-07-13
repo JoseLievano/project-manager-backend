@@ -39,8 +39,11 @@ public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundE
 
         //Encode the password
         employeeForm.setPassword(passwordEncoder.encode(employeeForm.getPassword()));
-
         EmployeeEntity toInsert = mapper.toEntity(employeeForm);
+
+        //Set the role
+        Set<String> roles = Set.of("ROLE_EMPLOYEE");
+        toInsert.setRoles(roles);
 
         //Save the employee in the DB
         employeeRepository.save(toInsert);
