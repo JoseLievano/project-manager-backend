@@ -1,16 +1,17 @@
 package com.bgsystem.bugtracker.models.client.business;
 
-import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
+import com.bgsystem.bugtracker.shared.controller.DefaultController;
+import com.bgsystem.bugtracker.shared.service.DefaultService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/business")
-public class BusinessController extends DefaultServiceImplements <BusinessDTO, BusinessMiniDTO, BusinessForm, BusinessEntity, Long> {
+public class BusinessController extends DefaultController<BusinessDTO, BusinessMiniDTO, BusinessForm, Long> {
 
 
-    public BusinessController(BusinessRepository repository, BusinessMapper mapper) {
-        super(repository, mapper);
+    protected BusinessController(DefaultService<BusinessDTO, BusinessMiniDTO, BusinessForm, Long> service) {
+        super(service);
     }
 
 }

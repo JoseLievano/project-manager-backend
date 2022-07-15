@@ -20,8 +20,6 @@ public class InvoiceForm {
 
     private Long id;
 
-    @NotBlank
-    @Min(0)
     private Double amount;
 
     private Date dateGenerated;
