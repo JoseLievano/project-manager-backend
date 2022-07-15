@@ -15,6 +15,7 @@ import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -83,6 +84,13 @@ public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDT
         businessEntity.getInvoiceEntities().add(toInsert);
         businessRepository.save(businessEntity);
 
+        //Set the generated date of the invoice
+        toInsert.setDateGenerated(new Date());
+
+        //Set limit date of the invoice, sum 5 days to todays date
+        toInsert.setLimitDate(new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 5)));
+
+        toInsert.setIsPaid(false);
 
         repository.save(toInsert);
 

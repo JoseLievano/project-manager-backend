@@ -1,9 +1,5 @@
 package com.bgsystem.bugtracker.models.HQ.invoice;
 
-import com.bgsystem.bugtracker.models.HQ.client.ClientMiniDTO;
-import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQMiniDTO;
-import com.bgsystem.bugtracker.models.HQ.plan.PlanMiniDTO;
-import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,13 +28,10 @@ public class InvoiceForm {
     @NotBlank
     private String number;
 
-    @NotEmpty
     private Long plan;
 
-    @NotEmpty
     private Long client;
 
-    @NotEmpty
     private Long business;
 
 }

@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 @Data
 @Validated

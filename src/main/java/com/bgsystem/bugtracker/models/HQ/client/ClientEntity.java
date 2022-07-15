@@ -7,6 +7,7 @@ import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,9 +32,11 @@ public class ClientEntity extends User {
     private Boolean isActive;
 
     @Column
+    @DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
     private Date dateCreated;
 
     @Column
+    @DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
     private Date lastLoginDate;
 
     @ManyToOne(optional = false)

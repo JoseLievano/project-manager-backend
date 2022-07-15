@@ -1,8 +1,5 @@
 package com.bgsystem.bugtracker.models.HQ.client;
 
-import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceMiniDTO;
-import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQMiniDTO;
-import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

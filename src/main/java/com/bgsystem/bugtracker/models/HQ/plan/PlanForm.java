@@ -3,7 +3,6 @@ package com.bgsystem.bugtracker.models.HQ.plan;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import java.util.Set;
 

@@ -6,6 +6,7 @@ import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,9 +30,11 @@ public class InvoiceEntity {
     private Double amount;
 
     @Column
+    @DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
     private Date dateGenerated;
 
     @Column
+    @DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
     private Date limitDate;
 
     @Column
