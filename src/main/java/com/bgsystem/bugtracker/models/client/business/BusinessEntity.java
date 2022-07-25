@@ -3,6 +3,7 @@ package com.bgsystem.bugtracker.models.client.business;
 import com.bgsystem.bugtracker.models.HQ.client.ClientEntity;
 import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceEntity;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
+import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -34,6 +35,15 @@ public class BusinessEntity {
     @Column
     private Date dateCreated;
 
+    @Column
+    private Boolean pendingInvoice;
+
+    @Column
+    private Boolean overDue;
+
+    @Column
+    private Boolean isActive;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_entity_id", nullable = false)
     private ClientEntity clientEntity;
@@ -44,6 +54,11 @@ public class BusinessEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "plan_entity_id", nullable = false)
     private PlanEntity planEntity;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "bs_client_entity_id", nullable = false)
+    private com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity bsClientEntity;
+
 
     @Override
     public boolean equals(Object o) {
