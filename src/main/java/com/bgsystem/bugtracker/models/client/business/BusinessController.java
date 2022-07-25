@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/business")
 public class BusinessController extends DefaultController<BusinessDTO, BusinessMiniDTO, BusinessForm, Long> {
 
-
     protected BusinessController(DefaultService<BusinessDTO, BusinessMiniDTO, BusinessForm, Long> service) {
         super(service);
     }

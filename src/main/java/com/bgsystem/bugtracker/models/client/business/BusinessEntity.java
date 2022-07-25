@@ -55,10 +55,8 @@ public class BusinessEntity {
     @JoinColumn(name = "plan_entity_id", nullable = false)
     private PlanEntity planEntity;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "bs_client_entity_id", nullable = false)
-    private com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity bsClientEntity;
-
+    @OneToMany(mappedBy = "business", orphanRemoval = true)
+    private Set<bsClientEntity> bsClientEntities = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

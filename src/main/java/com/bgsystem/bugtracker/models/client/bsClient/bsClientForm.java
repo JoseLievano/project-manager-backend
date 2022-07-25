@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Set;
 
@@ -22,7 +23,10 @@ public class bsClientForm {
 
     private String email;
 
+    @NotBlank
     private String username;
+
+    private String password;
 
     private Boolean isActive;
 
@@ -30,6 +34,6 @@ public class bsClientForm {
 
     private Date lastLoginDate;
 
-    private Set<Long> businesses;
+    private Long business;
 
 }

@@ -32,6 +32,6 @@ public class bsClientDTO {
 
     private Date lastLoginDate;
 
-    private Set<BusinessMiniDTO> businesses;
+    private BusinessMiniDTO business;
 
 }
