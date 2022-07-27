@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class bsGeneralSettingsEntity {
 
     @Id
-    @Column
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column

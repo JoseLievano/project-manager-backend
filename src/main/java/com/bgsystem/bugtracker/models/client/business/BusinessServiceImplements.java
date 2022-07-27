@@ -54,7 +54,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         //Insert the Business plan.
         toInsert.setPlanEntity(planRepository.findById(form.getPlan()).orElseThrow(ElementNotFoundExeption::new));
 
-        //Create an inser a bsGeneralSettingsEntity for this business.
+        //Create an insert a bsGeneralSettingsEntity for this business.
         bsGeneralSettingsEntity GeneralSettingsEntity = bsGeneralSettingsEntity.builder()
                 .address("Demo Address")
                 .email("info@demo-website.com")
