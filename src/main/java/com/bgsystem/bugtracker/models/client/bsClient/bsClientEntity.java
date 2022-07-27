@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Table
+@Table (name = "bs_client")
 @Entity
 @NoArgsConstructor
 @Setter

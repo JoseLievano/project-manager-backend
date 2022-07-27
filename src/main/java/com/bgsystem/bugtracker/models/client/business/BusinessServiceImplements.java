@@ -5,9 +5,12 @@ import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.HQ.client.ClientRepository;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanRepository;
+import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsEntity;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
+import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Set;
 
@@ -22,6 +25,9 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     @Autowired
     private PlanRepository planRepository;
+
+    @Autowired
+    private bsGeneralSettingsRepository bsGeneralSettingsRepository;
 
     public BusinessServiceImplements(BusinessRepository repository, BusinessMapper mapper) {
         super(repository, mapper);
@@ -43,12 +49,24 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         BusinessEntity toInsert = mapper.toEntity(form);
 
         //Insert the Business client.
-        toInsert.setClientEntity(clientRepository.findById(form.getClient()).get());
+        toInsert.setClientEntity(clientRepository.findById(form.getClient()).orElseThrow(ElementAlreadyExist::new));
 
         //Insert the Business plan.
-        toInsert.setPlanEntity(planRepository.findById(form.getPlan()).get());
+        toInsert.setPlanEntity(planRepository.findById(form.getPlan()).orElseThrow(ElementNotFoundExeption::new));
+
+        //Create an inser a bsGeneralSettingsEntity for this business.
+        bsGeneralSettingsEntity GeneralSettingsEntity = bsGeneralSettingsEntity.builder()
+                .address("Demo Address")
+                .email("info@demo-website.com")
+                .website("www.demo-website.com")
+                .business(toInsert)
+                .build();
+
+        toInsert.setBsGeneralSettings(GeneralSettingsEntity);
 
         repository.save(toInsert);
+
+        bsGeneralSettingsRepository.save(GeneralSettingsEntity);
 
         return mapper.toSmallDTO(toInsert);
 

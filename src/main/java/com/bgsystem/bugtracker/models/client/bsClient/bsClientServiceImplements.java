@@ -58,6 +58,10 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
         BusinessEntity business = businessRepository.findById(bsClientForm.getBusiness()).orElseThrow(ElementNotFoundExeption::new);
         toInsert.setBusiness(business);
 
+        //Insert the client into the business
+        business.setBsClientEntities(Set.of(toInsert));
+        businessRepository.save(business);
+
         repository.save(toInsert);
 
         return mapper.toSmallDTO(toInsert);
