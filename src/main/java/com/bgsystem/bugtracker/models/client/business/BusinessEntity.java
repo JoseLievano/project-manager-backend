@@ -5,6 +5,7 @@ import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceEntity;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsEntity;
+import com.bgsystem.bugtracker.models.client.bsManager.bsManagerEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -61,6 +62,9 @@ public class BusinessEntity {
 
     @OneToOne(mappedBy = "business", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private bsGeneralSettingsEntity bsGeneralSettings;
+
+    @OneToMany(mappedBy = "business", orphanRemoval = true)
+    private Set<bsManagerEntity> bsManagerEntities = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {
