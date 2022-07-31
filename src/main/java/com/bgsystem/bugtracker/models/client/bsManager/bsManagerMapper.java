@@ -1,4 +1,72 @@
 package com.bgsystem.bugtracker.models.client.bsManager;
 
-public class bsManagerMapper {
+import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
+import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
+
+@Service
+public class bsManagerMapper implements DefaultMapper<bsManagerDTO, bsManagerMiniDTO, bsManagerForm, bsManagerEntity> {
+
+    @Lazy
+    @Autowired
+    private BusinessMapper businessMapper;
+
+    @Override
+    public bsManagerDTO toDTO(bsManagerEntity entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        return bsManagerDTO.builder()
+                .id(entity.getId())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
+                .email(entity.getEmail())
+                .username(entity.getUsername())
+                .dateCreated(entity.getDateCreated())
+                .lastLogin(entity.getLastLogin())
+                .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .build();
+    }
+
+    @Override
+    public bsManagerMiniDTO toSmallDTO(bsManagerEntity entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        return bsManagerMiniDTO.builder()
+                .id(entity.getId())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
+                .email(entity.getEmail())
+                .username(entity.getUsername())
+                .dateCreated(entity.getDateCreated())
+                .lastLogin(entity.getLastLogin())
+                .build();
+
+    }
+
+    @Override
+    public bsManagerEntity toEntity(bsManagerForm form) {
+
+        if (form == null) {
+            return null;
+        }
+
+        return bsManagerEntity.bsManagerBuilder()
+                .id(form.getId())
+                .firstName(form.getFirstName())
+                .lastName(form.getLastName())
+                .email(form.getEmail())
+                .username(form.getUsername())
+                .dateCreated(form.getDateCreated())
+                .lastLogin(form.getLastLogin())
+                .build();
+
+    }
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Data
@@ -21,7 +22,10 @@ public class bsManagerForm {
 
     private String email;
 
+    @NotBlank(message = "Username is required")
     private String username;
+
+    private String password;
 
     private Date dateCreated;
 

@@ -5,6 +5,7 @@ import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceMapper;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanMapper;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientMapper;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsMapper;
+import com.bgsystem.bugtracker.models.client.bsManager.bsManagerMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -35,6 +36,10 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
     @Autowired
     private bsGeneralSettingsMapper bsGeneralSettingsMapper;
 
+    @Lazy
+    @Autowired
+    private bsManagerMapper bsManagerMapper;
+
     @Override
     public BusinessDTO toDTO(BusinessEntity entity) {
 
@@ -54,6 +59,11 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
                 .bsClients(entity.getBsClientEntities()
                         .stream()
                         .map(bsClientMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .bsManagers(entity.getBsManagerEntities()
+                        .stream()
+                        .map(bsManagerMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .bsGeneralSettings(bsGeneralSettingsMapper.toSmallDTO(entity.getBsGeneralSettings()))

@@ -5,6 +5,7 @@ import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceMiniDTO;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsClient.*;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsMiniDTO;
+import com.bgsystem.bugtracker.models.client.bsManager.bsManagerMiniDTO;
 import lombok.*;
 
 import java.util.Set;
@@ -32,5 +33,7 @@ public class BusinessDTO {
     private PlanMiniDTO plan;
 
     private Set<bsClientMiniDTO> bsClients;
+
+    private Set<bsManagerMiniDTO> bsManagers;
 
 }
