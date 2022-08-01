@@ -4,6 +4,7 @@ import com.bgsystem.bugtracker.models.HQ.client.ClientEntity;
 import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceEntity;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
+import com.bgsystem.bugtracker.models.client.bsEmployee.bsEmployeeEntity;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsEntity;
 import com.bgsystem.bugtracker.models.client.bsManager.bsManagerEntity;
 import lombok.*;
@@ -65,6 +66,9 @@ public class BusinessEntity {
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsManagerEntity> bsManagerEntities = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "business", orphanRemoval = true)
+    private Set<bsEmployeeEntity> bsEmployeeEntities = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

@@ -16,10 +16,6 @@ import java.util.Set;
 @Setter
 public class bsManagerEntity extends User {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
-    private Long id;
-
     @Column
     private Date dateCreated;
 
