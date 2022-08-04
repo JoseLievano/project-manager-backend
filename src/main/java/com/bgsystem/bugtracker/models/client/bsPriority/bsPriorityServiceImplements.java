@@ -15,6 +15,9 @@ public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPri
     @Autowired
     private BusinessRepository businessRepository;
 
+    @Autowired
+    private bsPriorityRepository priorityRepository;
+
     public bsPriorityServiceImplements( bsPriorityRepository repository, bsPriorityMapper mapper ){
         super( repository, mapper );
     }
@@ -24,6 +27,11 @@ public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPri
 
         if ( bsPriorityForm == null || bsPriorityForm.getBusiness() == null || bsPriorityForm.getName() == null ) {
             throw new InvalidInsertDeails("Invalid insert details, can´t create new priority");
+        }
+
+        //Check if a priority with the same name already exists
+        if ( priorityRepository.findByName(bsPriorityForm.getName()).size() > 0 ) {
+            throw new ElementAlreadyExist("Priority already exists");
         }
 
         bsPriorityEntity toInsert = mapper.toEntity(bsPriorityForm);

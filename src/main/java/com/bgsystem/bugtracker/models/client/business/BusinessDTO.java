@@ -9,6 +9,7 @@ import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettings
 import com.bgsystem.bugtracker.models.client.bsManager.bsManagerMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusMiniDTO;
+import com.bgsystem.bugtracker.models.client.bsType.bsTypeMiniDTO;
 import lombok.*;
 
 import java.util.Set;
@@ -44,5 +45,7 @@ public class BusinessDTO {
     private Set<bsStatusMiniDTO> bsStatuses;
 
     private Set<bsPriorityMiniDTO> bsPriorities;
+
+    private Set<bsTypeMiniDTO> bsTypes;
 
 }

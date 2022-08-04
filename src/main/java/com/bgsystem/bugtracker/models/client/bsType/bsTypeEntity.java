@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.bsType;
 
+import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,5 +20,9 @@ public class bsTypeEntity {
 
     @Column
     private String name;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "business_entity_id", nullable = false)
+    private BusinessEntity business;
 
 }

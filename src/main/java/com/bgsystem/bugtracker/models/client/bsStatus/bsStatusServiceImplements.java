@@ -15,6 +15,9 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
     @Autowired
     private BusinessRepository businessRepository;
 
+    @Autowired
+    private bsStatusRepository bsStatusRepository;
+
     public bsStatusServiceImplements(bsStatusRepository repository, bsStatusMapper mapper) {
         super(repository, mapper);
     }
@@ -24,6 +27,11 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
 
         if (form == null || form.getBusiness() == null || form.getName() == null || form.getColor() == null) {
             throw new InvalidInsertDeails("Invalid insert details, can´t create new status");
+        }
+
+        //Check if a status with the same namd or color already exists
+        if (bsStatusRepository.findByName(form.getName()).size() > 0 || bsStatusRepository.findByColor(form.getColor()).size() > 0) {
+            throw new ElementAlreadyExist("Status already exists with the same name or color");
         }
 
         bsStatusEntity toInsert = mapper.toEntity(form);
