@@ -1,10 +1,13 @@
 package com.bgsystem.bugtracker.models.client.bsDocsCategory;
 
+import com.bgsystem.bugtracker.models.client.bsDoc.bsDocMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, bsDocsCategoryMiniDTO, bsDocsCategoryForm, bsDocsCategoryEntity> {
@@ -12,6 +15,10 @@ public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, b
     @Lazy
     @Autowired
     private BusinessMapper businessMapper;
+
+    @Lazy
+    @Autowired
+    private bsDocMapper bsDocMapper;
 
     @Override
     public bsDocsCategoryDTO toDTO(bsDocsCategoryEntity entity) {
@@ -23,6 +30,11 @@ public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, b
                 .id(entity.getId())
                 .name(entity.getName())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .bsDocs(entity.getBsDocs()
+                        .stream()
+                        .map(bsDocMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
                 .build();
 
     }

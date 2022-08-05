@@ -4,6 +4,7 @@ import com.bgsystem.bugtracker.models.HQ.client.ClientMapper;
 import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceMapper;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanMapper;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientMapper;
+import com.bgsystem.bugtracker.models.client.bsDoc.bsDocMapper;
 import com.bgsystem.bugtracker.models.client.bsDocsCategory.bsDocsCategoryMapper;
 import com.bgsystem.bugtracker.models.client.bsEmployee.bsEmployeeMapper;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsMapper;
@@ -65,6 +66,10 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
     @Autowired
     private bsDocsCategoryMapper bsDocsCategoryMapper;
 
+    @Lazy
+    @Autowired
+    private bsDocMapper bsDocMapper;
+
     @Override
     public BusinessDTO toDTO(BusinessEntity entity) {
 
@@ -114,6 +119,11 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
                 .bsDocsCategories(entity.getBsDocsCategoryEntities()
                         .stream()
                         .map(bsDocsCategoryMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .bsDocs(entity.getBsDocEntities()
+                        .stream()
+                        .map(bsDocMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .bsGeneralSettings(bsGeneralSettingsMapper.toSmallDTO(entity.getBsGeneralSettings()))
