@@ -4,6 +4,7 @@ import com.bgsystem.bugtracker.models.HQ.client.ClientEntity;
 import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceEntity;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
+import com.bgsystem.bugtracker.models.client.bsDocsCategory.bsDocsCategoryEntity;
 import com.bgsystem.bugtracker.models.client.bsEmployee.bsEmployeeEntity;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsEntity;
 import com.bgsystem.bugtracker.models.client.bsManager.bsManagerEntity;
@@ -81,6 +82,9 @@ public class BusinessEntity {
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsTypeEntity> bsTypeEntities = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "business", orphanRemoval = true)
+    private Set<bsDocsCategoryEntity> bsDocsCategoryEntities = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {
