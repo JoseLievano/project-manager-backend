@@ -12,6 +12,7 @@ import com.bgsystem.bugtracker.models.client.bsManager.bsManagerMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsType.bsTypeMiniDTO;
+import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMiniDTO;
 import lombok.*;
 
 import java.util.Set;
@@ -53,5 +54,7 @@ public class BusinessDTO {
     private Set<bsDocsCategoryMiniDTO> bsDocsCategories;
 
     private Set<bsDocMiniDTO> bsDocs;
+
+    private Set<bsProjectMiniDTO> bsProjects;
 
 }

@@ -1,12 +1,14 @@
 package com.bgsystem.bugtracker.models.client.bsClient;
 
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
+import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,6 +32,9 @@ public class bsClientEntity extends User {
     @JoinColumn(name = "business_entity_id", nullable = false)
     private BusinessEntity business;
 
+    @OneToMany(mappedBy = "client", orphanRemoval = true)
+    private Set <bsProjectEntity> projects = new LinkedHashSet<>();
+
 
     @Builder(builderMethodName = "bsClientBuilder")
     public bsClientEntity(Long id,
@@ -42,7 +47,8 @@ public class bsClientEntity extends User {
                           Boolean isActive,
                           Date dateCreated,
                           Date lastLogin,
-                          BusinessEntity business) {
+                          BusinessEntity business,
+                          Set<bsProjectEntity> projects) {
         super(id, firstName, lastName, email, roles, username, password);
     }
 

@@ -36,4 +36,6 @@ public class bsClientForm {
 
     private Long business;
 
+    private Set<Long> projects;
+
 }

@@ -1,6 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsClient;
 
 import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
+import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMiniDTO;
 import lombok.*;
 
 import java.util.Date;
@@ -33,5 +34,7 @@ public class bsClientDTO {
     private Date lastLoginDate;
 
     private BusinessMiniDTO business;
+
+    Set<bsProjectMiniDTO> projects;
 
 }
