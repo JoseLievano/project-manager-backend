@@ -11,6 +11,7 @@ import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettings
 import com.bgsystem.bugtracker.models.client.bsManager.bsManagerMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusMiniDTO;
+import com.bgsystem.bugtracker.models.client.bsTaskCategory.bsTaskCategoryMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsType.bsTypeMiniDTO;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMiniDTO;
 import lombok.*;
@@ -56,5 +57,7 @@ public class BusinessDTO {
     private Set<bsDocMiniDTO> bsDocs;
 
     private Set<bsProjectMiniDTO> bsProjects;
+
+    private Set<bsTaskCategoryMiniDTO> bsTaskCategories;
 
 }

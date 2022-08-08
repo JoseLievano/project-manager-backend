@@ -1,4 +1,4 @@
-package com.bgsystem.bugtracker.models.client.project.bsProject;
+package com.bgsystem.bugtracker.models.client.bsTaskCategory;
 
 import lombok.*;
 
@@ -8,12 +8,10 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class bsProjectMiniDTO {
+public class bsTaskCategoryMiniDTO {
 
     private Long id;
 
     private String name;
-
-    private Boolean isCompleted;
 
 }

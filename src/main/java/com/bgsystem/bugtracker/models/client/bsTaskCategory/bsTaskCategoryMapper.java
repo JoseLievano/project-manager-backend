@@ -1,6 +1,5 @@
-package com.bgsystem.bugtracker.models.client.project.bsProject;
+package com.bgsystem.bugtracker.models.client.bsTaskCategory;
 
-import com.bgsystem.bugtracker.models.client.bsClient.bsClientMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,59 +7,51 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMiniDTO, bsProjectForm, bsProjectEntity> {
+public class bsTaskCategoryMapper implements DefaultMapper <bsTaskCategoryDTO, bsTaskCategoryMiniDTO, bsTaskCategoryForm, bsTaskCategoryEntity>{
 
     @Lazy
     @Autowired
     private BusinessMapper businessMapper;
 
-    @Lazy
-    @Autowired
-    private bsClientMapper clientMapper;
-
     @Override
-    public bsProjectDTO toDTO(bsProjectEntity entity) {
+    public bsTaskCategoryDTO toDTO(bsTaskCategoryEntity entity) {
 
         if (entity == null) {
             return null;
         }
 
-        return bsProjectDTO.builder()
+        return bsTaskCategoryDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
-                .isCompleted(entity.getIsCompleted())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
-                .client(clientMapper.toSmallDTO(entity.getClient()))
                 .build();
 
     }
 
     @Override
-    public bsProjectMiniDTO toSmallDTO(bsProjectEntity entity) {
+    public bsTaskCategoryMiniDTO toSmallDTO(bsTaskCategoryEntity entity) {
 
         if (entity == null) {
             return null;
         }
 
-        return bsProjectMiniDTO.builder()
+        return bsTaskCategoryMiniDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
-                .isCompleted(entity.getIsCompleted())
                 .build();
 
     }
 
     @Override
-    public bsProjectEntity toEntity(bsProjectForm form) {
+    public bsTaskCategoryEntity toEntity(bsTaskCategoryForm form) {
 
         if (form == null) {
             return null;
         }
 
-        return bsProjectEntity.builder()
+        return bsTaskCategoryEntity.builder()
                 .id(form.getId())
                 .name(form.getName())
-                .isCompleted(form.getIsCompleted())
                 .build();
 
     }

@@ -1,6 +1,5 @@
-package com.bgsystem.bugtracker.models.client.project.bsProject;
+package com.bgsystem.bugtracker.models.client.bsTaskCategory;
 
-import com.bgsystem.bugtracker.models.client.bsClient.bsClientMiniDTO;
 import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
 import lombok.*;
 
@@ -10,16 +9,12 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class bsProjectDTO {
+public class bsTaskCategoryDTO {
 
     private Long id;
 
     private String name;
 
-    private Boolean isCompleted;
-
     private BusinessMiniDTO business;
-
-    private bsClientMiniDTO client;
 
 }
