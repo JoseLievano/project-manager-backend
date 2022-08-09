@@ -4,6 +4,8 @@ import com.bgsystem.bugtracker.models.client.bsClient.bsClientMiniDTO;
 import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +19,10 @@ public class bsProjectDTO {
     private String name;
 
     private Boolean isCompleted;
+
+    private Date created;
+
+    private Date dueDate;
 
     private BusinessMiniDTO business;
 

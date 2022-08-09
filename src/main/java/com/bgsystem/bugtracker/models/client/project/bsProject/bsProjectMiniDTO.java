@@ -2,6 +2,8 @@ package com.bgsystem.bugtracker.models.client.project.bsProject;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +17,9 @@ public class bsProjectMiniDTO {
     private String name;
 
     private Boolean isCompleted;
+
+    private Date created;
+
+    private Date dueDate;
 
 }

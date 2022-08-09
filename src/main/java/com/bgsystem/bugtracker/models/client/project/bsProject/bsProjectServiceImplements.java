@@ -11,6 +11,8 @@ import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class bsProjectServiceImplements extends DefaultServiceImplements <bsProjectDTO, bsProjectMiniDTO, bsProjectForm, bsProjectEntity, Long> {
 
@@ -35,6 +37,18 @@ public class bsProjectServiceImplements extends DefaultServiceImplements <bsProj
         }
 
         bsProjectEntity toInsert = mapper.toEntity(form);
+
+        //Check if there is a valid due date
+        //A valid date is a date in the future from today
+        if (form.getDueDate() != null && form.getDueDate().after(new Date())) {
+            toInsert.setDueDate(form.getDueDate());
+        }
+
+        //Set today as the created date
+        toInsert.setCreated(new Date());
+
+        //Set isCmpleted to false
+        toInsert.setIsCompleted(false);
 
         //Check if business exists
         BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundExeption("Business not found"));

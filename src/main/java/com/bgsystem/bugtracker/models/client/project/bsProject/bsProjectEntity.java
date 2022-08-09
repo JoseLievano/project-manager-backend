@@ -5,6 +5,7 @@ import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "bs_projects")
 @Entity
@@ -24,6 +25,14 @@ public class bsProjectEntity {
 
     @Column
     private Boolean isCompleted;
+
+    @Column
+    private Date created;
+
+    @Column
+    private Date dueDate;
+
+    //Todo: Add an Owner field to the project entity
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "business_entity_id", nullable = false)

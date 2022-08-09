@@ -29,6 +29,8 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 .id(entity.getId())
                 .name(entity.getName())
                 .isCompleted(entity.getIsCompleted())
+                .created(entity.getCreated())
+                .dueDate(entity.getDueDate())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
                 .client(clientMapper.toSmallDTO(entity.getClient()))
                 .build();
@@ -46,6 +48,8 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 .id(entity.getId())
                 .name(entity.getName())
                 .isCompleted(entity.getIsCompleted())
+                .created(entity.getCreated())
+                .dueDate(entity.getDueDate())
                 .build();
 
     }
@@ -61,6 +65,8 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 .id(form.getId())
                 .name(form.getName())
                 .isCompleted(form.getIsCompleted())
+                .created(form.getCreated())
+                .dueDate(form.getDueDate())
                 .build();
 
     }
