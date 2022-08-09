@@ -1,7 +1,10 @@
 package com.bgsystem.bugtracker.models.client.bsPriority;
 
 import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
+import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMiniDTO;
 import lombok.*;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,5 +21,7 @@ public class bsPriorityDTO {
     private Integer priorityOrder;
 
     private BusinessMiniDTO business;
+
+    private Set<bsPrTaskMiniDTO> tasks;
 
 }

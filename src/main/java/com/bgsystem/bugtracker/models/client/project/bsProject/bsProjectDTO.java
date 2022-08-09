@@ -2,9 +2,11 @@ package com.bgsystem.bugtracker.models.client.project.bsProject;
 
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientMiniDTO;
 import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
+import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMiniDTO;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -27,5 +29,7 @@ public class bsProjectDTO {
     private BusinessMiniDTO business;
 
     private bsClientMiniDTO client;
+
+    private Set<bsPrTaskMiniDTO> tasks;
 
 }

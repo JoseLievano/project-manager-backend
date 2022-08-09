@@ -1,7 +1,10 @@
 package com.bgsystem.bugtracker.models.client.bsType;
 
 import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
+import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMiniDTO;
 import lombok.*;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,5 +19,7 @@ public class bsTypeDTO {
     private String name;
 
     private BusinessMiniDTO business;
+
+    private Set<bsPrTaskMiniDTO> tasks;
 
 }

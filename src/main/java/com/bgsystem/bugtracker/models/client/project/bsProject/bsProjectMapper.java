@@ -2,10 +2,13 @@ package com.bgsystem.bugtracker.models.client.project.bsProject;
 
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
+import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMiniDTO, bsProjectForm, bsProjectEntity> {
@@ -17,6 +20,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
     @Lazy
     @Autowired
     private bsClientMapper clientMapper;
+
+    @Lazy
+    @Autowired
+    private bsPrTaskMapper taskMapper;
 
     @Override
     public bsProjectDTO toDTO(bsProjectEntity entity) {
@@ -33,6 +40,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 .dueDate(entity.getDueDate())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
                 .client(clientMapper.toSmallDTO(entity.getClient()))
+                .tasks(entity.getTasks().stream()
+                        .map(taskMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
                 .build();
 
     }

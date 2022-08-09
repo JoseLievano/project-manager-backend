@@ -3,6 +3,8 @@ package com.bgsystem.bugtracker.models.client.bsPriority;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Set;
+
 @Data
 @Validated
 @AllArgsConstructor
@@ -16,5 +18,7 @@ public class bsPriorityForm {
     private Integer priorityOrder;
 
     private Long business;
+
+    private Set<Long> tasks;
 
 }

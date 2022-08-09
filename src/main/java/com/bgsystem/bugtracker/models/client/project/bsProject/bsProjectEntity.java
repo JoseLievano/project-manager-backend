@@ -2,10 +2,12 @@ package com.bgsystem.bugtracker.models.client.project.bsProject;
 
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Table(name = "bs_projects")
 @Entity
@@ -41,5 +43,8 @@ public class bsProjectEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "bs_client_id", nullable = false)
     private bsClientEntity client;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private Set<bsPrTaskEntity> tasks;
 
 }

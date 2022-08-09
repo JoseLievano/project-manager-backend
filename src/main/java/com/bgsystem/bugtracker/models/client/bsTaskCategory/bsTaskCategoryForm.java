@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Set;
+
 @Validated
 @Data
 @AllArgsConstructor
@@ -16,5 +18,7 @@ public class bsTaskCategoryForm {
     private String name;
 
     private Long business;
+
+    private Set<Long> tasks;
 
 }

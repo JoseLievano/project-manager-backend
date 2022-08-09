@@ -15,6 +15,7 @@ import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityEntity;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusEntity;
 import com.bgsystem.bugtracker.models.client.bsTaskCategory.bsTaskCategoryEntity;
 import com.bgsystem.bugtracker.models.client.bsType.bsTypeEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskEntity;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -105,6 +106,9 @@ public class BusinessEntity {
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsTaskCategoryEntity> bsTaskCategoryEntities = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "business", orphanRemoval = true)
+    private Set<bsPrTaskEntity> bsPrTaskEntities = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

@@ -1,10 +1,13 @@
 package com.bgsystem.bugtracker.models.client.bsPriority;
 
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
+import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class bsPriorityMapper implements DefaultMapper <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityForm, bsPriorityEntity> {
@@ -12,6 +15,10 @@ public class bsPriorityMapper implements DefaultMapper <bsPriorityDTO, bsPriorit
     @Lazy
     @Autowired
     private BusinessMapper businessMapper;
+
+    @Lazy
+    @Autowired
+    private bsPrTaskMapper bsPrTaskMapper;
 
     @Override
     public bsPriorityDTO toDTO(bsPriorityEntity entity) {
@@ -25,6 +32,11 @@ public class bsPriorityMapper implements DefaultMapper <bsPriorityDTO, bsPriorit
                 .name(entity.getName())
                 .priorityOrder(entity.getPriorityOrder())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .tasks(entity.getTasks()
+                        .stream()
+                        .map(bsPrTaskMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
                 .build();
 
     }

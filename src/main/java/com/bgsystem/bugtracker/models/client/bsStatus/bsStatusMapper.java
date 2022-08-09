@@ -1,10 +1,13 @@
 package com.bgsystem.bugtracker.models.client.bsStatus;
 
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
+import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class bsStatusMapper implements DefaultMapper<bsStatusDTO, bsStatusMiniDTO, bsStatusForm, bsStatusEntity> {
@@ -12,6 +15,10 @@ public class bsStatusMapper implements DefaultMapper<bsStatusDTO, bsStatusMiniDT
     @Lazy
     @Autowired
     private BusinessMapper businessMapper;
+
+    @Lazy
+    @Autowired
+    private bsPrTaskMapper bsPrTaskMapper;
 
     @Override
     public bsStatusDTO toDTO(bsStatusEntity entity) {
@@ -25,6 +32,11 @@ public class bsStatusMapper implements DefaultMapper<bsStatusDTO, bsStatusMiniDT
                 .name(entity.getName())
                 .color(entity.getColor())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .tasks(entity.getTasks()
+                        .stream()
+                        .map(bsPrTaskMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
                 .build();
 
     }
