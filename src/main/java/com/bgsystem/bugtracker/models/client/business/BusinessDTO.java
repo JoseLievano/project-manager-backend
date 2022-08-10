@@ -8,6 +8,7 @@ import com.bgsystem.bugtracker.models.client.bsDoc.bsDocMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsDocsCategory.bsDocsCategoryMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsEmployee.bsEmployeeMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsMiniDTO;
+import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsManager.bsManagerMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusMiniDTO;
@@ -62,5 +63,7 @@ public class BusinessDTO {
     private Set<bsTaskCategoryMiniDTO> bsTaskCategories;
 
     private Set<bsPrTaskMiniDTO> bsPrTasks;
+
+    private Set<bsInvoiceMiniDTO> bsInvoices;
 
 }

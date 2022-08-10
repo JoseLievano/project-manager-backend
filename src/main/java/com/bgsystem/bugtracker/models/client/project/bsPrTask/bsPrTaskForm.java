@@ -41,4 +41,6 @@ public class bsPrTaskForm {
 
     private Long status;
 
+    private Long invoice;
+
 }

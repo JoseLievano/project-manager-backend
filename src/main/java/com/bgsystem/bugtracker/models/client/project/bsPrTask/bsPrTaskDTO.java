@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrTask;
 
+import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsTaskCategory.bsTaskCategoryMiniDTO;
@@ -45,5 +46,7 @@ public class bsPrTaskDTO {
     private bsPriorityMiniDTO priority;
 
     private bsStatusMiniDTO status;
+
+    private bsInvoiceMiniDTO invoice;
 
 }

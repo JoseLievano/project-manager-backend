@@ -38,4 +38,6 @@ public class bsClientForm {
 
     private Set<Long> projects;
 
+    private Set<Long> invoices;
+
 }

@@ -1,6 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsProject;
 
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
+import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskEntity;
 import lombok.*;
@@ -44,7 +45,10 @@ public class bsProjectEntity {
     @JoinColumn(name = "bs_client_id", nullable = false)
     private bsClientEntity client;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project")
     private Set<bsPrTaskEntity> tasks;
+
+    @OneToMany(mappedBy = "project")
+    private Set<bsInvoiceEntity> invoices;
 
 }

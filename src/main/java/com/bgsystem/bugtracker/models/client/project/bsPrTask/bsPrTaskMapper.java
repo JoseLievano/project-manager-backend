@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrTask;
 
+import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMapper;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityMapper;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusMapper;
 import com.bgsystem.bugtracker.models.client.bsTaskCategory.bsTaskCategoryMapper;
@@ -38,6 +39,10 @@ public class bsPrTaskMapper implements DefaultMapper <bsPrTaskDTO, bsPrTaskMiniD
     @Autowired
     private bsStatusMapper bsStatusMapper;
 
+    @Lazy
+    @Autowired
+    private bsInvoiceMapper bsInvoiceMapper;
+
     @Override
     public bsPrTaskDTO toDTO(bsPrTaskEntity entity) {
 
@@ -60,6 +65,7 @@ public class bsPrTaskMapper implements DefaultMapper <bsPrTaskDTO, bsPrTaskMiniD
                 .type(bsTypeMapper.toSmallDTO(entity.getType()))
                 .priority(bsPriorityMapper.toSmallDTO(entity.getPriority()))
                 .status(bsStatusMapper.toSmallDTO(entity.getStatus()))
+                .invoice(bsInvoiceMapper.toSmallDTO(entity.getInvoice()))
                 .build();
 
     }

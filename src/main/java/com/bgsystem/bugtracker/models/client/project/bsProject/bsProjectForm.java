@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
+import java.util.Set;
 
 @Validated
 @Data
@@ -24,5 +25,7 @@ public class bsProjectForm {
     private Long business;
 
     private Long client;
+
+    private Set<Long> invoices;
 
 }

@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrTask;
 
+import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceEntity;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityEntity;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusEntity;
 import com.bgsystem.bugtracker.models.client.bsTaskCategory.bsTaskCategoryEntity;
@@ -68,5 +69,9 @@ public class bsPrTaskEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "bs_status_id", nullable = false)
     private bsStatusEntity status;
+
+    @ManyToOne
+    @JoinColumn(name = "bs_invoice_id")
+    private bsInvoiceEntity invoice;
 
 }

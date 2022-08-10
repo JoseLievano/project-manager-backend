@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.bsClient;
 
+import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
@@ -19,6 +20,10 @@ public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniD
     @Lazy
     @Autowired
     private bsProjectMapper bsProjectMapper;
+
+    @Lazy
+    @Autowired
+    private bsInvoiceMapper bsInvoiceMapper;
 
     @Override
     public bsClientDTO toDTO(bsClientEntity entity) {
@@ -40,6 +45,11 @@ public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniD
                 .projects(entity.getProjects()
                         .stream()
                         .map(bsProjectMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .invoices(entity.getInvoices()
+                        .stream()
+                        .map(bsInvoiceMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .build();

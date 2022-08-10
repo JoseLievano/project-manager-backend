@@ -8,6 +8,7 @@ import com.bgsystem.bugtracker.models.client.bsDoc.bsDocMapper;
 import com.bgsystem.bugtracker.models.client.bsDocsCategory.bsDocsCategoryMapper;
 import com.bgsystem.bugtracker.models.client.bsEmployee.bsEmployeeMapper;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsMapper;
+import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMapper;
 import com.bgsystem.bugtracker.models.client.bsManager.bsManagerMapper;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityMapper;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusMapper;
@@ -85,6 +86,10 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
     @Autowired
     private bsPrTaskMapper bsPrTaskMapper;
 
+    @Lazy
+    @Autowired
+    private bsInvoiceMapper bsInvoiceMapper;
+
     @Override
     public BusinessDTO toDTO(BusinessEntity entity) {
 
@@ -154,6 +159,11 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
                 .bsPrTasks(entity.getBsPrTaskEntities()
                         .stream()
                         .map(bsPrTaskMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .bsInvoices(entity.getBsInvoiceEntities()
+                        .stream()
+                        .map(bsInvoiceMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .bsGeneralSettings(bsGeneralSettingsMapper.toSmallDTO(entity.getBsGeneralSettings()))
