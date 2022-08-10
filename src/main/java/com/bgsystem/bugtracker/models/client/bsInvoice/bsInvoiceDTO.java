@@ -37,6 +37,6 @@ public class bsInvoiceDTO {
 
     private BusinessMiniDTO business;
 
-    private Set<bsPrTaskMiniDTO> tasks;
+    private bsPrTaskMiniDTO task;
 
 }

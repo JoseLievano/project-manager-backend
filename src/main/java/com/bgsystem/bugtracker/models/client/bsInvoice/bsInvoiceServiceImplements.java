@@ -15,6 +15,8 @@ import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoiceDTO, bsInvoiceMiniDTO, bsInvoiceForm, bsInvoiceEntity, Long> {
 
@@ -37,7 +39,7 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
     @Override
     public bsInvoiceMiniDTO insert(bsInvoiceForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
 
-        if (form == null || form.getAmount() == null || form.getClient() == null || form.getBusiness() == null || form.getNumber() == null){
+        if (form == null || form.getAmount() == null || form.getClient() == null || form.getBusiness() == null ){
             throw new InvalidInsertDeails("Invalid insert details");
         }
 
@@ -56,6 +58,9 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
         bsClientEntity client = clientRepository.findById(form.getClient()).orElseThrow(() -> new ElementNotFoundExeption("Client not found"));
         client.getInvoices().add(toInsert);
 
+        toInsert.setBusiness(business);
+        toInsert.setClient(client);
+
         //Create an empty task
         bsPrTaskEntity task = new bsPrTaskEntity();
 
@@ -67,8 +72,10 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
 
             task = taskRepository.findById(form.getTask()).orElseThrow(() -> new ElementNotFoundExeption("Task not found"));
             task.setInvoice(toInsert);
+            toInsert.setTask(task);
 
             project = task.getProject();
+            project.getTasks().add(task);
             toInsert.setProject(project);
 
         }else{
@@ -76,6 +83,31 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
             task = null;
             project = projectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundExeption("Project not found"));
             project.getInvoices().add(toInsert);
+
+            toInsert.setProject(project);
+
+        }
+
+        //Set the created date to today
+        Date today = new Date();
+        toInsert.setDateGenerated(today);
+
+        if (form.getIsPaid() == null) {
+            toInsert.setIsPaid(false);
+        }
+
+        toInsert.setIsOverDue(false);
+
+        toInsert.setNumber("");
+
+        //Check if there is a limitDate and if it is in the future
+        if(form.getLimitDate() != null){
+
+            if(form.getLimitDate().before(new Date())){
+                throw new InvalidInsertDeails("Invalid insert details, limit date must be in the future");
+            }else {
+                toInsert.setLimitDate(form.getLimitDate());
+            }
 
         }
 

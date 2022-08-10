@@ -30,16 +30,60 @@ public class bsInvoiceMapper implements DefaultMapper <bsInvoiceDTO, bsInvoiceMi
 
     @Override
     public bsInvoiceDTO toDTO(bsInvoiceEntity entity) {
-        return null;
+
+        if (entity == null){
+            return null;
+        }
+
+        return bsInvoiceDTO.builder()
+                .id(entity.getId())
+                .dateGenerated(entity.getDateGenerated())
+                .limitDate(entity.getLimitDate())
+                .amount(entity.getAmount())
+                .isPaid(entity.getIsPaid())
+                .isOverDue(entity.getIsOverDue())
+                .number(entity.getNumber())
+                .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .client(clientMapper.toSmallDTO(entity.getClient()))
+                .project(projectMapper.toSmallDTO(entity.getProject()))
+                .task(taskMapper.toSmallDTO(entity.getTask()))
+                .build();
+
     }
 
     @Override
     public bsInvoiceMiniDTO toSmallDTO(bsInvoiceEntity entity) {
-        return null;
+
+        if (entity == null){
+            return null;
+        }
+
+        return bsInvoiceMiniDTO.builder()
+                .id(entity.getId())
+                .dateGenerated(entity.getDateGenerated())
+                .limitDate(entity.getLimitDate())
+                .amount(entity.getAmount())
+                .isPaid(entity.getIsPaid())
+                .isOverDue(entity.getIsOverDue())
+                .number(entity.getNumber())
+                .build();
     }
 
     @Override
     public bsInvoiceEntity toEntity(bsInvoiceForm form) {
-        return null;
+
+        if (form == null){
+            return null;
+        }
+
+        return bsInvoiceEntity.builder()
+                .id(form.getId())
+                .dateGenerated(form.getDateGenerated())
+                .limitDate(form.getLimitDate())
+                .amount(form.getAmount())
+                .isPaid(form.getIsPaid())
+                .isOverDue(form.getIsOverDue())
+                .number(form.getNumber())
+                .build();
     }
 }
