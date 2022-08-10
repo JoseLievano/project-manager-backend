@@ -120,8 +120,6 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
         if (task != null){
             taskRepository.save(task);
         }
-
         return mapper.toSmallDTO(toInsert);
-
     }
 }
