@@ -10,6 +10,7 @@ import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMiniDTO;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -48,5 +49,7 @@ public class bsPrTaskDTO {
     private bsStatusMiniDTO status;
 
     private bsInvoiceMiniDTO invoice;
+
+    private Set<bsPrCh>
 
 }

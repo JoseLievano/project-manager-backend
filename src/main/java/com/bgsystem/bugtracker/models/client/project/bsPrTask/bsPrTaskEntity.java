@@ -6,11 +6,16 @@ import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusEntity;
 import com.bgsystem.bugtracker.models.client.bsTaskCategory.bsTaskCategoryEntity;
 import com.bgsystem.bugtracker.models.client.bsType.bsTypeEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Table(name = "bs_pr_tasks")
 @Entity
@@ -74,4 +79,20 @@ public class bsPrTaskEntity {
     @JoinColumn(name = "bs_invoice_id")
     private bsInvoiceEntity invoice;
 
+
+    @ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
+    private Set<bsPrChannelEntity> channels = new LinkedHashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        bsPrTaskEntity that = (bsPrTaskEntity) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

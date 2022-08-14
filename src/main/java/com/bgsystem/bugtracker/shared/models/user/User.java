@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.shared.models.user;
 
+import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,6 +35,10 @@ public class User {
     @Column(name = "role")
     private Set<String> roles = new HashSet<>();
 
+    //Channels where the user is a member
+    @ManyToMany (fetch = FetchType.LAZY, mappedBy = "members")
+    private Set<bsPrChannelEntity> channels = new HashSet<>();
+
     @Column
     private String username;
 
@@ -49,7 +54,15 @@ public class User {
     @Column(nullable = false)
     private boolean enabled = true;
 
-    public User(Long id, String firstName, String lastName, String email, Set<String> roles, String username, String password) {
+    public User(
+            Long id,
+            String firstName,
+            String lastName,
+            String email,
+            Set<String> roles,
+            String username,
+            String password,
+            Set<bsPrChannelEntity> channels){
 
         this.id = id;
 
@@ -64,6 +77,8 @@ public class User {
         this.username = username;
 
         this.password = password;
+
+        this.channels = channels;
 
     }
 }
