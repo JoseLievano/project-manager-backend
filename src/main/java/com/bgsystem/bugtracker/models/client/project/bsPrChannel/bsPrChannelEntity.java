@@ -7,6 +7,7 @@ import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -28,6 +29,12 @@ public class bsPrChannelEntity {
 
     @Column
     private Boolean isPublic;
+
+    @Column
+    private Date creationDate;
+
+    @Column (length = 500)
+    private String description;
 
     @ManyToOne (optional = false)
     @JoinColumn (name = "author_id", nullable = false)

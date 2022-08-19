@@ -6,6 +6,7 @@ import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table (name = "bs_pr_comment")
 @Entity
@@ -22,6 +23,9 @@ public class bsPrCommentEntity {
 
     @Column (length = 2000)
     private String commentContent;
+
+    @Column
+    private Date commentDate;
 
     @ManyToOne (optional = false)
     @JoinColumn (name = "author_id", nullable = false)
