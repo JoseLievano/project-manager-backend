@@ -49,7 +49,7 @@ public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPr
 
         //Check if there are members for this channel, if there are insert them in the channel
 
-        Boolean hasMembers = form.getMembers().size() > 0;
+        boolean hasMembers = form.getMembers() != null;
 
         if (hasMembers){
             for (Long memberID : form.getMembers()){
