@@ -3,6 +3,7 @@ package com.bgsystem.bugtracker.models.client.project.bsProject;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientMapper;
 import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
+import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
     @Autowired
     private bsInvoiceMapper invoiceMapper;
 
+    @Lazy
+    @Autowired
+    private bsPrChannelMapper channelMapper;
+
     @Override
     public bsProjectDTO toDTO(bsProjectEntity entity) {
 
@@ -51,6 +56,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 )
                 .invoices(entity.getInvoices().stream()
                         .map(invoiceMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .channels(entity.getChannels().stream()
+                        .map(channelMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .build();

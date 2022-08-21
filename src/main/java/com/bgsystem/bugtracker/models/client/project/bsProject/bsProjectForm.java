@@ -28,4 +28,6 @@ public class bsProjectForm {
 
     private Set<Long> invoices;
 
+    private Set<Long> channels;
+
 }

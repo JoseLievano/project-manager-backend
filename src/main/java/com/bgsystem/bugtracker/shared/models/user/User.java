@@ -39,6 +39,10 @@ public class User {
     @ManyToMany (fetch = FetchType.LAZY, mappedBy = "members")
     private Set<bsPrChannelEntity> channels = new HashSet<>();
 
+    //Channels where the user is the author
+    @OneToMany (mappedBy = "author")
+    private Set<bsPrChannelEntity> channelsAuthor = new HashSet<>();
+
     @Column
     private String username;
 
@@ -47,10 +51,13 @@ public class User {
 
     @Column(nullable = false)
     private boolean accountNonExpired = true;
+
     @Column(nullable = false)
     private boolean accountNonLocked = true;
+
     @Column(nullable = false)
     private boolean credentialsNonExpired = true;
+
     @Column(nullable = false)
     private boolean enabled = true;
 
@@ -62,7 +69,8 @@ public class User {
             Set<String> roles,
             String username,
             String password,
-            Set<bsPrChannelEntity> channels){
+            Set<bsPrChannelEntity> channels,
+            Set<bsPrChannelEntity> channelsAuthor){
 
         this.id = id;
 
@@ -79,6 +87,8 @@ public class User {
         this.password = password;
 
         this.channels = channels;
+
+        this.channelsAuthor = channelsAuthor;
 
     }
 }
