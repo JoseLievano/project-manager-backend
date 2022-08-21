@@ -1,6 +1,7 @@
 package com.bgsystem.bugtracker.shared.models.user;
 
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,6 +44,9 @@ public class User {
     @OneToMany (mappedBy = "author")
     private Set<bsPrChannelEntity> channelsAuthor = new HashSet<>();
 
+    @OneToMany (mappedBy = "author")
+    private Set<bsPrCommentEntity> comments = new HashSet<>();
+
     @Column
     private String username;
 
@@ -70,7 +74,8 @@ public class User {
             String username,
             String password,
             Set<bsPrChannelEntity> channels,
-            Set<bsPrChannelEntity> channelsAuthor){
+            Set<bsPrChannelEntity> channelsAuthor,
+            Set<bsPrCommentEntity> comments){
 
         this.id = id;
 
@@ -89,6 +94,8 @@ public class User {
         this.channels = channels;
 
         this.channelsAuthor = channelsAuthor;
+
+        this.comments = comments;
 
     }
 }
