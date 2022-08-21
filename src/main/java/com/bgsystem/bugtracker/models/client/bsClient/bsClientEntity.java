@@ -2,6 +2,8 @@ package com.bgsystem.bugtracker.models.client.bsClient;
 
 import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentEntity;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
@@ -48,13 +50,16 @@ public class bsClientEntity extends User {
                           Set<String> roles,
                           String username,
                           String password,
+                          Set<bsPrChannelEntity> channels,
+                          Set<bsPrChannelEntity> channelsAuthor,
+                          Set<bsPrCommentEntity> comments,
                           Boolean isActive,
                           Date dateCreated,
                           Date lastLogin,
                           BusinessEntity business,
                           Set<bsProjectEntity> projects,
                           Set <bsInvoiceEntity> invoices) {
-        super(id, firstName, lastName, email, roles, username, password);
+        super(id, firstName, lastName, email, roles, username, password, channels, channelsAuthor, comments);
     }
 
     @Override

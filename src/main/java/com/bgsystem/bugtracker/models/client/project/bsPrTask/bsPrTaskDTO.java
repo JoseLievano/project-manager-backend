@@ -50,6 +50,4 @@ public class bsPrTaskDTO {
 
     private bsInvoiceMiniDTO invoice;
 
-    private Set<bsPrCh>
-
 }

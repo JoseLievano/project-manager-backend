@@ -2,6 +2,8 @@ package com.bgsystem.bugtracker.models.HQ.employee;
 
 import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQEntity;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentEntity;
 import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -35,8 +37,11 @@ public class EmployeeEntity extends User {
                           Set<String> roles,
                           String username,
                           String password,
+                          Set<bsPrChannelEntity> channels,
+                          Set<bsPrChannelEntity> channelsAuthor,
+                          Set<bsPrCommentEntity> comments,
                           MainHQEntity mainHQEntity){
-        super(id, firstName, lastName, email, roles, username, password);
+        super(id, firstName, lastName, email, roles, username, password, channels, channelsAuthor, comments);
         this.mainHQEntity = mainHQEntity;
     }
 

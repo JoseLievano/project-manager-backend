@@ -1,6 +1,8 @@
 package com.bgsystem.bugtracker.models.client.bsManager;
 
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentEntity;
 import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 
@@ -34,9 +36,12 @@ public class bsManagerEntity extends User {
                            Set<String> roles,
                            String username,
                            String password,
+                           Set<bsPrChannelEntity> channels,
+                           Set<bsPrChannelEntity> channelsAuthor,
+                           Set<bsPrCommentEntity> comments,
                            Date dateCreated,
                            Date lastLogin,
                            BusinessEntity business) {
-        super(id, firstName, lastName, email, roles, username, password);
+        super(id, firstName, lastName, email, roles, username, password, channels, channelsAuthor, comments);
     }
 }

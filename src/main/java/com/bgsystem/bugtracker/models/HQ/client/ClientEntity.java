@@ -4,6 +4,8 @@ import com.bgsystem.bugtracker.models.HQ.invoice.InvoiceEntity;
 import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQEntity;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentEntity;
 import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -58,13 +60,16 @@ public class ClientEntity extends User {
                          Set<String> roles,
                          String username,
                          String password,
+                         Set<bsPrChannelEntity> channels,
+                         Set<bsPrChannelEntity> channelsAuthor,
+                         Set<bsPrCommentEntity> comments,
                          Boolean isActive,
                          Date dateCreated,
                          Date lastLoginDate,
                          MainHQEntity mainHQEntity,
                          Set<BusinessEntity> businessEntities,
                          Set<InvoiceEntity> invoiceEntities){
-        super(id, firstName, lastName, email, roles, username, password);
+        super(id, firstName, lastName, email, roles, username, password, channels, channelsAuthor, comments);
         this.isActive = isActive;
         this.dateCreated = dateCreated;
         this.lastLoginDate = lastLoginDate;
