@@ -4,6 +4,7 @@ import com.bgsystem.bugtracker.models.client.bsClient.bsClientMapper;
 import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelMapper;
+import com.bgsystem.bugtracker.models.client.project.bsPrDocsCategory.bsPrDocsCategoryMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
     @Autowired
     private bsPrChannelMapper channelMapper;
 
+    @Lazy
+    @Autowired
+    private bsPrDocsCategoryMapper docsCategoryMapper;
+
     @Override
     public bsProjectDTO toDTO(bsProjectEntity entity) {
 
@@ -60,6 +65,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 )
                 .channels(entity.getChannels().stream()
                         .map(channelMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .docsCategories(entity.getDocsCategories().stream()
+                        .map(docsCategoryMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .build();
@@ -97,6 +106,5 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 .created(form.getCreated())
                 .dueDate(form.getDueDate())
                 .build();
-
     }
 }

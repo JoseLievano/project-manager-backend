@@ -30,4 +30,6 @@ public class bsProjectForm {
 
     private Set<Long> channels;
 
+    private Set<Long> docsCategories;
+
 }
