@@ -1,4 +1,4 @@
-package com.bgsystem.bugtracker.models.client.project.bsPrKBCategory;
+package com.bgsystem.bugtracker.models.client.project.bsPrKB;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,21 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.Set;
-
 @Validated
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
-public class bsPrKBCategoryForm {
+public class bsPrKBForm {
 
     private Long id;
 
-    private String name;
+    private String title;
+
+    private String content;
 
     private Long project;
 
-    private Set<Long> kbs;
+    private Long category;
 
 }

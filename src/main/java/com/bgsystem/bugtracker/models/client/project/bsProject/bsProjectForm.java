@@ -36,4 +36,6 @@ public class bsProjectForm {
 
     private Set<Long> kbCategories;
 
+    private Set<Long> kbs;
+
 }

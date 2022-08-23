@@ -6,6 +6,7 @@ import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrDocs.bsPrDocsMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrDocsCategory.bsPrDocsCategoryMapper;
+import com.bgsystem.bugtracker.models.client.project.bsPrKB.bsPrKBMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrKBCategory.bsPrKBCategoryMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
@@ -50,6 +51,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
     @Autowired
     private bsPrKBCategoryMapper kbCategoryMapper;
 
+    @Lazy
+    @Autowired
+    private bsPrKBMapper kbMapper;
+
     @Override
     public bsProjectDTO toDTO(bsProjectEntity entity) {
 
@@ -87,6 +92,9 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 )
                 .kbCategories(entity.getKbCategories().stream()
                         .map(kbCategoryMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                ).kbs(entity.getKbs().stream()
+                        .map(kbMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .build();
