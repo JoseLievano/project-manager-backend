@@ -1,12 +1,14 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrComment;
 
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrMention.bsPrMentionEntity;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Table (name = "bs_pr_comment")
 @Entity
@@ -38,5 +40,8 @@ public class bsPrCommentEntity {
     @ManyToOne (optional = false)
     @JoinColumn ( name = "project_id", nullable = false)
     private bsProjectEntity project;
+
+    @OneToMany (mappedBy = "comment", cascade = CascadeType.ALL)
+    private Set<bsPrMentionEntity> mentions;
 
 }

@@ -1,4 +1,4 @@
-package com.bgsystem.bugtracker.models.client.project.bsPrComment;
+package com.bgsystem.bugtracker.models.client.project.bsPrMention;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,26 +7,22 @@ import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
-import java.util.Set;
 
-@Validated
 @Data
+@Validated
 @AllArgsConstructor
 @NoArgsConstructor
-public class bsPrCommentForm {
+@Builder
+public class bsPrMentionForm {
 
     private Long id;
 
-    private String commentContent;
+    private Date mentionDate;
 
-    private Date commentDate;
+    private Long comment;
 
     private Long author;
 
-    private Long channel;
-
-    private Long project;
-
-    private Set<Long> mentions;
+    private Long mentionedUser;
 
 }

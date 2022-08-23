@@ -1,6 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrComment;
 
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelMiniDTO;
+import com.bgsystem.bugtracker.models.client.project.bsPrMention.bsPrMentionMiniDTO;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMiniDTO;
 import com.bgsystem.bugtracker.shared.models.user.UserMiniDTO;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -27,5 +29,7 @@ public class bsPrCommentDTO {
     private bsPrChannelMiniDTO channel;
 
     private bsProjectMiniDTO project;
+
+    private Set<bsPrMentionMiniDTO> mentions;
 
 }

@@ -1,6 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrComment;
 
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelMapper;
+import com.bgsystem.bugtracker.models.client.project.bsPrMention.bsPrMentionMapper;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import com.bgsystem.bugtracker.shared.models.user.UserMapper;
@@ -23,6 +24,10 @@ public class bsPrCommentMapper implements DefaultMapper <bsPrCommentDTO, bsPrCom
     @Autowired
     private bsProjectMapper bsProjectMapper;
 
+    @Lazy
+    @Autowired
+    private bsPrMentionMapper bsPrMentionMapper;
+
     @Override
     public bsPrCommentDTO toDTO(bsPrCommentEntity entity) {
 
@@ -37,6 +42,10 @@ public class bsPrCommentMapper implements DefaultMapper <bsPrCommentDTO, bsPrCom
                 .author(userMapper.toSmallDTO(entity.getAuthor()))
                 .channel(bsPrChannelMapper.toSmallDTO(entity.getChannel()))
                 .project(bsProjectMapper.toSmallDTO(entity.getProject()))
+                .mentions(entity.getMentions().stream()
+                        .map(bsPrMentionMapper::toSmallDTO)
+                        .collect(java.util.stream.Collectors.toSet())
+                )
                 .build();
     }
 
