@@ -4,6 +4,7 @@ import com.bgsystem.bugtracker.models.client.bsClient.bsClientMiniDTO;
 import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMiniDTO;
 import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelMiniDTO;
+import com.bgsystem.bugtracker.models.client.project.bsPrDocs.bsPrDocsMiniDTO;
 import com.bgsystem.bugtracker.models.client.project.bsPrDocsCategory.bsPrDocsCategoryMiniDTO;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMiniDTO;
 import lombok.*;
@@ -40,5 +41,7 @@ public class bsProjectDTO {
     private Set<bsPrChannelMiniDTO> channels;
 
     private Set<bsPrDocsCategoryMiniDTO> docsCategories;
+
+    private Set<bsPrDocsMiniDTO> docs;
 
 }

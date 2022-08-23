@@ -1,9 +1,11 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrDocsCategory;
 
+import com.bgsystem.bugtracker.models.client.project.bsPrDocs.bsPrDocsEntity;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Table(name = "bs_pr_docs_category")
 @Entity
@@ -24,5 +26,8 @@ public class bsPrDocsCategoryEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "project_id", nullable = false)
     private bsProjectEntity project;
+
+    @OneToMany(mappedBy = "category")
+    private Set<bsPrDocsEntity> docs;
 
 }

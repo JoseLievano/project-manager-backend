@@ -19,7 +19,7 @@ public class bsDocEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column (unique = true)
+    @Column
     private String title;
 
     @Column (length = 10000)

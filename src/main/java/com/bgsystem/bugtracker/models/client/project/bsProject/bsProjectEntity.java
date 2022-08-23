@@ -4,6 +4,7 @@ import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
 import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrDocs.bsPrDocsEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrDocsCategory.bsPrDocsCategoryEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskEntity;
 import lombok.*;
@@ -58,5 +59,8 @@ public class bsProjectEntity {
 
     @OneToMany(mappedBy = "project")
     private Set<bsPrDocsCategoryEntity> docsCategories;
+
+    @OneToMany(mappedBy = "project")
+    private Set<bsPrDocsEntity> docs;
 
 }
