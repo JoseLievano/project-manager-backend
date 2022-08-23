@@ -6,6 +6,7 @@ import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrDocs.bsPrDocsMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrDocsCategory.bsPrDocsCategoryMapper;
+import com.bgsystem.bugtracker.models.client.project.bsPrKBCategory.bsPrKBCategoryMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
     @Autowired
     private bsPrDocsMapper docsMapper;
 
+    @Lazy
+    @Autowired
+    private bsPrKBCategoryMapper kbCategoryMapper;
+
     @Override
     public bsProjectDTO toDTO(bsProjectEntity entity) {
 
@@ -78,6 +83,10 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 )
                 .docs(entity.getDocs().stream()
                         .map(docsMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .kbCategories(entity.getKbCategories().stream()
+                        .map(kbCategoryMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .build();
