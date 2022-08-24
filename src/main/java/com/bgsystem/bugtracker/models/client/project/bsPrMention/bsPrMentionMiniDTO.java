@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrMention;
 
+import com.bgsystem.bugtracker.shared.models.user.UserMiniDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +17,9 @@ public class bsPrMentionMiniDTO {
     private Long id;
 
     private Date mentionDate;
+
+    private UserMiniDTO author;
+
+    private UserMiniDTO mentionedUser;
 
 }
