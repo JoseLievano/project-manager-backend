@@ -5,15 +5,20 @@ import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelRepository;
+import com.bgsystem.bugtracker.models.client.project.bsPrMention.bsPrMentionEntity;
+import com.bgsystem.bugtracker.models.client.project.bsPrMention.bsPrMentionRepository;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectRepository;
 import com.bgsystem.bugtracker.shared.models.user.User;
 import com.bgsystem.bugtracker.shared.models.user.UserRepository;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
+import com.bgsystem.bugtracker.shared.tools.MentionGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentForm, bsPrCommentEntity, Long> {
@@ -26,6 +31,12 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
 
     @Autowired
     private bsProjectRepository projectRepository;
+
+    @Autowired
+    private bsPrMentionRepository mentionRepository;
+
+    @Autowired
+    private bsPrCommentRepository commentRepository;
 
     public bsPrCommentServiceImplements(bsPrCommentRepository repository, bsPrCommentMapper mapper){
         super(repository, mapper);
@@ -60,6 +71,24 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
 
         //Save the comment
         repository.save(toInsert);
+
+        //Use the tool to check if we need to generate mentions
+
+        Set<bsPrMentionEntity> mentions = new HashSet<>();
+        mentions.addAll(MentionGenerator.generateMentions(toInsert, userRepository, mentionRepository));
+
+
+
+
+        if (!mentions.isEmpty()){
+            for (bsPrMentionEntity mention : mentions){
+                System.out.println("Date: " + mention.getMentionDate());
+                System.out.println("Author: " + mention.getAuthor().getUsername());
+                System.out.println("Mentioned: " + mention.getMentionedUser().getUsername());
+                mentionRepository.save(mention);
+            }
+        }
+
 
         userRepository.save(author);
         channelRepository.save(channel);
