@@ -1,6 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrComment;
 
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelMiniDTO;
+import com.bgsystem.bugtracker.models.client.project.bsPrMention.bsPrMentionDTO;
 import com.bgsystem.bugtracker.models.client.project.bsPrMention.bsPrMentionMiniDTO;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMiniDTO;
 import com.bgsystem.bugtracker.shared.models.user.UserMiniDTO;
@@ -30,6 +31,6 @@ public class bsPrCommentDTO {
 
     private bsProjectMiniDTO project;
 
-    private Set<bsPrMentionMiniDTO> mentions;
+    private Set<bsPrMentionDTO> mentions;
 
 }

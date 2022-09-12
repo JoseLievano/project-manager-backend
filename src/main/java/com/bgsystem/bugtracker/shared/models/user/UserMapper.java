@@ -32,6 +32,7 @@ public class UserMapper implements DefaultMapper <UserDTO, UserMiniDTO, UserForm
                 .id(entity.getId())
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
+                .username(entity.getUsername())
                 .roles(entity.getRoles())
                 .build();
     }

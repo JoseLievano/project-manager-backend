@@ -43,7 +43,7 @@ public class bsPrCommentMapper implements DefaultMapper <bsPrCommentDTO, bsPrCom
                 .channel(bsPrChannelMapper.toSmallDTO(entity.getChannel()))
                 .project(bsProjectMapper.toSmallDTO(entity.getProject()))
                 .mentions(entity.getMentions().stream()
-                        .map(bsPrMentionMapper::toSmallDTO)
+                        .map(bsPrMentionMapper::toDTO)
                         .collect(java.util.stream.Collectors.toSet())
                 )
                 .build();

@@ -41,8 +41,7 @@ public class SecurityConfig {
 
         http
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .csrf().disable()
+            .and().csrf().disable()
             .authorizeRequests()
                 .anyRequest().permitAll();
         return http.build();
