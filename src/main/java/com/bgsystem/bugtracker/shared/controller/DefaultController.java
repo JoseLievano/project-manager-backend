@@ -30,7 +30,7 @@ public abstract class DefaultController <DTO, MINIDTO, FORM, ID>{
 
     @PostMapping
     public ResponseEntity<MINIDTO> insert (@Valid @RequestBody FORM form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
-        System.out.println("Ingresamos en el post");
+
         return ResponseEntity.ok(service.insert(form));
     }
 

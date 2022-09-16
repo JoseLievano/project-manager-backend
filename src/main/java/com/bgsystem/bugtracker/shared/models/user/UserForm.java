@@ -3,6 +3,7 @@ package com.bgsystem.bugtracker.shared.models.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;

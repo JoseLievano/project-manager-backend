@@ -22,11 +22,18 @@ public class SecurityUserServiceImplements implements UserDetailsService {
 
         Collection<User> user = userRepository.findByUsername(username);
 
+
         if (user == null){
             throw new UsernameNotFoundException(username);
         }
 
-        return new SecurityUser(user.iterator().next());
+        User actualUser = user.iterator().next();
+
+        /*System.out.println(actualUser.getUsername());
+
+        System.out.println(actualUser.getRoles().size());*/
+
+        return new SecurityUser(actualUser);
     }
 
 }
