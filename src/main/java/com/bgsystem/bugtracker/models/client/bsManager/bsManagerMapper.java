@@ -64,6 +64,7 @@ public class bsManagerMapper implements DefaultMapper<bsManagerDTO, bsManagerMin
                 .lastName(form.getLastName())
                 .email(form.getEmail())
                 .username(form.getUsername())
+                .password(form.getPassword())
                 .dateCreated(form.getDateCreated())
                 .lastLogin(form.getLastLogin())
                 .build();

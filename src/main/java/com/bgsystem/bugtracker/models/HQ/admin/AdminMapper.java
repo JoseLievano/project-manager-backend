@@ -46,6 +46,7 @@ public class AdminMapper implements DefaultMapper <AdminDTO, AdminMiniDTO, Admin
                 .lastName(adminForm.getLastName())
                 .email(adminForm.getEmail())
                 .username(adminForm.getUsername())
+                .password(adminForm.getPassword())
                 .build();
     }
 }

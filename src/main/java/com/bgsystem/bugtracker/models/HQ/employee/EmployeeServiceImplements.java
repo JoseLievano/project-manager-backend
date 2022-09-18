@@ -46,10 +46,12 @@ public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundE
 
         //Encode the password
         employeeForm.setPassword(passwordEncoder.encode(employeeForm.getPassword()));
+
         EmployeeEntity toInsert = mapper.toEntity(employeeForm);
 
         //Set the role
         Set<String> roles = Set.of("ROLE_EMPLOYEE");
+
         toInsert.setRoles(roles);
 
         //Insert the MainHQ in the employee
@@ -59,10 +61,14 @@ public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundE
             throw new ElementNotFoundExeption("The MainHQ is not found in our DB");
         }else {
             toInsert.setMainHQEntity(mainHQEntity);
+
+            mainHQEntity.getEmployeeEntities().add(toInsert);
         }
 
         //Save the employee in the DB
         employeeRepository.save(toInsert);
+
+        mainHQRepository.save(mainHQEntity);
 
         return mapper.toSmallDTO(toInsert);
     }

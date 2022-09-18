@@ -80,6 +80,7 @@ public class ClientMapper implements DefaultMapper <ClientDTO, ClientMiniDTO, Cl
                 .lastName(form.getLastName())
                 .email(form.getEmail())
                 .username(form.getUsername())
+                .password(form.getPassword())
                 .isActive(form.getIsActive())
                 .dateCreated(form.getDateCreated())
                 .lastLoginDate(form.getLastLoginDate())

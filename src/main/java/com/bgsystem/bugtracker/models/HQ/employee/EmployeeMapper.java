@@ -48,6 +48,7 @@ public class EmployeeMapper implements DefaultMapper <EmployeeDTO, EmployeeMiniD
                 .firstName(form.getFirstName())
                 .lastName(form.getLastName())
                 .username(form.getUsername())
+                .password(form.getPassword())
                 .email(form.getEmail())
                 .build();
     }
