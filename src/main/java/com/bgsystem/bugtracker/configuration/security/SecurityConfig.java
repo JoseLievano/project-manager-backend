@@ -23,11 +23,15 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final SecurityUserServiceImplements securityUserServiceImplements;
 
     @Autowired
-    private SecurityUserServiceImplements securityUserServiceImplements;
+    public SecurityConfig(UserRepository userRepository, SecurityUserServiceImplements securityUserServiceImplements) {
+        this.userRepository = userRepository;
+        this.securityUserServiceImplements = securityUserServiceImplements;
+    }
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {

@@ -13,17 +13,19 @@ import java.util.stream.Collectors;
 @Service
 public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniDTO, bsClientForm, bsClientEntity> {
 
-    @Lazy
-    @Autowired
-    private BusinessMapper businessMapper;
+    private final BusinessMapper businessMapper;
+
+    private final bsProjectMapper bsProjectMapper;
+
+    private final bsInvoiceMapper bsInvoiceMapper;
 
     @Lazy
     @Autowired
-    private bsProjectMapper bsProjectMapper;
-
-    @Lazy
-    @Autowired
-    private bsInvoiceMapper bsInvoiceMapper;
+    public bsClientMapper(BusinessMapper businessMapper, bsProjectMapper bsProjectMapper, bsInvoiceMapper bsInvoiceMapper) {
+        this.businessMapper = businessMapper;
+        this.bsProjectMapper = bsProjectMapper;
+        this.bsInvoiceMapper = bsInvoiceMapper;
+    }
 
     @Override
     public bsClientDTO toDTO(bsClientEntity entity) {

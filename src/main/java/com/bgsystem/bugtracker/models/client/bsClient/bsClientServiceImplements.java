@@ -15,17 +15,18 @@ import java.util.Set;
 @Service
 public class bsClientServiceImplements extends DefaultServiceImplements<bsClientDTO, bsClientMiniDTO, bsClientForm, bsClientEntity, Long> {
 
-    @Autowired
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
+
+    private final bsClientRepository bsClientRepository;
+
+    private final BusinessRepository businessRepository;
 
     @Autowired
-    private bsClientRepository bsClientRepository;
-
-    @Autowired
-    private BusinessRepository businessRepository;
-
-    public bsClientServiceImplements(bsClientRepository repository, bsClientMapper mapper) {
+    public bsClientServiceImplements(bsClientRepository repository, bsClientMapper mapper, PasswordEncoder encoder, bsClientRepository bsClientRepository, BusinessRepository businessRepository) {
         super(repository, mapper);
+        this.encoder = encoder;
+        this.bsClientRepository = bsClientRepository;
+        this.businessRepository = businessRepository;
     }
 
     @Override

@@ -14,17 +14,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, bsDocMiniDTO, bsDocForm, bsDocEntity, Long> {
 
-    @Autowired
-    private bsDocRepository bsDocRepository;
+    private final bsDocRepository bsDocRepository;
+
+    private final BusinessRepository businessRepository;
+
+    private final bsDocsCategoryRepository bsDocsCategoryRepository;
 
     @Autowired
-    private BusinessRepository businessRepository;
-
-    @Autowired
-    private bsDocsCategoryRepository bsDocsCategoryRepository;
-
-    public bsDocServiceImplements(bsDocRepository repository, bsDocMapper mapper){
+    public bsDocServiceImplements(bsDocRepository repository, bsDocMapper mapper, bsDocRepository bsDocRepository, BusinessRepository businessRepository, bsDocsCategoryRepository bsDocsCategoryRepository) {
         super(repository, mapper);
+        this.bsDocRepository = bsDocRepository;
+        this.businessRepository = businessRepository;
+        this.bsDocsCategoryRepository = bsDocsCategoryRepository;
     }
 
     @Override

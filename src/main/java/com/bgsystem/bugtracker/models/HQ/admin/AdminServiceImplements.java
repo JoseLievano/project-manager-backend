@@ -13,14 +13,15 @@ import java.util.Set;
 @Service
 public class AdminServiceImplements extends DefaultServiceImplements <AdminDTO, AdminMiniDTO, AdminForm, AdminEntity, Long>{
 
-    @Autowired
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
+
+    private final AdminRepository adminRepository;
 
     @Autowired
-    private AdminRepository adminRepository;
-
-    public AdminServiceImplements(AdminRepository repository, AdminMapper mapper) {
+    public AdminServiceImplements(AdminRepository repository, AdminMapper mapper, PasswordEncoder encoder, AdminRepository adminRepository) {
         super(repository, mapper);
+        this.encoder = encoder;
+        this.adminRepository = adminRepository;
     }
 
     @Override
