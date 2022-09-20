@@ -12,21 +12,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsInvoiceMapper implements DefaultMapper <bsInvoiceDTO, bsInvoiceMiniDTO, bsInvoiceForm, bsInvoiceEntity> {
 
-    @Lazy
-    @Autowired
-    private BusinessMapper businessMapper;
+    private final BusinessMapper businessMapper;
+
+    private final bsClientMapper clientMapper;
+
+    private final bsProjectMapper projectMapper;
+
+    private final bsPrTaskMapper taskMapper;
 
     @Lazy
     @Autowired
-    private bsClientMapper clientMapper;
-
-    @Lazy
-    @Autowired
-    private bsProjectMapper projectMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrTaskMapper taskMapper;
+    public bsInvoiceMapper(BusinessMapper businessMapper, bsClientMapper clientMapper, bsProjectMapper projectMapper, bsPrTaskMapper taskMapper) {
+        this.businessMapper = businessMapper;
+        this.clientMapper = clientMapper;
+        this.projectMapper = projectMapper;
+        this.taskMapper = taskMapper;
+    }
 
     @Override
     public bsInvoiceDTO toDTO(bsInvoiceEntity entity) {

@@ -12,14 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityForm, bsPriorityEntity, Long> {
 
-    @Autowired
-    private BusinessRepository businessRepository;
+    private final BusinessRepository businessRepository;
+
+    private final bsPriorityRepository priorityRepository;
 
     @Autowired
-    private bsPriorityRepository priorityRepository;
-
-    public bsPriorityServiceImplements( bsPriorityRepository repository, bsPriorityMapper mapper ){
+    public bsPriorityServiceImplements( bsPriorityRepository repository, bsPriorityMapper mapper, BusinessRepository businessRepository, bsPriorityRepository priorityRepository) {
         super( repository, mapper );
+        this.businessRepository = businessRepository;
+        this.priorityRepository = priorityRepository;
     }
 
     @Override

@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsManagerMapper implements DefaultMapper<bsManagerDTO, bsManagerMiniDTO, bsManagerForm, bsManagerEntity> {
 
+    private final BusinessMapper businessMapper;
+
     @Lazy
     @Autowired
-    private BusinessMapper businessMapper;
+    public bsManagerMapper(BusinessMapper businessMapper) {
+        this.businessMapper = businessMapper;
+    }
 
     @Override
     public bsManagerDTO toDTO(bsManagerEntity entity) {

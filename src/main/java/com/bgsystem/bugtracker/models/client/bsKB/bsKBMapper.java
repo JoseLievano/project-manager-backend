@@ -10,13 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsKBMapper implements DefaultMapper <bsKBDTO, bsKBMiniDTO, bsKBForm, bsKBEntity> {
 
-    @Lazy
-    @Autowired
-    private BusinessMapper businessMapper;
+    private final BusinessMapper businessMapper;
+
+    private final bsKBCategoryMapper bsKBCategoryMapper;
 
     @Lazy
     @Autowired
-    private bsKBCategoryMapper bsKBCategoryMapper;
+    public bsKBMapper(BusinessMapper businessMapper, bsKBCategoryMapper bsKBCategoryMapper) {
+        this.businessMapper = businessMapper;
+        this.bsKBCategoryMapper = bsKBCategoryMapper;
+    }
 
     @Override
     public bsKBDTO toDTO(bsKBEntity entity) {

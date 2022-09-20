@@ -12,13 +12,16 @@ import java.util.stream.Collectors;
 @Service
 public class bsPriorityMapper implements DefaultMapper <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityForm, bsPriorityEntity> {
 
-    @Lazy
-    @Autowired
-    private BusinessMapper businessMapper;
+    private final BusinessMapper businessMapper;
+
+    private final bsPrTaskMapper bsPrTaskMapper;
 
     @Lazy
     @Autowired
-    private bsPrTaskMapper bsPrTaskMapper;
+    public bsPriorityMapper(BusinessMapper businessMapper, bsPrTaskMapper bsPrTaskMapper) {
+        this.businessMapper = businessMapper;
+        this.bsPrTaskMapper = bsPrTaskMapper;
+    }
 
     @Override
     public bsPriorityDTO toDTO(bsPriorityEntity entity) {

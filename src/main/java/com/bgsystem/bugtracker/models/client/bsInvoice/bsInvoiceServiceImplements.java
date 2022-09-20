@@ -20,20 +20,21 @@ import java.util.Date;
 @Service
 public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoiceDTO, bsInvoiceMiniDTO, bsInvoiceForm, bsInvoiceEntity, Long> {
 
-    @Autowired
-    private BusinessRepository businessRepository;
+    private final BusinessRepository businessRepository;
+
+    private final bsProjectRepository projectRepository;
+
+    private final bsClientRepository clientRepository;
+
+    private final bsPrTaskRepository taskRepository;
 
     @Autowired
-    private bsProjectRepository projectRepository;
-
-    @Autowired
-    private bsClientRepository clientRepository;
-
-    @Autowired
-    private bsPrTaskRepository taskRepository;
-
-    public bsInvoiceServiceImplements(bsInvoiceRepository repository, bsInvoiceMapper mapper) {
+    public bsInvoiceServiceImplements(bsInvoiceRepository repository, bsInvoiceMapper mapper, BusinessRepository businessRepository, bsProjectRepository projectRepository, bsClientRepository clientRepository, bsPrTaskRepository taskRepository) {
         super(repository, mapper);
+        this.businessRepository = businessRepository;
+        this.projectRepository = projectRepository;
+        this.clientRepository = clientRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Override
