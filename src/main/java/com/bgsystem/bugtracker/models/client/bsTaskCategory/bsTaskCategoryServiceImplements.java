@@ -12,14 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <bsTaskCategoryDTO, bsTaskCategoryMiniDTO, bsTaskCategoryForm, bsTaskCategoryEntity, Long> {
 
-    @Autowired
-    private bsTaskCategoryRepository bsTaskCategoryRepository;
+    private final bsTaskCategoryRepository bsTaskCategoryRepository;
+
+    private final BusinessRepository businessRepository;
 
     @Autowired
-    private BusinessRepository businessRepository;
-
-    public bsTaskCategoryServiceImplements(bsTaskCategoryRepository repository, bsTaskCategoryMapper mapper){
+    public bsTaskCategoryServiceImplements(bsTaskCategoryRepository repository, bsTaskCategoryMapper mapper, bsTaskCategoryRepository bsTaskCategoryRepository, BusinessRepository businessRepository) {
         super(repository, mapper);
+        this.bsTaskCategoryRepository = bsTaskCategoryRepository;
+        this.businessRepository = businessRepository;
     }
 
     @Override

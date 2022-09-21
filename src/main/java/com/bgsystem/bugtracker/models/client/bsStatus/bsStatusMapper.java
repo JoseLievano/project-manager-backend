@@ -12,13 +12,17 @@ import java.util.stream.Collectors;
 @Service
 public class bsStatusMapper implements DefaultMapper<bsStatusDTO, bsStatusMiniDTO, bsStatusForm, bsStatusEntity> {
 
-    @Lazy
-    @Autowired
-    private BusinessMapper businessMapper;
+    private final BusinessMapper businessMapper;
+
+    private final bsPrTaskMapper bsPrTaskMapper;
+
 
     @Lazy
     @Autowired
-    private bsPrTaskMapper bsPrTaskMapper;
+    public bsStatusMapper(BusinessMapper businessMapper, bsPrTaskMapper bsPrTaskMapper) {
+        this.businessMapper = businessMapper;
+        this.bsPrTaskMapper = bsPrTaskMapper;
+    }
 
     @Override
     public bsStatusDTO toDTO(bsStatusEntity entity) {

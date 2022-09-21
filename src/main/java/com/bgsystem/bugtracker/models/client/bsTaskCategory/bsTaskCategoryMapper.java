@@ -12,13 +12,16 @@ import java.util.stream.Collectors;
 @Service
 public class bsTaskCategoryMapper implements DefaultMapper <bsTaskCategoryDTO, bsTaskCategoryMiniDTO, bsTaskCategoryForm, bsTaskCategoryEntity>{
 
-    @Lazy
-    @Autowired
-    private BusinessMapper businessMapper;
+    private final BusinessMapper businessMapper;
+
+    private final bsPrTaskMapper bsPrTaskEntityMapper;
 
     @Lazy
     @Autowired
-    private bsPrTaskMapper bsPrTaskEntityMapper;
+    public bsTaskCategoryMapper(BusinessMapper businessMapper, bsPrTaskMapper bsPrTaskEntityMapper) {
+        this.businessMapper = businessMapper;
+        this.bsPrTaskEntityMapper = bsPrTaskEntityMapper;
+    }
 
     @Override
     public bsTaskCategoryDTO toDTO(bsTaskCategoryEntity entity) {
