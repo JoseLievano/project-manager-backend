@@ -12,14 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsTypeServiceImplements extends DefaultServiceImplements <bsTypeDTO, bsTypeMiniDTO, bsTypeForm, bsTypeEntity, Long> {
 
-    @Autowired
-    private bsTypeRepository bsTypeRepository;
+    private final bsTypeRepository bsTypeRepository;
+
+    private final BusinessRepository businessRepository;
 
     @Autowired
-    private BusinessRepository businessRepository;
-
-    public bsTypeServiceImplements(bsTypeRepository repository, bsTypeMapper mapper){
+    public bsTypeServiceImplements(bsTypeRepository repository, bsTypeMapper mapper, bsTypeRepository bsTypeRepository, BusinessRepository businessRepository) {
         super(repository, mapper);
+        this.bsTypeRepository = bsTypeRepository;
+        this.businessRepository = businessRepository;
     }
 
     @Override
