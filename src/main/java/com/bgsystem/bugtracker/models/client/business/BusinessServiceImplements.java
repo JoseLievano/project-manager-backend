@@ -17,20 +17,26 @@ import java.util.Set;
 @Service
 public class BusinessServiceImplements extends DefaultServiceImplements<BusinessDTO, BusinessMiniDTO, BusinessForm, BusinessEntity, Long> {
 
-    @Autowired
-    private BusinessRepository businessRepository;
+    private final BusinessRepository businessRepository;
+
+    private final ClientRepository clientRepository;
+
+    private final PlanRepository planRepository;
+
+    private final bsGeneralSettingsRepository bsGeneralSettingsRepository;
 
     @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private PlanRepository planRepository;
-
-    @Autowired
-    private bsGeneralSettingsRepository bsGeneralSettingsRepository;
-
-    public BusinessServiceImplements(BusinessRepository repository, BusinessMapper mapper) {
+    public BusinessServiceImplements(BusinessRepository repository, BusinessMapper mapper,
+                                     BusinessRepository businessRepository,
+                                     ClientRepository clientRepository,
+                                     PlanRepository planRepository,
+                                     bsGeneralSettingsRepository bsGeneralSettingsRepository
+    ){
         super(repository, mapper);
+        this.businessRepository = businessRepository;
+        this.clientRepository = clientRepository;
+        this.planRepository = planRepository;
+        this.bsGeneralSettingsRepository = bsGeneralSettingsRepository;
     }
 
     @Override

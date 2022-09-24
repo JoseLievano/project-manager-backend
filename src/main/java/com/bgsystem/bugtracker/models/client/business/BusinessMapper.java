@@ -26,69 +26,75 @@ import java.util.stream.Collectors;
 @Service
 public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniDTO, BusinessForm, BusinessEntity> {
 
-    @Lazy
-    @Autowired
-    private ClientMapper clientMapper;
+    private final ClientMapper clientMapper;
+
+    private final InvoiceMapper invoiceMapper;
+
+    private final PlanMapper planMapper;
+
+    private final bsClientMapper bsClientMapper;
+
+    private final bsGeneralSettingsMapper bsGeneralSettingsMapper;
+
+    private final bsManagerMapper bsManagerMapper;
+
+    private final bsEmployeeMapper bsEmployeeMapper;
+
+    private final bsStatusMapper bsStatusMapper;
+
+    private final bsPriorityMapper bsPriorityMapper;
+
+    private final bsTypeMapper bsTypeMapper;
+
+    private final bsDocsCategoryMapper bsDocsCategoryMapper;
+
+    private final bsDocMapper bsDocMapper;
+
+    private final bsProjectMapper bsProjectMapper;
+
+    private final bsTaskCategoryMapper bsTaskCategoryMapper;
+
+    private final bsPrTaskMapper bsPrTaskMapper;
+
+    private final bsInvoiceMapper bsInvoiceMapper;
 
     @Lazy
     @Autowired
-    private InvoiceMapper invoiceMapper;
-
-    @Lazy
-    @Autowired
-    private PlanMapper planMapper;
-
-    @Lazy
-    @Autowired
-    private bsClientMapper bsClientMapper;
-
-    @Lazy
-    @Autowired
-    private bsGeneralSettingsMapper bsGeneralSettingsMapper;
-
-    @Lazy
-    @Autowired
-    private bsManagerMapper bsManagerMapper;
-
-    @Lazy
-    @Autowired
-    private bsEmployeeMapper bsEmployeeMapper;
-
-    @Lazy
-    @Autowired
-    private  bsStatusMapper bsStatusMapper;
-
-    @Lazy
-    @Autowired
-    private bsPriorityMapper bsPriorityMapper;
-
-    @Lazy
-    @Autowired
-    private bsTypeMapper bsTypeMapper;
-
-    @Lazy
-    @Autowired
-    private bsDocsCategoryMapper bsDocsCategoryMapper;
-
-    @Lazy
-    @Autowired
-    private bsDocMapper bsDocMapper;
-
-    @Lazy
-    @Autowired
-    private bsProjectMapper bsProjectMapper;
-
-    @Lazy
-    @Autowired
-    private bsTaskCategoryMapper bsTaskCategoryMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrTaskMapper bsPrTaskMapper;
-
-    @Lazy
-    @Autowired
-    private bsInvoiceMapper bsInvoiceMapper;
+    public BusinessMapper(
+            ClientMapper clientMapper,
+            InvoiceMapper invoiceMapper,
+            PlanMapper planMapper,
+            bsClientMapper bsClientMapper,
+            bsGeneralSettingsMapper bsGeneralSettingsMapper,
+            bsManagerMapper bsManagerMapper,
+            bsEmployeeMapper bsEmployeeMapper,
+            bsStatusMapper bsStatusMapper,
+            bsPriorityMapper bsPriorityMapper,
+            bsTypeMapper bsTypeMapper,
+            bsDocsCategoryMapper bsDocsCategoryMapper,
+            bsDocMapper bsDocMapper,
+            bsProjectMapper bsProjectMapper,
+            bsTaskCategoryMapper bsTaskCategoryMapper,
+            bsPrTaskMapper bsPrTaskMapper,
+            bsInvoiceMapper bsInvoiceMapper
+    ) {
+        this.clientMapper = clientMapper;
+        this.invoiceMapper = invoiceMapper;
+        this.planMapper = planMapper;
+        this.bsClientMapper = bsClientMapper;
+        this.bsGeneralSettingsMapper = bsGeneralSettingsMapper;
+        this.bsManagerMapper = bsManagerMapper;
+        this.bsEmployeeMapper = bsEmployeeMapper;
+        this.bsStatusMapper = bsStatusMapper;
+        this.bsPriorityMapper = bsPriorityMapper;
+        this.bsTypeMapper = bsTypeMapper;
+        this.bsDocsCategoryMapper = bsDocsCategoryMapper;
+        this.bsDocMapper = bsDocMapper;
+        this.bsProjectMapper = bsProjectMapper;
+        this.bsTaskCategoryMapper = bsTaskCategoryMapper;
+        this.bsPrTaskMapper = bsPrTaskMapper;
+        this.bsInvoiceMapper = bsInvoiceMapper;
+    }
 
     @Override
     public BusinessDTO toDTO(BusinessEntity entity) {
