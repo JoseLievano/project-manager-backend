@@ -10,13 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsPrDocsMapper implements DefaultMapper <bsPrDocsDTO, bsPrDocsMiniDTO, bsPrDocsForm, bsPrDocsEntity> {
 
-    @Lazy
-    @Autowired
-    private bsPrDocsCategoryMapper categoryMapper;
+    private final bsPrDocsCategoryMapper categoryMapper;
+
+    private final bsProjectMapper projectMapper;
 
     @Lazy
     @Autowired
-    private bsProjectMapper projectMapper;
+    public bsPrDocsMapper(bsPrDocsCategoryMapper categoryMapper, bsProjectMapper projectMapper) {
+        this.categoryMapper = categoryMapper;
+        this.projectMapper = projectMapper;
+    }
 
     @Override
     public bsPrDocsDTO toDTO(bsPrDocsEntity entity) {
