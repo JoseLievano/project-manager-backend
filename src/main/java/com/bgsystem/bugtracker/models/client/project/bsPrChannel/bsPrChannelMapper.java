@@ -4,7 +4,6 @@ import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import com.bgsystem.bugtracker.shared.models.user.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +12,16 @@ import java.util.stream.Collectors;
 @Service
 public class bsPrChannelMapper implements DefaultMapper <bsPrChannelDTO, bsPrChannelMiniDTO, bsPrChannelForm, bsPrChannelEntity> {
 
-    @Lazy
-    @Autowired
-    private bsProjectMapper projectMapper;
+    private final bsProjectMapper projectMapper;
+
+    private final UserMapper userMapper;
 
     @Lazy
     @Autowired
-    private UserMapper userMapper;
+    public bsPrChannelMapper(bsProjectMapper projectMapper, UserMapper userMapper) {
+        this.projectMapper = projectMapper;
+        this.userMapper = userMapper;
+    }
 
     @Override
     public bsPrChannelDTO toDTO(bsPrChannelEntity entity) {

@@ -16,17 +16,18 @@ import java.util.Date;
 @Service
 public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPrChannelDTO, bsPrChannelMiniDTO, bsPrChannelForm, bsPrChannelEntity, Long> {
 
-    @Autowired
-    private bsProjectRepository projectRepository;
+    private final bsProjectRepository projectRepository;
+
+    private final UserRepository userRepository;
+
+    private final bsPrChannelRepository channelRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private bsPrChannelRepository channelRepository;
-
-    public bsPrChannelServiceImplements(bsPrChannelRepository respository, bsPrChannelMapper mapper){
+    public bsPrChannelServiceImplements(bsPrChannelRepository respository, bsPrChannelMapper mapper, bsProjectRepository projectRepository, UserRepository userRepository, bsPrChannelRepository channelRepository) {
         super(respository, mapper);
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+        this.channelRepository = channelRepository;
     }
 
     @Override
