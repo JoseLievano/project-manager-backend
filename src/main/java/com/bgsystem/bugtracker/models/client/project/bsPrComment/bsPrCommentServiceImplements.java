@@ -23,23 +23,29 @@ import java.util.Set;
 @Service
 public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentForm, bsPrCommentEntity, Long> {
 
-    @Autowired
-    private bsPrChannelRepository channelRepository;
+    private final bsPrChannelRepository channelRepository;
+
+    private final UserRepository userRepository;
+
+    private final bsProjectRepository projectRepository;
+
+    private final bsPrMentionRepository mentionRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public bsPrCommentServiceImplements(
+            bsPrCommentRepository repository,
+            bsPrCommentMapper mapper,
+            bsPrChannelRepository channelRepository,
+            UserRepository userRepository,
+            bsProjectRepository projectRepository,
+            bsPrMentionRepository mentionRepository
 
-    @Autowired
-    private bsProjectRepository projectRepository;
-
-    @Autowired
-    private bsPrMentionRepository mentionRepository;
-
-    @Autowired
-    private bsPrCommentRepository commentRepository;
-
-    public bsPrCommentServiceImplements(bsPrCommentRepository repository, bsPrCommentMapper mapper){
+    ) {
         super(repository, mapper);
+        this.channelRepository = channelRepository;
+        this.userRepository = userRepository;
+        this.projectRepository = projectRepository;
+        this.mentionRepository = mentionRepository;
     }
 
     @Override

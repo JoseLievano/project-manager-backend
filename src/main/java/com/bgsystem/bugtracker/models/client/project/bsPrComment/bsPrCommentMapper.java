@@ -12,21 +12,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsPrCommentMapper implements DefaultMapper <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentForm, bsPrCommentEntity> {
 
-    @Lazy
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
+
+    private final bsPrChannelMapper bsPrChannelMapper;
+
+    private final bsProjectMapper bsProjectMapper;
+
+    private final bsPrMentionMapper bsPrMentionMapper;
 
     @Lazy
     @Autowired
-    private bsPrChannelMapper bsPrChannelMapper;
-
-    @Lazy
-    @Autowired
-    private bsProjectMapper bsProjectMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrMentionMapper bsPrMentionMapper;
+    public bsPrCommentMapper(UserMapper userMapper, bsPrChannelMapper bsPrChannelMapper, bsProjectMapper bsProjectMapper, bsPrMentionMapper bsPrMentionMapper) {
+        this.userMapper = userMapper;
+        this.bsPrChannelMapper = bsPrChannelMapper;
+        this.bsProjectMapper = bsProjectMapper;
+        this.bsPrMentionMapper = bsPrMentionMapper;
+    }
 
     @Override
     public bsPrCommentDTO toDTO(bsPrCommentEntity entity) {
