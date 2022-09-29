@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .addFilterBefore(new JWTTokenValidatorFilter(securityUserServiceImplements), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JWTTokenGeneratorFilter(userRepository), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((auth) -> auth
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
         ).httpBasic(Customizer.withDefaults());
         return http.build();
     }
