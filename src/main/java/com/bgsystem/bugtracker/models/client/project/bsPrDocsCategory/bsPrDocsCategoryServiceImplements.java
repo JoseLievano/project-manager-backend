@@ -12,14 +12,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsPrDocsCategoryServiceImplements extends DefaultServiceImplements <bsPrDocsCategoryDTO, bsPrDocsCategoryMiniDTO, bsPrDocsCategoryForm, bsPrDocsCategoryEntity, Long> {
 
-    @Autowired
-    private bsProjectRepository projectRepository;
+    private final bsProjectRepository projectRepository;
+
+    private final bsPrDocsCategoryRepository bsPrDocsCategoryRepository;
 
     @Autowired
-    private bsPrDocsCategoryRepository bsPrDocsCategoryRepository;
-
-    public bsPrDocsCategoryServiceImplements(bsPrDocsCategoryRepository repository, bsPrDocsCategoryMapper mapper){
+    public bsPrDocsCategoryServiceImplements(bsPrDocsCategoryRepository repository,
+                                             bsPrDocsCategoryMapper mapper,
+                                             bsProjectRepository projectRepository,
+                                             bsPrDocsCategoryRepository bsPrDocsCategoryRepository){
         super(repository, mapper);
+        this.projectRepository = projectRepository;
+        this.bsPrDocsCategoryRepository = bsPrDocsCategoryRepository;
     }
 
     @Override
