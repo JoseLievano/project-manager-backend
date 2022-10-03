@@ -14,17 +14,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsPrKBServiceImplements extends DefaultServiceImplements <bsPrKBDTO, bsPrKBMiniDTO, bsPrKBForm, bsPrKBEntity, Long> {
 
-    @Autowired
-    private bsPrKBRepository bsPrKBRepository;
+    private final bsPrKBRepository bsPrKBRepository;
+
+    private final bsProjectRepository bsProjectRepository;
+
+    private final bsPrKBCategoryRepository bsPrKBCategoryRepository;
 
     @Autowired
-    private bsProjectRepository bsProjectRepository;
-
-    @Autowired
-    private bsPrKBCategoryRepository bsPrKBCategoryRepository;
-
-    public bsPrKBServiceImplements (bsPrKBRepository repository, bsPrKBMapper mapper) {
+    public bsPrKBServiceImplements (bsPrKBRepository repository,
+                                    bsPrKBMapper mapper,
+                                    bsPrKBRepository bsPrKBRepository,
+                                    bsProjectRepository bsProjectRepository,
+                                    bsPrKBCategoryRepository bsPrKBCategoryRepository)
+    {
         super (repository, mapper);
+        this.bsPrKBRepository = bsPrKBRepository;
+        this.bsProjectRepository = bsProjectRepository;
+        this.bsPrKBCategoryRepository = bsPrKBCategoryRepository;
     }
 
     @Override

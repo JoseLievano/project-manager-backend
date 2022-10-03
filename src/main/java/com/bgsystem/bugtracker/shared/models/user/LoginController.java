@@ -2,7 +2,6 @@ package com.bgsystem.bugtracker.shared.models.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,19 +12,17 @@ import java.util.Set;
 @RequestMapping("/login")
 public class LoginController {
 
+    private final UserRepository userRepository;
+
+    private final UserMapper userMapper;
+
     @Autowired
-    private UserRepository userRepository;
-
-    private UserForm userForm;
-
-    public LoginController(){
-        this.userForm = new UserForm();
+    public LoginController(UserRepository userRepository, UserMapper userMapper){
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @GetMapping("/")
+    @GetMapping(value = {"/", ""})
     public UserMiniDTO getUserDetailsAfterLogin(Principal user) {
 
         Set<User> users = userRepository.findByUsername(user.getName());

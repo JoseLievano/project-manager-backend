@@ -4,16 +4,22 @@ import com.bgsystem.bugtracker.models.client.project.bsPrKBCategory.bsPrKBCatego
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
 public class bsPrKBMapper implements DefaultMapper <bsPrKBDTO, bsPrKBMiniDTO, bsPrKBForm, bsPrKBEntity> {
 
-    @Autowired
-    private bsProjectMapper projectMapper;
+    private final bsProjectMapper projectMapper;
 
+    private final bsPrKBCategoryMapper categoryMapper;
+
+    @Lazy
     @Autowired
-    private bsPrKBCategoryMapper categoryMapper;
+    public bsPrKBMapper(bsProjectMapper projectMapper, bsPrKBCategoryMapper categoryMapper) {
+        this.projectMapper = projectMapper;
+        this.categoryMapper = categoryMapper;
+    }
 
     @Override
     public bsPrKBDTO toDTO(bsPrKBEntity entity) {
