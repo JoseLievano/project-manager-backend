@@ -12,13 +12,16 @@ import java.util.stream.Collectors;
 @Service
 public class bsPrKBCategoryMapper implements DefaultMapper <bsPrKBCategoryDTO, bsPrKBCategoryMiniDTO, bsPrKBCategoryForm, bsPrKBCategoryEntity> {
 
-    @Lazy
-    @Autowired
-    private bsProjectMapper projectMapper;
+    private final bsProjectMapper projectMapper;
+
+    private final bsPrKBMapper kbMapper;
 
     @Lazy
     @Autowired
-    private bsPrKBMapper kbMapper;
+    public bsPrKBCategoryMapper(bsProjectMapper projectMapper, bsPrKBMapper kbMapper) {
+        this.projectMapper = projectMapper;
+        this.kbMapper = kbMapper;
+    }
 
     @Override
     public bsPrKBCategoryDTO toDTO(bsPrKBCategoryEntity entity) {
