@@ -14,17 +14,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsPrMentionServiceImplements extends DefaultServiceImplements <bsPrMentionDTO, bsPrMentionMiniDTO, bsPrMentionForm, bsPrMentionEntity, Long> {
 
-    @Autowired
-    private bsPrMentionRepository mentionRepository;
+    private final bsPrMentionRepository mentionRepository;
+
+    private final UserRepository userRepository;
+
+    private final bsPrCommentRepository commentRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private bsPrCommentRepository commentRepository;
-
-    public bsPrMentionServiceImplements (bsPrMentionRepository repository, bsPrMentionMapper mapper){
+    public bsPrMentionServiceImplements (bsPrMentionRepository repository,
+                                         bsPrMentionMapper mapper,
+                                         bsPrMentionRepository mentionRepository,
+                                         UserRepository userRepository,
+                                         bsPrCommentRepository commentRepository){
         super(repository, mapper);
+        this.mentionRepository = mentionRepository;
+        this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class bsPrMentionServiceImplements extends DefaultServiceImplements <bsPr
         bsPrMentionEntity toInsert = mapper.toEntity(form);
 
         //Check if the author and the mentioned user are the same
-        if (form.getAuthor() == form.getMentionedUser()){
+        if (form.getAuthor().equals(form.getMentionedUser())){
             throw new InvalidInsertDeails("The author and the mentioned user are the same");
         }
 

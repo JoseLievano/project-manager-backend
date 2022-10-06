@@ -4,16 +4,23 @@ import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentMapp
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import com.bgsystem.bugtracker.shared.models.user.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
 public class bsPrMentionMapper implements DefaultMapper <bsPrMentionDTO, bsPrMentionMiniDTO, bsPrMentionForm, bsPrMentionEntity> {
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
+    private final bsPrCommentMapper commentMapper;
+
+    @Lazy
     @Autowired
-    private bsPrCommentMapper commentMapper;
+    public bsPrMentionMapper(UserMapper userMapper,
+                             bsPrCommentMapper commentMapper){
+        this.userMapper = userMapper;
+        this.commentMapper = commentMapper;
+    }
 
     @Override
     public bsPrMentionDTO toDTO(bsPrMentionEntity entity) {
