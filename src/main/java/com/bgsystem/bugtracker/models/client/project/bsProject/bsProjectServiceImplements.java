@@ -16,17 +16,22 @@ import java.util.Date;
 @Service
 public class bsProjectServiceImplements extends DefaultServiceImplements <bsProjectDTO, bsProjectMiniDTO, bsProjectForm, bsProjectEntity, Long> {
 
-    @Autowired
-    private BusinessRepository businessRepository;
+    private final BusinessRepository businessRepository;
+
+    private final bsClientRepository bsClientRepository;
+
+    private final bsProjectRepository bsProjectRepository;
 
     @Autowired
-    private bsClientRepository bsClientRepository;
-
-    @Autowired
-    private bsProjectRepository bsProjectRepository;
-
-    public bsProjectServiceImplements (bsProjectRepository repository, bsProjectMapper mapper) {
+    public bsProjectServiceImplements (bsProjectRepository repository,
+                                       bsProjectMapper mapper,
+                                       BusinessRepository businessRepository,
+                                       bsClientRepository bsClientRepository,
+                                       bsProjectRepository bsProjectRepository) {
         super(repository, mapper);
+        this.businessRepository = businessRepository;
+        this.bsClientRepository = bsClientRepository;
+        this.bsProjectRepository = bsProjectRepository;
     }
 
     @Override

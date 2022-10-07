@@ -19,41 +19,45 @@ import java.util.stream.Collectors;
 @Service
 public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMiniDTO, bsProjectForm, bsProjectEntity> {
 
-    @Lazy
-    @Autowired
-    private BusinessMapper businessMapper;
+    private final BusinessMapper businessMapper;
+
+    private final bsClientMapper clientMapper;
+
+    private final bsPrTaskMapper taskMapper;
+
+    private final bsInvoiceMapper invoiceMapper;
+
+    private final bsPrChannelMapper channelMapper;
+
+    private final bsPrDocsCategoryMapper docsCategoryMapper;
+
+    private final bsPrDocsMapper docsMapper;
+
+    private final bsPrKBCategoryMapper kbCategoryMapper;
+
+    private final bsPrKBMapper kbMapper;
 
     @Lazy
     @Autowired
-    private bsClientMapper clientMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrTaskMapper taskMapper;
-
-    @Lazy
-    @Autowired
-    private bsInvoiceMapper invoiceMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrChannelMapper channelMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrDocsCategoryMapper docsCategoryMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrDocsMapper docsMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrKBCategoryMapper kbCategoryMapper;
-
-    @Lazy
-    @Autowired
-    private bsPrKBMapper kbMapper;
+    public bsProjectMapper(BusinessMapper businessMapper,
+                           bsClientMapper clientMapper,
+                           bsPrTaskMapper taskMapper,
+                           bsInvoiceMapper invoiceMapper,
+                           bsPrChannelMapper channelMapper,
+                           bsPrDocsCategoryMapper docsCategoryMapper,
+                           bsPrDocsMapper docsMapper,
+                           bsPrKBCategoryMapper kbCategoryMapper,
+                           bsPrKBMapper kbMapper) {
+        this.businessMapper = businessMapper;
+        this.clientMapper = clientMapper;
+        this.taskMapper = taskMapper;
+        this.invoiceMapper = invoiceMapper;
+        this.channelMapper = channelMapper;
+        this.docsCategoryMapper = docsCategoryMapper;
+        this.docsMapper = docsMapper;
+        this.kbCategoryMapper = kbCategoryMapper;
+        this.kbMapper = kbMapper;
+    }
 
     @Override
     public bsProjectDTO toDTO(bsProjectEntity entity) {
