@@ -24,29 +24,38 @@ import java.util.Date;
 @Service
 public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTaskDTO, bsPrTaskMiniDTO, bsPrTaskForm, bsPrTaskEntity, Long> {
 
-    @Autowired
-    private BusinessRepository businessRepository;
+    private final BusinessRepository businessRepository;
+
+    private final bsPrTaskRepository bsPrTaskRepository;
+
+    private final bsProjectRepository projectRepository;
+
+    private final bsTypeRepository typeRepository;
+
+    private final bsStatusRepository statusRepository;
+
+    private final bsPriorityRepository priorityRepository;
+
+    private final bsTaskCategoryRepository categoryRepository;
 
     @Autowired
-    private bsPrTaskRepository bsPrTaskRepository;
-
-    @Autowired
-    private bsProjectRepository projectRepository;
-
-    @Autowired
-    private bsTypeRepository typeRepository;
-
-    @Autowired
-    private bsStatusRepository statusRepository;
-
-    @Autowired
-    private bsPriorityRepository priorityRepository;
-
-    @Autowired
-    private bsTaskCategoryRepository categoryRepository;
-
-    public bsPrTaskServiceImplements(bsPrTaskRepository repository, bsPrTaskMapper mapper){
+    public bsPrTaskServiceImplements(bsPrTaskRepository repository,
+                                     bsPrTaskMapper mapper,
+                                     BusinessRepository businessRepository,
+                                     bsPrTaskRepository bsPrTaskRepository,
+                                     bsProjectRepository projectRepository,
+                                     bsTypeRepository typeRepository,
+                                     bsStatusRepository statusRepository,
+                                     bsPriorityRepository priorityRepository,
+                                     bsTaskCategoryRepository categoryRepository) {
         super (repository, mapper);
+        this.businessRepository = businessRepository;
+        this.bsPrTaskRepository = bsPrTaskRepository;
+        this.projectRepository = projectRepository;
+        this.typeRepository = typeRepository;
+        this.statusRepository = statusRepository;
+        this.priorityRepository = priorityRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override

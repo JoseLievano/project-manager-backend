@@ -15,33 +15,39 @@ import org.springframework.stereotype.Service;
 @Service
 public class bsPrTaskMapper implements DefaultMapper <bsPrTaskDTO, bsPrTaskMiniDTO, bsPrTaskForm, bsPrTaskEntity> {
 
-    @Lazy
-    @Autowired
-    private BusinessMapper businessMapper;
+    private final BusinessMapper businessMapper;
+
+    private final bsProjectMapper bsProjectMapper;
+
+    private final bsTaskCategoryMapper bsTaskCategoryMapper;
+
+    private final bsTypeMapper bsTypeMapper;
+
+    private final bsPriorityMapper bsPriorityMapper;
+
+    private final bsStatusMapper bsStatusMapper;
+
+    private final bsInvoiceMapper bsInvoiceMapper;
 
     @Lazy
     @Autowired
-    private bsProjectMapper bsProjectMapper;
-
-    @Lazy
-    @Autowired
-    private bsTaskCategoryMapper bsTaskCategoryMapper;
-
-    @Lazy
-    @Autowired
-    private bsTypeMapper bsTypeMapper;
-
-    @Lazy
-    @Autowired
-    private bsPriorityMapper bsPriorityMapper;
-
-    @Lazy
-    @Autowired
-    private bsStatusMapper bsStatusMapper;
-
-    @Lazy
-    @Autowired
-    private bsInvoiceMapper bsInvoiceMapper;
+    public bsPrTaskMapper(
+            BusinessMapper businessMapper,
+            bsProjectMapper bsProjectMapper,
+            bsTaskCategoryMapper bsTaskCategoryMapper,
+            bsTypeMapper bsTypeMapper,
+            bsPriorityMapper bsPriorityMapper,
+            bsStatusMapper bsStatusMapper,
+            bsInvoiceMapper bsInvoiceMapper
+    ) {
+        this.businessMapper = businessMapper;
+        this.bsProjectMapper = bsProjectMapper;
+        this.bsTaskCategoryMapper = bsTaskCategoryMapper;
+        this.bsTypeMapper = bsTypeMapper;
+        this.bsPriorityMapper = bsPriorityMapper;
+        this.bsStatusMapper = bsStatusMapper;
+        this.bsInvoiceMapper = bsInvoiceMapper;
+    }
 
     @Override
     public bsPrTaskDTO toDTO(bsPrTaskEntity entity) {
