@@ -85,5 +85,36 @@ public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO,
         return clientDTO;
 
     }
+
+    @Override
+    public ClientDTO update(Long ID, ClientForm form) throws ElementNotFoundExeption {
+
+        if (form.getUsername() == null){
+            throw new ElementNotFoundExeption("You must specify the username");
+        }
+
+        ClientEntity toUpdate = repository.findById(ID).orElse(clientRepository.findByUsername(form.getUsername()).stream().findFirst().orElseThrow(() -> new ElementNotFoundExeption("The client is not found")));
+
+        if (form.getFirstName() != null && !form.getFirstName().equals(toUpdate.getFirstName())){
+            toUpdate.setFirstName(form.getFirstName());
+        }
+
+        if (form.getLastName() != null && !form.getLastName().equals(toUpdate.getLastName())){
+            toUpdate.setLastName(form.getLastName());
+        }
+
+        if (form.getEmail() != null && !form.getEmail().equals(toUpdate.getEmail())){
+            toUpdate.setEmail(form.getEmail());
+        }
+
+        if (form.getPassword() != null && !form.getPassword().equals(toUpdate.getPassword())){
+            toUpdate.setPassword(passwordEncoder.encode(form.getPassword()));
+        }
+
+        repository.save(toUpdate);
+
+        return mapper.toDTO(toUpdate);
+
+    }
 }
 
