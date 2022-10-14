@@ -9,6 +9,8 @@ import com.bgsystem.bugtracker.models.client.bsDocsCategory.bsDocsCategoryMapper
 import com.bgsystem.bugtracker.models.client.bsEmployee.bsEmployeeMapper;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsMapper;
 import com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceMapper;
+import com.bgsystem.bugtracker.models.client.bsKB.bsKBMapper;
+import com.bgsystem.bugtracker.models.client.bsKBCategory.bsKBCategoryMapper;
 import com.bgsystem.bugtracker.models.client.bsManager.bsManagerMapper;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityMapper;
 import com.bgsystem.bugtracker.models.client.bsStatus.bsStatusMapper;
@@ -50,6 +52,10 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
 
     private final bsDocMapper bsDocMapper;
 
+    private final bsKBCategoryMapper bsKBCategoryMapper;
+
+    private final bsKBMapper bsKBMapper;
+
     private final bsProjectMapper bsProjectMapper;
 
     private final bsTaskCategoryMapper bsTaskCategoryMapper;
@@ -73,6 +79,8 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
             bsTypeMapper bsTypeMapper,
             bsDocsCategoryMapper bsDocsCategoryMapper,
             bsDocMapper bsDocMapper,
+            bsKBCategoryMapper bsKBCategoryMapper,
+            bsKBMapper bsKBMapper,
             bsProjectMapper bsProjectMapper,
             bsTaskCategoryMapper bsTaskCategoryMapper,
             bsPrTaskMapper bsPrTaskMapper,
@@ -90,6 +98,8 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
         this.bsTypeMapper = bsTypeMapper;
         this.bsDocsCategoryMapper = bsDocsCategoryMapper;
         this.bsDocMapper = bsDocMapper;
+        this.bsKBCategoryMapper = bsKBCategoryMapper;
+        this.bsKBMapper = bsKBMapper;
         this.bsProjectMapper = bsProjectMapper;
         this.bsTaskCategoryMapper = bsTaskCategoryMapper;
         this.bsPrTaskMapper = bsPrTaskMapper;
@@ -150,6 +160,16 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
                 .bsDocs(entity.getBsDocEntities()
                         .stream()
                         .map(bsDocMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .bsKBCategories(entity.getBsKBCategoryEntities()
+                        .stream()
+                        .map(bsKBCategoryMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .bsKBs(entity.getBsKBEntities()
+                        .stream()
+                        .map(bsKBMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .bsProjects(entity.getBsProjectEntities()
