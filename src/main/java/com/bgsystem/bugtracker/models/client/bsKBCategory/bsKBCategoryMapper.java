@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.bsKBCategory;
 
+import com.bgsystem.bugtracker.models.client.bsKB.bsKBMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,13 @@ public class bsKBCategoryMapper implements DefaultMapper <bsKBCategoryDTO, bsKBC
 
     private final BusinessMapper businessMapper;
 
+    private final bsKBMapper bsKBMapper;
+
     @Lazy
     @Autowired
-    public bsKBCategoryMapper(BusinessMapper businessMapper) {
+    public bsKBCategoryMapper(BusinessMapper businessMapper, bsKBMapper bsKBMapper) {
         this.businessMapper = businessMapper;
+        this.bsKBMapper = bsKBMapper;
     }
 
     @Override
@@ -28,6 +32,11 @@ public class bsKBCategoryMapper implements DefaultMapper <bsKBCategoryDTO, bsKBC
                 .id(entity.getId())
                 .name(entity.getName())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .bsKBs(entity.getBsKBEntities()
+                        .stream()
+                        .map(bsKBMapper::toSmallDTO)
+                        .collect(java.util.stream.Collectors.toSet())
+                )
                 .build();
 
     }

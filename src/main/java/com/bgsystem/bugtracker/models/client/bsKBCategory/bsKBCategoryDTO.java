@@ -1,7 +1,10 @@
 package com.bgsystem.bugtracker.models.client.bsKBCategory;
 
+import com.bgsystem.bugtracker.models.client.bsKB.bsKBMiniDTO;
 import com.bgsystem.bugtracker.models.client.business.BusinessMiniDTO;
 import lombok.*;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,5 +19,7 @@ public class bsKBCategoryDTO {
     private String name;
 
     private BusinessMiniDTO business;
+
+    private Set<bsKBMiniDTO> bsKBs;
 
 }
