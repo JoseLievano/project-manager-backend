@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrChannel;
 
+import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentMiniDTO;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMiniDTO;
 import com.bgsystem.bugtracker.shared.models.user.UserMiniDTO;
 import lombok.AllArgsConstructor;
@@ -31,5 +32,7 @@ public class bsPrChannelDTO {
     private bsProjectMiniDTO project;
 
     private Set<UserMiniDTO> members;
+
+    private Set<bsPrCommentMiniDTO> comments;
 
 }

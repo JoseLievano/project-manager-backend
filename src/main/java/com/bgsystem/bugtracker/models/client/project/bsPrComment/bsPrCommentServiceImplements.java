@@ -14,11 +14,12 @@ import com.bgsystem.bugtracker.shared.models.user.UserRepository;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import com.bgsystem.bugtracker.shared.tools.MentionGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentForm, bsPrCommentEntity, Long> {
@@ -31,6 +32,8 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
 
     private final bsPrMentionRepository mentionRepository;
 
+    private final bsPrCommentRepository commentRepository;
+
     @Autowired
     public bsPrCommentServiceImplements(
             bsPrCommentRepository repository,
@@ -38,7 +41,8 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
             bsPrChannelRepository channelRepository,
             UserRepository userRepository,
             bsProjectRepository projectRepository,
-            bsPrMentionRepository mentionRepository
+            bsPrMentionRepository mentionRepository,
+            bsPrCommentRepository commentRepository
 
     ) {
         super(repository, mapper);
@@ -46,6 +50,7 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
         this.userRepository = userRepository;
         this.projectRepository = projectRepository;
         this.mentionRepository = mentionRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -101,5 +106,17 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
         projectRepository.save(project);
 
         return mapper.toSmallDTO(toInsert);
+    }
+
+    public List< bsPrCommentDTO> getAllByChannel(Long channelID, Integer page, Integer size) throws ElementNotFoundExeption {
+
+        bsPrChannelEntity channel = channelRepository.findById(channelID).orElseThrow(() -> new ElementNotFoundExeption("Channel not found"));
+
+        PageRequest pr = PageRequest.of(page, size);
+
+        Page<bsPrCommentDTO> actualPage = commentRepository.findByChannelOrderByCommentDateDesc(pr, channel).map(mapper::toDTO);
+
+        return actualPage.getContent();
+
     }
 }

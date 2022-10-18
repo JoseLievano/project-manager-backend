@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrChannel;
 
+import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentMapper;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import com.bgsystem.bugtracker.shared.models.user.UserMapper;
@@ -16,11 +17,14 @@ public class bsPrChannelMapper implements DefaultMapper <bsPrChannelDTO, bsPrCha
 
     private final UserMapper userMapper;
 
+    private final bsPrCommentMapper commentMapper;
+
     @Lazy
     @Autowired
-    public bsPrChannelMapper(bsProjectMapper projectMapper, UserMapper userMapper) {
+    public bsPrChannelMapper(bsProjectMapper projectMapper, UserMapper userMapper, bsPrCommentMapper commentMapper) {
         this.projectMapper = projectMapper;
         this.userMapper = userMapper;
+        this.commentMapper = commentMapper;
     }
 
     @Override
@@ -40,6 +44,10 @@ public class bsPrChannelMapper implements DefaultMapper <bsPrChannelDTO, bsPrCha
                 .project(projectMapper.toSmallDTO(entity.getProject()))
                 .members(entity.getMembers().stream()
                         .map(userMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
+                .comments(entity.getComments().stream()
+                        .map(commentMapper::toSmallDTO)
                         .collect(Collectors.toSet())
                 )
                 .build();
