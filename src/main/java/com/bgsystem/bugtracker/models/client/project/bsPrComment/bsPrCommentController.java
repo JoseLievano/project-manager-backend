@@ -21,8 +21,8 @@ public class bsPrCommentController extends DefaultController <bsPrCommentDTO, bs
         this.extraService = extraService;
     }
 
-    @GetMapping("/pagina/{channel}/{page}/{size}")
-    public List<bsPrCommentDTO> pagina(@PathVariable Long channel, @PathVariable Integer page, @PathVariable Integer size) throws ElementNotFoundExeption {
+    @GetMapping("/pageable/{channel}/{page}/{size}")
+    public List<bsPrCommentDTO> pageable(@PathVariable Long channel, @PathVariable Integer page, @PathVariable Integer size) throws ElementNotFoundExeption {
 
         return extraService.getAllByChannel(channel, page, size);
     }
