@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Set;
 
 public abstract class DefaultController <DTO, MINIDTO, FORM, ID>{
@@ -24,7 +25,7 @@ public abstract class DefaultController <DTO, MINIDTO, FORM, ID>{
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<Set<DTO>> getAll (){
+    public ResponseEntity<Collection<DTO>> getAll (){
         return ResponseEntity.ok(service.getAll());
     }
 

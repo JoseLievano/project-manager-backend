@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class bsPrCommentController extends DefaultController <bsPrCommentDTO, bs
     }
 
     @GetMapping("/pageable/{channel}/{page}/{size}")
-    public List<bsPrCommentDTO> pageable(@PathVariable Long channel, @PathVariable Integer page, @PathVariable Integer size) throws ElementNotFoundExeption {
+    public Collection<bsPrCommentDTO> pageable(@PathVariable Long channel, @PathVariable Integer page, @PathVariable Integer size) throws ElementNotFoundExeption {
 
         return extraService.getAllByChannel(channel, page, size);
     }

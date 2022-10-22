@@ -6,6 +6,7 @@ import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, FORM, ENTITY, ID> 
     }
 
     @Override
-    public Set<DTO> getAll() {
+    public Collection<DTO> getAll() {
         return repository.findAll()
                 .stream()
                 .map(mapper::toDTO)

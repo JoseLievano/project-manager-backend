@@ -4,13 +4,14 @@ import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 
+import java.util.Collection;
 import java.util.Set;
 
 public interface DefaultService < DTO, MINIDTO, FORM, ID >{
 
     DTO getOne(ID id) throws ElementNotFoundExeption;
 
-    Set<DTO> getAll();
+    Collection<DTO> getAll();
 
     MINIDTO insert(FORM form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails;
 
