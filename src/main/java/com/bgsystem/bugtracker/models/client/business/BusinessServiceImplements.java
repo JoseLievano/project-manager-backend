@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -25,18 +26,22 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     private final bsGeneralSettingsRepository bsGeneralSettingsRepository;
 
+    private final BusinessMapper businessMapper;
+
     @Autowired
     public BusinessServiceImplements(BusinessRepository repository, BusinessMapper mapper,
                                      BusinessRepository businessRepository,
                                      ClientRepository clientRepository,
                                      PlanRepository planRepository,
-                                     bsGeneralSettingsRepository bsGeneralSettingsRepository
+                                     bsGeneralSettingsRepository bsGeneralSettingsRepository,
+                                     BusinessMapper businessMapper
     ){
         super(repository, mapper);
         this.businessRepository = businessRepository;
         this.clientRepository = clientRepository;
         this.planRepository = planRepository;
         this.bsGeneralSettingsRepository = bsGeneralSettingsRepository;
+        this.businessMapper = businessMapper;
     }
 
     @Override
@@ -75,6 +80,18 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         bsGeneralSettingsRepository.save(GeneralSettingsEntity);
 
         return mapper.toSmallDTO(toInsert);
+
+    }
+
+    public Set<BusinessListDTO> getAllForList(){
+
+        Set <BusinessListDTO> businessListDTOS = new HashSet<>();
+
+        for (BusinessEntity businessEntity : repository.findAll()){
+            businessListDTOS.add(businessMapper.toListDTO(businessEntity));
+        }
+
+        return businessListDTOS;
 
     }
 }
