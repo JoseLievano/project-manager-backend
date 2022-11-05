@@ -72,47 +72,92 @@ public class BusinessEntity {
     @OneToMany(mappedBy = "businessEntity", orphanRemoval = true)
     private Set<InvoiceEntity> invoiceEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long invoiceCount;
+
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsClientEntity> bsClientEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long bsClientCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsManagerEntity> bsManagerEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long bsManagerCount;
+
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsEmployeeEntity> bsEmployeeEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long bsEmployeeCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsStatusEntity> bsStatusEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long bsStatusCount;
+
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsPriorityEntity> bsPriorityEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long bsPriorityCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsTypeEntity> bsTypeEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long bsTypeCount;
+
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsDocsCategoryEntity> bsDocsCategoryEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long bsDocsCategoryCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsDocEntity> bsDocEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long bsDocCount;
+
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsKBCategoryEntity> bsKBCategoryEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long bsKBCategoryCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsKBEntity> bsKBEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long bsKBCount;
+
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsProjectEntity> bsProjectEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long bsProjectCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsTaskCategoryEntity> bsTaskCategoryEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long bsTaskCategoryCount;
+
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsPrTaskEntity> bsPrTaskEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long bsPrTaskCount;
+
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsInvoiceEntity> bsInvoiceEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long bsInvoiceCount;
 
     @Override
     public boolean equals(Object o) {

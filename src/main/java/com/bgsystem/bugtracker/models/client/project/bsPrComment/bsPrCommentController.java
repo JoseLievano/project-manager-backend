@@ -26,5 +26,6 @@ public class bsPrCommentController extends DefaultController <bsPrCommentDTO, bs
     public Collection<bsPrCommentDTO> pageable(@PathVariable Long channel, @PathVariable Integer page, @PathVariable Integer size) throws ElementNotFoundExeption {
 
         return extraService.getAllByChannel(channel, page, size);
+
     }
 }

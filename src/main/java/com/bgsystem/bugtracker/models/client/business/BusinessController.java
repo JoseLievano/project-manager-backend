@@ -1,12 +1,14 @@
 package com.bgsystem.bugtracker.models.client.business;
 
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.shared.controller.DefaultController;
+import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import com.bgsystem.bugtracker.shared.service.DefaultService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/business")
@@ -19,8 +21,30 @@ public class BusinessController extends DefaultController<BusinessDTO, BusinessM
     }
 
     @GetMapping("/list")
-    public Collection<BusinessListDTO> getAllForList() {
-        return service.getAllForList();
+    public Collection<BusinessListDTO> getAllForList() throws ElementNotFoundExeption {
+        return service.getAllForList(Optional.empty());
+    }
+
+    @GetMapping("/list/{id}")
+    public Collection<BusinessListDTO> getAllForListByUserId(@PathVariable Long id) throws ElementNotFoundExeption {
+        return service.getAllForList(Optional.of(id));
+    }
+
+    @GetMapping("/list/page")
+    public Page<BusinessListDTO> getAllForListPageable(@RequestBody PageableRequest pageableRequest) throws ElementNotFoundExeption{
+
+        return service.getPageableList(Optional.empty(), pageableRequest);
+
+    }
+
+    @GetMapping("/list/page/{id}")
+    public Page<BusinessListDTO> getAllForListPageable(@RequestBody PageableRequest pageableRequest, @PathVariable Long id) throws ElementNotFoundExeption{
+        return service.getPageableList(Optional.of(id), pageableRequest);
+    }
+
+    @GetMapping("update-list-view/{id}")
+    public BusinessListDTO updateListView(@PathVariable Long id) throws ElementNotFoundExeption {
+        return service.updateListView(id);
     }
 
 }
