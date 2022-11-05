@@ -2,7 +2,7 @@ package com.bgsystem.bugtracker.models.client.business;
 
 import lombok.*;
 
-import java.util.Set;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +17,13 @@ public class BusinessMiniDTO {
     private String name;
 
     private String taxID;
+
+    private Date dateCreated;
+
+    private Boolean pendingInvoice;
+
+    private Boolean overDue;
+
+    private Boolean isActive;
 
 }

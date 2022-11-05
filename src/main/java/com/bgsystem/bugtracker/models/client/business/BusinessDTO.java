@@ -20,6 +20,7 @@ import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMiniDTO;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectMiniDTO;
 import lombok.*;
 
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -36,13 +37,21 @@ public class BusinessDTO {
 
     private String taxID;
 
+    private Date dateCreated;
+
+    private Boolean pendingInvoice;
+
+    private Boolean overDue;
+
+    private Boolean isActive;
+
     private ClientMiniDTO client;
+
+    private PlanMiniDTO plan;
 
     private bsGeneralSettingsMiniDTO bsGeneralSettings;
 
     private Set<InvoiceMiniDTO> invoices;
-
-    private PlanMiniDTO plan;
 
     private Set<bsClientMiniDTO> bsClients;
 

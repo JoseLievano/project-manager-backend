@@ -116,6 +116,11 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
                 .id(entity.getId())
                 .name(entity.getName())
                 .taxID(entity.getTaxID())
+                .taxID(entity.getTaxID())
+                .dateCreated(entity.getDateCreated())
+                .pendingInvoice(entity.getPendingInvoice())
+                .overDue(entity.getOverDue())
+                .isActive(entity.getIsActive())
                 .client(clientMapper.toSmallDTO(entity.getClientEntity()))
                 .invoices(entity.getInvoiceEntities()
                         .stream()
@@ -208,6 +213,10 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
                 .id(entity.getId())
                 .name(entity.getName())
                 .taxID(entity.getTaxID())
+                .dateCreated(entity.getDateCreated())
+                .pendingInvoice(entity.getPendingInvoice())
+                .overDue(entity.getOverDue())
+                .isActive(entity.getIsActive())
                 .build();
 
     }
@@ -234,6 +243,10 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
                 .id(entity.getId())
                 .name(entity.getName())
                 .taxID(entity.getTaxID())
+                .dateCreated(entity.getDateCreated())
+                .pendingInvoice(entity.getPendingInvoice())
+                .overDue(entity.getOverDue())
+                .isActive(entity.getIsActive())
                 .client(clientMapper.toSmallDTO(entity.getClientEntity()))
                 .plan(planMapper.toSmallDTO(entity.getPlanEntity()))
                 .invoices(((long) entity.getInvoiceEntities().size()))

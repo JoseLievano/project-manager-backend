@@ -4,6 +4,8 @@ import com.bgsystem.bugtracker.models.HQ.client.ClientMiniDTO;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanMiniDTO;
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +19,14 @@ public class BusinessListDTO {
     private String name;
 
     private String taxID;
+
+    private Date dateCreated;
+
+    private Boolean pendingInvoice;
+
+    private Boolean overDue;
+
+    private Boolean isActive;
 
     private ClientMiniDTO client;
 

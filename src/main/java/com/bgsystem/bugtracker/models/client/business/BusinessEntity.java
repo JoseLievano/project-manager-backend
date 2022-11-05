@@ -62,18 +62,18 @@ public class BusinessEntity {
     @JoinColumn(name = "client_entity_id", nullable = false)
     private ClientEntity clientEntity;
 
-    @OneToMany(mappedBy = "businessEntity", orphanRemoval = true)
-    private Set<InvoiceEntity> invoiceEntities = new LinkedHashSet<>();
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "plan_entity_id", nullable = false)
     private PlanEntity planEntity;
 
-    @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsClientEntity> bsClientEntities = new LinkedHashSet<>();
-
     @OneToOne(mappedBy = "business", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private bsGeneralSettingsEntity bsGeneralSettings;
+
+    @OneToMany(mappedBy = "businessEntity", orphanRemoval = true)
+    private Set<InvoiceEntity> invoiceEntities = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "business", orphanRemoval = true)
+    private Set<bsClientEntity> bsClientEntities = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     private Set<bsManagerEntity> bsManagerEntities = new LinkedHashSet<>();
