@@ -1,6 +1,5 @@
 package com.bgsystem.bugtracker.models.client.business;
 
-import ch.qos.logback.core.net.server.Client;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
@@ -14,11 +13,7 @@ import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettings
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +33,6 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     @Autowired
     public BusinessServiceImplements(BusinessRepository repository, BusinessMapper mapper,
-                                     BusinessRepository businessRepository,
                                      ClientRepository clientRepository,
                                      PlanRepository planRepository,
                                      bsGeneralSettingsRepository bsGeneralSettingsRepository,
@@ -83,9 +77,11 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
         toInsert.setBsGeneralSettings(GeneralSettingsEntity);
 
-        repository.save(updateListFields(toInsert));
+        repository.save(toInsert);
 
         bsGeneralSettingsRepository.save(GeneralSettingsEntity);
+
+        repository.save(updateListFields(toInsert));
 
         return mapper.toSmallDTO(toInsert);
 
@@ -97,7 +93,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
         if (id.isPresent()){
 
-            ClientEntity client = clientRepository.findById(id.get().longValue()).orElseThrow(ElementNotFoundExeption::new);
+            ClientEntity client = clientRepository.findById(id.get()).orElseThrow(ElementNotFoundExeption::new);
 
             for (BusinessEntity business : repository.findAllByClientEntity(client)){
                 businessListDTOS.add(businessMapper.toListDTO(business));
@@ -119,15 +115,12 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         PageRequest pr = pageableRequest.getPageRequest();
 
         if (id.isEmpty()){
-            Page<BusinessListDTO> page = repository.findAll(pr).map(businessMapper::toListDTO);
-            return page;
+            return repository.findAll(pr).map(businessMapper::toListDTO);
         }
 
         ClientEntity client = clientRepository.findById(id.get()).orElseThrow(ElementNotFoundExeption::new);
 
-        Page <BusinessListDTO> page = repository.findByClientEntity(pr, client).map(businessMapper::toListDTO);
-
-        return page;
+        return repository.findByClientEntity(pr, client).map(businessMapper::toListDTO);
 
     }
 

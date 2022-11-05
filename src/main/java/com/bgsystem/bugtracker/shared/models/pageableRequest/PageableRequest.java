@@ -7,6 +7,9 @@ import lombok.Setter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Builder
 @Getter
@@ -17,20 +20,31 @@ public class PageableRequest {
 
     private int size;
 
-    private String sort;
+    private List<SortInfo> sort;
 
-    private Boolean isAscending;
+    /*private Boolean isAscending;*/
 
     public PageRequest getPageRequest(){
 
-        Sort.Direction newDirection = Sort.Direction.DESC;
+        List<Sort.Order> sorts = new ArrayList<>();
 
-        if (isAscending){
-            newDirection = Sort.Direction.ASC;
+        if (sort.size() > 0) {
+            for (SortInfo sortInfo : sort){
+                if (sortInfo.getIsAscending()){
+                    Sort.Direction actualDirection = Sort.Direction.ASC;
+                    sorts.add(new Sort.Order(actualDirection, sortInfo.getProperty()));
+                }else{
+                    Sort.Direction actualDirection = Sort.Direction.DESC;
+                    sorts.add(new Sort.Order(actualDirection, sortInfo.getProperty()));
+                }
+            }
+        }else{
+            Sort.Direction actualDirection = Sort.Direction.ASC;
+            sorts.add(new Sort.Order(actualDirection, "id"));
         }
 
 
-        return PageRequest.of(page, size, Sort.by(newDirection, this.sort));
+        return PageRequest.of(page, size, Sort.by(sorts));
 
     }
 
