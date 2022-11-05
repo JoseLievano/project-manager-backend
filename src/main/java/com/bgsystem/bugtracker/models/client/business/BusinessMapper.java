@@ -224,4 +224,35 @@ public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniD
                 .taxID(form.getTaxID())
                 .build();
     }
+
+    public BusinessListDTO toListDTO(BusinessEntity entity){
+
+        if (entity == null)
+            return null;
+
+        return BusinessListDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .taxID(entity.getTaxID())
+                .client(clientMapper.toSmallDTO(entity.getClientEntity()))
+                .plan(planMapper.toSmallDTO(entity.getPlanEntity()))
+                .invoices(((long) entity.getInvoiceEntities().size()))
+                .bsClients(((long) entity.getBsClientEntities().size()))
+                .bsManagers(((long) entity.getBsManagerEntities().size()))
+                .bsEmployees(((long) entity.getBsEmployeeEntities().size()))
+                .bsStatuses(((long) entity.getBsStatusEntities().size()))
+                .bsPriorities(((long) entity.getBsPriorityEntities().size()))
+                .bsTypes(((long) entity.getBsTypeEntities().size()))
+                .bsDocsCategories(((long) entity.getBsDocsCategoryEntities().size()))
+                .bsDocs(((long) entity.getBsDocEntities().size()))
+                .bsKBCategories(((long) entity.getBsKBCategoryEntities().size()))
+                .bsKBs(((long) entity.getBsKBEntities().size()))
+                .bsProjects(((long) entity.getBsProjectEntities().size()))
+                .bsTaskCategories(((long) entity.getBsTaskCategoryEntities().size()))
+                .bsPrTasks(((long) entity.getBsPrTaskEntities().size()))
+                .bsInvoices(((long) entity.getBsInvoiceEntities().size()))
+                .build();
+
+    }
+
 }

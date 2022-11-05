@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface bsPrCommentRepository extends JpaRepository<bsPrCommentEntity, Long> {
 
-    Page<bsPrCommentEntity> findByChannelOrderByCommentDateDesc (Pageable pageable, bsPrChannelEntity channel);
+    Page<bsPrCommentEntity> findByChannel (Pageable pageable, bsPrChannelEntity channel);
 
 }

@@ -16,10 +16,10 @@ import com.bgsystem.bugtracker.shared.tools.MentionGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentForm, bsPrCommentEntity, Long> {
@@ -112,9 +112,9 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
 
         bsPrChannelEntity channel = channelRepository.findById(channelID).orElseThrow(() -> new ElementNotFoundExeption("Channel not found"));
 
-        PageRequest pr = PageRequest.of(page, size);
+        PageRequest pr = PageRequest.of(page, size, Sort.by("commentDate").descending());
 
-        Page<bsPrCommentDTO> actualPage = commentRepository.findByChannelOrderByCommentDateDesc(pr, channel).map(mapper::toDTO);
+        Page<bsPrCommentDTO> actualPage = commentRepository.findByChannel(pr, channel).map(mapper::toDTO);
 
         return actualPage.getContent();
 
