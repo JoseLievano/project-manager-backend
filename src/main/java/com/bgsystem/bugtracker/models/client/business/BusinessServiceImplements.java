@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class BusinessServiceImplements extends DefaultServiceImplements<BusinessDTO, BusinessMiniDTO, BusinessForm, BusinessEntity, Long> {
+public class BusinessServiceImplements extends DefaultServiceImplements<BusinessDTO, BusinessMiniDTO, BusinessListDTO, BusinessForm, BusinessEntity, Long> {
 
     private final BusinessRepository repository;
 

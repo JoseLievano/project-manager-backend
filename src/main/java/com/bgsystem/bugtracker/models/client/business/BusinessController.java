@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/business")
-public class BusinessController extends DefaultController<BusinessDTO, BusinessMiniDTO, BusinessForm, Long> {
+public class BusinessController extends DefaultController<BusinessDTO, BusinessMiniDTO, BusinessListDTO, BusinessForm, Long> {
 
     private BusinessServiceImplements service;
     protected BusinessController(BusinessServiceImplements service) {

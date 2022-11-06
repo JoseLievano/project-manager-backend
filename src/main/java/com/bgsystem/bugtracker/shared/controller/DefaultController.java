@@ -11,11 +11,11 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Set;
 
-public abstract class DefaultController <DTO, MINIDTO, FORM, ID>{
+public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
 
-    protected final DefaultService<DTO, MINIDTO, FORM, ID> service;
+    protected final DefaultService<DTO, MINIDTO, LISTDTO, FORM, ID> service;
 
-    protected DefaultController(DefaultService<DTO, MINIDTO, FORM, ID> service){
+    protected DefaultController(DefaultService<DTO, MINIDTO, LISTDTO, FORM, ID> service){
         this.service = service;
     }
 

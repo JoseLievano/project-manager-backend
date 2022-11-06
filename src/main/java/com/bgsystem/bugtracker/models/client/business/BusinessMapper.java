@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniDTO, BusinessForm, BusinessEntity> {
+public class BusinessMapper implements DefaultMapper <BusinessDTO, BusinessMiniDTO, BusinessListDTO, BusinessForm, BusinessEntity> {
 
     private final ClientMapper clientMapper;
 
