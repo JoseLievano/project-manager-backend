@@ -77,11 +77,9 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
         toInsert.setBsGeneralSettings(GeneralSettingsEntity);
 
-        repository.save(toInsert);
+        repository.save(updateListFields(toInsert));
 
         bsGeneralSettingsRepository.save(GeneralSettingsEntity);
-
-        repository.save(updateListFields(toInsert));
 
         return mapper.toSmallDTO(toInsert);
 
@@ -136,22 +134,22 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     private BusinessEntity updateListFields(BusinessEntity business){
 
-        business.setInvoiceCount((long) business.getInvoiceEntities().size());
-        business.setBsClientCount((long) business.getBsClientEntities().size());
-        business.setBsManagerCount((long) business.getBsManagerEntities().size());
-        business.setBsEmployeeCount((long) business.getBsEmployeeEntities().size());
-        business.setBsStatusCount((long) business.getBsStatusEntities().size());
-        business.setBsPriorityCount((long) business.getBsPriorityEntities().size());
-        business.setBsPriorityCount((long) business.getBsPriorityEntities().size());
-        business.setBsTypeCount((long) business.getBsTypeEntities().size());
-        business.setBsDocsCategoryCount((long) business.getBsDocsCategoryEntities().size());
-        business.setBsDocCount((long) business.getBsDocEntities().size());
-        business.setBsKBCategoryCount((long) business.getBsKBCategoryEntities().size());
-        business.setBsKBCount((long) business.getBsKBEntities().size());
-        business.setBsProjectCount((long) business.getBsProjectEntities().size());
-        business.setBsTaskCategoryCount((long) business.getBsTaskCategoryEntities().size());
-        business.setBsPrTaskCount((long) business.getBsPrTaskEntities().size());
-        business.setBsInvoiceCount((long) business.getBsInvoiceEntities().size());
+        business.setInvoiceCount(business.getInvoiceEntities() == null ? 0 : (long) business.getInvoiceEntities().size());
+        business.setBsClientCount(business.getBsClientEntities() == null ? 0 : (long) business.getBsClientEntities().size());
+        business.setBsManagerCount(business.getBsManagerEntities() == null ? 0 : (long) business.getBsManagerEntities().size());
+        business.setBsEmployeeCount(business.getBsEmployeeEntities() == null ? 0 : (long) business.getBsEmployeeEntities().size());
+        business.setBsStatusCount(business.getBsStatusEntities() == null ? 0 : (long) business.getBsStatusEntities().size());
+        business.setBsPriorityCount(business.getBsPriorityEntities() == null ? 0 : (long) business.getBsPriorityEntities().size());
+        business.setBsPriorityCount(business.getBsPriorityEntities() == null ? 0 : (long) business.getBsPriorityEntities().size());
+        business.setBsTypeCount(business.getBsTypeEntities() == null ? 0 : (long) business.getBsTypeEntities().size());
+        business.setBsDocsCategoryCount(business.getBsDocsCategoryEntities() == null ? 0 : (long) business.getBsDocsCategoryEntities().size());
+        business.setBsDocCount(business.getBsDocEntities() == null ? 0 : (long) business.getBsDocEntities().size());
+        business.setBsKBCategoryCount(business.getBsKBCategoryEntities() == null ? 0 : (long) business.getBsKBCategoryEntities().size());
+        business.setBsKBCount(business.getBsKBEntities() == null ? 0 : (long) business.getBsKBEntities().size());
+        business.setBsProjectCount(business.getBsProjectEntities() == null ? 0 : (long) business.getBsProjectEntities().size());
+        business.setBsTaskCategoryCount(business.getBsTaskCategoryEntities() == null ? 0 : (long) business.getBsTaskCategoryEntities().size());
+        business.setBsPrTaskCount(business.getBsPrTaskEntities() == null ? 0 : (long) business.getBsPrTaskEntities().size());
+        business.setBsInvoiceCount(business.getBsInvoiceEntities() == null ? 0 : (long) business.getBsInvoiceEntities().size());
 
         return business;
     }

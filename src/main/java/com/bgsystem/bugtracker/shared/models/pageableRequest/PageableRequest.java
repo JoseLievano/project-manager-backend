@@ -22,8 +22,6 @@ public class PageableRequest {
 
     private List<SortInfo> sort;
 
-    /*private Boolean isAscending;*/
-
     public PageRequest getPageRequest(){
 
         List<Sort.Order> sorts = new ArrayList<>();
