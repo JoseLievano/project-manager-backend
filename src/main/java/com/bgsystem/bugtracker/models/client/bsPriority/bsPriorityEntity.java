@@ -33,4 +33,7 @@ public class bsPriorityEntity {
     @OneToMany(mappedBy = "priority")
     private Set<bsPrTaskEntity> tasks;
 
+    @Column
+    private Long taskCount;
+
 }

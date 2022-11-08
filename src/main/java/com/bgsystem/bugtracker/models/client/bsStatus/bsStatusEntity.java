@@ -33,4 +33,7 @@ public class bsStatusEntity {
     @OneToMany(mappedBy = "status")
     private Set<bsPrTaskEntity> tasks;
 
+    @Column
+    private Long taskCount;
+
 }

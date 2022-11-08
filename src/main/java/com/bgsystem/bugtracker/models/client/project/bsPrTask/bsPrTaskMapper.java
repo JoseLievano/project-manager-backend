@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsPrTaskMapper implements DefaultMapper <bsPrTaskDTO, bsPrTaskMiniDTO, bsPrTaskForm, bsPrTaskEntity> {
+public class bsPrTaskMapper implements DefaultMapper <bsPrTaskDTO, bsPrTaskMiniDTO, bsPrTaskListDTO, bsPrTaskForm, bsPrTaskEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -112,6 +112,34 @@ public class bsPrTaskMapper implements DefaultMapper <bsPrTaskDTO, bsPrTaskMiniD
                 .isInternal(form.getIsInternal())
                 .isOverDue(form.getIsOverDue())
                 .isDone(form.getIsDone())
+                .build();
+
+    }
+
+    @Override
+    public bsPrTaskListDTO toListDTO(bsPrTaskEntity entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        return bsPrTaskListDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .created(entity.getCreated())
+                .dueDate(entity.getDueDate())
+                .isInternal(entity.getIsInternal())
+                .isOverDue(entity.getIsOverDue())
+                .isDone(entity.getIsDone())
+                .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .category(bsTaskCategoryMapper.toSmallDTO(entity.getCategory()))
+                .project(bsProjectMapper.toSmallDTO(entity.getProject()))
+                .type(bsTypeMapper.toSmallDTO(entity.getType()))
+                .priority(bsPriorityMapper.toSmallDTO(entity.getPriority()))
+                .status(bsStatusMapper.toSmallDTO(entity.getStatus()))
+                .invoice(bsInvoiceMapper.toSmallDTO(entity.getInvoice()))
+                .channelCount(entity.getChannelCount())
                 .build();
 
     }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("bs_type")
-public class bsTypeController extends DefaultController <bsTypeDTO, bsTypeMiniDTO, bsTypeForm, Long> {
+public class bsTypeController extends DefaultController <bsTypeDTO, bsTypeMiniDTO, bsTypeListDTO, bsTypeForm, Long> {
 
     public bsTypeController(bsTypeServiceImplements service){
         super(service);

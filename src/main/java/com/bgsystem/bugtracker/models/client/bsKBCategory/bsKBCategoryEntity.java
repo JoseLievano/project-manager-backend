@@ -31,4 +31,6 @@ public class bsKBCategoryEntity {
     @OneToMany(mappedBy = "bsKBCategory", orphanRemoval = true)
     private Set<bsKBEntity> bsKBEntities = new HashSet<>();
 
+    private Long bsKBCount;
+
 }

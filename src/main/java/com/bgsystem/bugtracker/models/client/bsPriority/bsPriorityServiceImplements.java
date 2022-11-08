@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityForm, bsPriorityEntity, Long> {
+public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityListDTO, bsPriorityForm, bsPriorityEntity, Long> {
 
     private final BusinessRepository businessRepository;
 

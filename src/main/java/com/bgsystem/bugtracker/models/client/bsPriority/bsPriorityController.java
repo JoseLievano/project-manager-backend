@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/bs_priority")
-public class bsPriorityController extends DefaultController <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityForm, Long> {
+public class bsPriorityController extends DefaultController <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityListDTO, bsPriorityForm, Long> {
 
     public bsPriorityController(bsPriorityServiceImplements service) {
         super(service);

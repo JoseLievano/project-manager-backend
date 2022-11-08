@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsPrDocsCategoryServiceImplements extends DefaultServiceImplements <bsPrDocsCategoryDTO, bsPrDocsCategoryMiniDTO, bsPrDocsCategoryForm, bsPrDocsCategoryEntity, Long> {
+public class bsPrDocsCategoryServiceImplements extends DefaultServiceImplements <bsPrDocsCategoryDTO, bsPrDocsCategoryMiniDTO, bsPrDocsCategoryListDTO, bsPrDocsCategoryForm, bsPrDocsCategoryEntity, Long> {
 
     private final bsProjectRepository projectRepository;
 

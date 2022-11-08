@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatusDTO, bsStatusMiniDTO, bsStatusForm, bsStatusEntity, Long> {
+public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatusDTO, bsStatusMiniDTO, bsStatusListDTO, bsStatusForm, bsStatusEntity, Long> {
 
     private final BusinessRepository businessRepository;
 

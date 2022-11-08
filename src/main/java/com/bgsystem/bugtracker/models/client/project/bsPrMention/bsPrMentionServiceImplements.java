@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsPrMentionServiceImplements extends DefaultServiceImplements <bsPrMentionDTO, bsPrMentionMiniDTO, bsPrMentionForm, bsPrMentionEntity, Long> {
+public class bsPrMentionServiceImplements extends DefaultServiceImplements <bsPrMentionDTO, bsPrMentionMiniDTO, bsPrMentionListDTO, bsPrMentionForm, bsPrMentionEntity, Long> {
 
     private final bsPrMentionRepository mentionRepository;
 

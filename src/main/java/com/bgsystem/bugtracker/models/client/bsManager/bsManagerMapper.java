@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsManagerMapper implements DefaultMapper<bsManagerDTO, bsManagerMiniDTO, bsManagerForm, bsManagerEntity> {
+public class bsManagerMapper implements DefaultMapper<bsManagerDTO, bsManagerMiniDTO, bsManagerListDTO, bsManagerForm, bsManagerEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -20,9 +20,9 @@ public class bsManagerMapper implements DefaultMapper<bsManagerDTO, bsManagerMin
     @Override
     public bsManagerDTO toDTO(bsManagerEntity entity) {
 
-        if (entity == null) {
+        if (entity == null)
             return null;
-        }
+
 
         return bsManagerDTO.builder()
                 .id(entity.getId())
@@ -71,6 +71,26 @@ public class bsManagerMapper implements DefaultMapper<bsManagerDTO, bsManagerMin
                 .password(form.getPassword())
                 .dateCreated(form.getDateCreated())
                 .lastLogin(form.getLastLogin())
+                .build();
+
+    }
+
+    @Override
+    public bsManagerListDTO toListDTO(bsManagerEntity bsManagerEntity) {
+
+        if (bsManagerEntity == null)
+            return null;
+
+
+        return bsManagerListDTO.builder()
+                .id(bsManagerEntity.getId())
+                .firstName(bsManagerEntity.getFirstName())
+                .lastName(bsManagerEntity.getLastName())
+                .email(bsManagerEntity.getEmail())
+                .username(bsManagerEntity.getUsername())
+                .dateCreated(bsManagerEntity.getDateCreated())
+                .lastLogin(bsManagerEntity.getLastLogin())
+                .business(businessMapper.toSmallDTO(bsManagerEntity.getBusiness()))
                 .build();
 
     }

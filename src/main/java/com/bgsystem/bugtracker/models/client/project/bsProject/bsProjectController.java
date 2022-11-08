@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("bs_project")
-public class bsProjectController extends DefaultController <bsProjectDTO, bsProjectMiniDTO, bsProjectForm, Long> {
+public class bsProjectController extends DefaultController <bsProjectDTO, bsProjectMiniDTO, bsProjectListDTO, bsProjectForm, Long> {
 
     public bsProjectController (bsProjectServiceImplements service){
         super (service);

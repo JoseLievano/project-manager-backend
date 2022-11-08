@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class bsProjectServiceImplements extends DefaultServiceImplements <bsProjectDTO, bsProjectMiniDTO, bsProjectForm, bsProjectEntity, Long> {
+public class bsProjectServiceImplements extends DefaultServiceImplements <bsProjectDTO, bsProjectMiniDTO, bsProjectListDTO, bsProjectForm, bsProjectEntity, Long> {
 
     private final BusinessRepository businessRepository;
 

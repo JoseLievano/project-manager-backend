@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class bsManagerServiceImplements extends DefaultServiceImplements <bsManagerDTO, bsManagerMiniDTO, bsManagerForm, bsManagerEntity, Long> {
+public class bsManagerServiceImplements extends DefaultServiceImplements <bsManagerDTO, bsManagerMiniDTO, bsManagerListDTO, bsManagerForm, bsManagerEntity, Long> {
 
     private final PasswordEncoder encoder;
 

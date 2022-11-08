@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTaskDTO, bsPrTaskMiniDTO, bsPrTaskForm, bsPrTaskEntity, Long> {
+public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTaskDTO, bsPrTaskMiniDTO, bsPrTaskListDTO, bsPrTaskForm, bsPrTaskEntity, Long> {
 
     private final BusinessRepository businessRepository;
 

@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-public class UserController extends DefaultController <UserDTO, UserMiniDTO, UserForm, Long> {
+public class UserController extends DefaultController <UserDTO, UserMiniDTO, UserListDTO, UserForm, Long> {
 
-    public UserController(DefaultService<UserDTO, UserMiniDTO, UserForm, Long> service){
+    public UserController(DefaultService<UserDTO, UserMiniDTO, UserListDTO, UserForm, Long> service){
         super(service);
     }
 }

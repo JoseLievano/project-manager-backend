@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPrChannelDTO, bsPrChannelMiniDTO, bsPrChannelForm, bsPrChannelEntity, Long> {
+public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPrChannelDTO, bsPrChannelMiniDTO, bsPrChannelListDTO, bsPrChannelForm, bsPrChannelEntity, Long> {
 
     private final bsProjectRepository projectRepository;
 

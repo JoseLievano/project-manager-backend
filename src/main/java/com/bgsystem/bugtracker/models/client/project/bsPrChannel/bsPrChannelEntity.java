@@ -47,6 +47,9 @@ public class bsPrChannelEntity {
     @OneToMany (mappedBy = "channel")
     private Set<bsPrCommentEntity> comments;
 
+    @Column
+    private Long commentsCount;
+
     @ManyToMany (fetch = FetchType.LAZY)
     @JoinTable(
             name = "channel_and_members_relations",
@@ -54,6 +57,9 @@ public class bsPrChannelEntity {
             inverseJoinColumns = @JoinColumn(name = "member_id")
     )
     private Set<User> members;
+
+    @Column
+    private Long membersCount;
 
     @ManyToMany (fetch = FetchType.LAZY)
     @JoinTable(

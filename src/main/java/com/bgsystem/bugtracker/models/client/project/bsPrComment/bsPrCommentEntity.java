@@ -44,4 +44,7 @@ public class bsPrCommentEntity {
     @OneToMany (mappedBy = "comment", cascade = CascadeType.ALL)
     private Set<bsPrMentionEntity> mentions;
 
+    @Column
+    private Long mentionCount;
+
 }

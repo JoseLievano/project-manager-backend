@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsPrCommentMapper implements DefaultMapper <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentForm, bsPrCommentEntity> {
+public class bsPrCommentMapper implements DefaultMapper <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentListDTO, bsPrCommentForm, bsPrCommentEntity> {
 
     private final UserMapper userMapper;
 
@@ -75,6 +75,25 @@ public class bsPrCommentMapper implements DefaultMapper <bsPrCommentDTO, bsPrCom
                 .id(form.getId())
                 .commentContent(form.getCommentContent())
                 .commentDate(form.getCommentDate())
+                .build();
+
+    }
+
+    @Override
+    public bsPrCommentListDTO toListDTO(bsPrCommentEntity entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        return bsPrCommentListDTO.builder()
+                .id(entity.getId())
+                .commentContent(entity.getCommentContent())
+                .commentDate(entity.getCommentDate())
+                .author(userMapper.toSmallDTO(entity.getAuthor()))
+                .channel(bsPrChannelMapper.toSmallDTO(entity.getChannel()))
+                .project(bsProjectMapper.toSmallDTO(entity.getProject()))
+                .mentionCount(entity.getMentionCount())
                 .build();
 
     }

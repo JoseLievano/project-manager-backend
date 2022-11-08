@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("bs_pr_docs_category")
-public class bsPrDocsCategoryController extends DefaultController <bsPrDocsCategoryDTO, bsPrDocsCategoryMiniDTO, bsPrDocsCategoryForm, Long>{
+public class bsPrDocsCategoryController extends DefaultController <bsPrDocsCategoryDTO, bsPrDocsCategoryMiniDTO, bsPrDocsCategoryListDTO, bsPrDocsCategoryForm, Long>{
 
     public bsPrDocsCategoryController (bsPrDocsCategoryServiceImplements service){
         super(service);

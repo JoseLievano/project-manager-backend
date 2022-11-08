@@ -53,22 +53,42 @@ public class bsProjectEntity {
     @OneToMany(mappedBy = "project")
     private Set<bsPrTaskEntity> tasks;
 
+    @Column
+    private Long taskCount;
+
     @OneToMany(mappedBy = "project")
     private Set<bsInvoiceEntity> invoices;
+
+    @Column
+    private Long invoiceCount;
 
     @OneToMany(mappedBy = "project")
     private Set<bsPrChannelEntity> channels;
 
+    @Column
+    private Long channelCount;
+
     @OneToMany(mappedBy = "project")
     private Set<bsPrDocsCategoryEntity> docsCategories;
+
+    @Column
+    private Long docsCategoryCount;
 
     @OneToMany(mappedBy = "project")
     private Set<bsPrDocsEntity> docs;
 
+    @Column
+    private Long docsCount;
+
     @OneToMany(mappedBy = "project")
     private Set<bsPrKBCategoryEntity> kbCategories;
+
+    @Column
+    private Long kbCategoryCount;
 
     @OneToMany(mappedBy = "project")
     private Set<bsPrKBEntity> kbs;
 
+    @Column
+    private Long kbCount;
 }

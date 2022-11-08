@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class bsTypeMapper implements DefaultMapper<bsTypeDTO, bsTypeMiniDTO, bsTypeForm, bsTypeEntity> {
+public class bsTypeMapper implements DefaultMapper<bsTypeDTO, bsTypeMiniDTO, bsTypeListDTO, bsTypeForm, bsTypeEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -67,6 +67,21 @@ public class bsTypeMapper implements DefaultMapper<bsTypeDTO, bsTypeMiniDTO, bsT
                 .id(form.getId())
                 .name(form.getName())
                 .build();
+
+    }
+
+    @Override
+    public bsTypeListDTO toListDTO(bsTypeEntity entity) {
+
+            if (entity == null)
+                return null;
+
+            return bsTypeListDTO.builder()
+                    .id(entity.getId())
+                    .name(entity.getName())
+                    .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                    .taskCount(entity.getTaskCount())
+                    .build();
 
     }
 }

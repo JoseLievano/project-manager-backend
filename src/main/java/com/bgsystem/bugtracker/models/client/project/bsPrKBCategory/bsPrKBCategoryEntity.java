@@ -30,4 +30,7 @@ public class bsPrKBCategoryEntity {
     @OneToMany(mappedBy = "category")
     private Set<bsPrKBEntity> kbs;
 
+    @Column
+    private Long kbCount;
+
 }

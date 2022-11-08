@@ -30,4 +30,6 @@ public class bsTypeEntity {
     @OneToMany(mappedBy = "type")
     private Set<bsPrTaskEntity> tasks;
 
+    private Long taskCount;
+
 }

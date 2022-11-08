@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentForm, bsPrCommentEntity, Long> {
+public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPrCommentDTO, bsPrCommentMiniDTO, bsPrCommentListDTO, bsPrCommentForm, bsPrCommentEntity, Long> {
 
     private final bsPrChannelRepository channelRepository;
 

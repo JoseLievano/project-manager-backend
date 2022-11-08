@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class bsPriorityMapper implements DefaultMapper <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityForm, bsPriorityEntity> {
+public class bsPriorityMapper implements DefaultMapper <bsPriorityDTO, bsPriorityMiniDTO, bsPriorityListDTO, bsPriorityForm, bsPriorityEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -73,4 +73,21 @@ public class bsPriorityMapper implements DefaultMapper <bsPriorityDTO, bsPriorit
                 .build();
 
     }
+
+    @Override
+    public bsPriorityListDTO toListDTO(bsPriorityEntity entity) {
+
+        if (entity == null)
+            return null;
+
+        return bsPriorityListDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .priorityOrder(entity.getPriorityOrder())
+                .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .taskCount(entity.getTaskCount())
+                .build();
+
+    }
+
 }

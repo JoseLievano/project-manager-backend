@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/bs_manager")
-public class bsManagerController extends DefaultController<bsManagerDTO, bsManagerMiniDTO, bsManagerForm, Long> {
+public class bsManagerController extends DefaultController<bsManagerDTO, bsManagerMiniDTO, bsManagerListDTO, bsManagerForm, Long> {
 
     public bsManagerController(bsManagerServiceImplements service) {
         super(service);

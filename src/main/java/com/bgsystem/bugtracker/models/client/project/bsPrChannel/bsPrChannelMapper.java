@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class bsPrChannelMapper implements DefaultMapper <bsPrChannelDTO, bsPrChannelMiniDTO, bsPrChannelForm, bsPrChannelEntity> {
+public class bsPrChannelMapper implements DefaultMapper <bsPrChannelDTO, bsPrChannelMiniDTO, bsPrChannelListDTO, bsPrChannelForm, bsPrChannelEntity> {
 
     private final bsProjectMapper projectMapper;
 
@@ -83,6 +83,27 @@ public class bsPrChannelMapper implements DefaultMapper <bsPrChannelDTO, bsPrCha
                 .isPublic(form.getIsPublic())
                 .creationDate(form.getCreationDate())
                 .description(form.getDescription())
+                .build();
+
+    }
+
+    @Override
+    public bsPrChannelListDTO toListDTO(bsPrChannelEntity bsPrChannelEntity) {
+
+        if (bsPrChannelEntity == null) {
+            return null;
+        }
+
+        return bsPrChannelListDTO.builder()
+                .id(bsPrChannelEntity.getId())
+                .name(bsPrChannelEntity.getName())
+                .isPublic(bsPrChannelEntity.getIsPublic())
+                .creationDate(bsPrChannelEntity.getCreationDate())
+                .description(bsPrChannelEntity.getDescription())
+                .author(userMapper.toSmallDTO(bsPrChannelEntity.getAuthor()))
+                .project(projectMapper.toSmallDTO(bsPrChannelEntity.getProject()))
+                .commentsCount(bsPrChannelEntity.getCommentsCount())
+                .membersCount(bsPrChannelEntity.getMembersCount())
                 .build();
 
     }

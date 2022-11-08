@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class bsPrKBCategoryMapper implements DefaultMapper <bsPrKBCategoryDTO, bsPrKBCategoryMiniDTO, bsPrKBCategoryForm, bsPrKBCategoryEntity> {
+public class bsPrKBCategoryMapper implements DefaultMapper <bsPrKBCategoryDTO, bsPrKBCategoryMiniDTO, bsPrKBCategoryListDTO, bsPrKBCategoryForm, bsPrKBCategoryEntity> {
 
     private final bsProjectMapper projectMapper;
 
@@ -67,6 +67,23 @@ public class bsPrKBCategoryMapper implements DefaultMapper <bsPrKBCategoryDTO, b
                 .id(form.getId())
                 .name(form.getName())
                 .build();
+
+    }
+
+    @Override
+    public bsPrKBCategoryListDTO toListDTO(bsPrKBCategoryEntity entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        return bsPrKBCategoryListDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .project(projectMapper.toSmallDTO(entity.getProject()))
+                .kbCount(entity.getKbCount())
+                .build();
+
 
     }
 }

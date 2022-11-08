@@ -83,6 +83,9 @@ public class bsPrTaskEntity {
     @ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
     private Set<bsPrChannelEntity> channels = new LinkedHashSet<>();
 
+    @Column
+    private Long channelCount;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

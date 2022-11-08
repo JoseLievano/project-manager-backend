@@ -30,4 +30,7 @@ public class bsTaskCategoryEntity {
     @OneToMany(mappedBy = "category")
     private Set<bsPrTaskEntity> tasks;
 
+    @Column
+    private Long taskCount;
+
 }

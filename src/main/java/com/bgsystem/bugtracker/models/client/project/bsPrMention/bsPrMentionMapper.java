@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsPrMentionMapper implements DefaultMapper <bsPrMentionDTO, bsPrMentionMiniDTO, bsPrMentionForm, bsPrMentionEntity> {
+public class bsPrMentionMapper implements DefaultMapper <bsPrMentionDTO, bsPrMentionMiniDTO, bsPrMentionListDTO, bsPrMentionForm, bsPrMentionEntity> {
 
     private final UserMapper userMapper;
 
@@ -65,5 +65,21 @@ public class bsPrMentionMapper implements DefaultMapper <bsPrMentionDTO, bsPrMen
                 .mentionDate(form.getMentionDate())
                 .build();
 
+    }
+
+    @Override
+    public bsPrMentionListDTO toListDTO(bsPrMentionEntity entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        return bsPrMentionListDTO.builder()
+                .id(entity.getId())
+                .mentionDate(entity.getMentionDate())
+                .author(userMapper.toSmallDTO(entity.getAuthor()))
+                .mentionedUser(userMapper.toSmallDTO(entity.getMentionedUser()))
+                .comment(commentMapper.toSmallDTO(entity.getComment()))
+                .build();
     }
 }

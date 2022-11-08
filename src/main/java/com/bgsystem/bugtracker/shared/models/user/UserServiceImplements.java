@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class UserServiceImplements extends DefaultServiceImplements <UserDTO, UserMiniDTO, UserForm, User, Long> {
+public class UserServiceImplements extends DefaultServiceImplements <UserDTO, UserMiniDTO, UserListDTO, UserForm, User, Long> {
 
     @Autowired
     PasswordEncoder encoder;

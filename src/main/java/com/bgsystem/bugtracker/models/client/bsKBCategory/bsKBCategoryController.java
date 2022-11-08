@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/bs_kb_category")
-public class bsKBCategoryController extends DefaultController<bsKBCategoryDTO, bsKBCategoryMiniDTO, bsKBCategoryForm, Long> {
+public class bsKBCategoryController extends DefaultController<bsKBCategoryDTO, bsKBCategoryMiniDTO, bsKBCategoryListDTO, bsKBCategoryForm, Long> {
 
     public bsKBCategoryController(bsKBCategoryServiceImplements service){
         super(service);

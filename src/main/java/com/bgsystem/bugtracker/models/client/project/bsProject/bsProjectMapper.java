@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMiniDTO, bsProjectForm, bsProjectEntity> {
+public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMiniDTO, bsProjectListDTO, bsProjectForm, bsProjectEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -136,5 +136,31 @@ public class bsProjectMapper implements DefaultMapper <bsProjectDTO, bsProjectMi
                 .created(form.getCreated())
                 .dueDate(form.getDueDate())
                 .build();
+    }
+
+    @Override
+    public bsProjectListDTO toListDTO(bsProjectEntity entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        return bsProjectListDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .isCompleted(entity.getIsCompleted())
+                .created(entity.getCreated())
+                .dueDate(entity.getDueDate())
+                .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .client(clientMapper.toSmallDTO(entity.getClient()))
+                .taskCount(entity.getTaskCount())
+                .invoiceCount(entity.getInvoiceCount())
+                .channelCount(entity.getChannelCount())
+                .docsCategoryCount(entity.getDocsCategoryCount())
+                .docsCount(entity.getDocsCount())
+                .kbCategoryCount(entity.getKbCategoryCount())
+                .kbCount(entity.getKbCount())
+                .build();
+
     }
 }

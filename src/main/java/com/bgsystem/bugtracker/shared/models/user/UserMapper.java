@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class UserMapper implements DefaultMapper <UserDTO, UserMiniDTO, UserForm, User> {
+public class UserMapper implements DefaultMapper <UserDTO, UserMiniDTO, UserListDTO, UserForm, User> {
 
     @Override
     public UserDTO toDTO(User entity) {
@@ -49,6 +49,21 @@ public class UserMapper implements DefaultMapper <UserDTO, UserMiniDTO, UserForm
                 .username(form.getUsername())
                 .roles(form.getRoles())
                 .password(form.getPassword())
+                .build();
+    }
+
+    @Override
+    public UserListDTO toListDTO(User entity) {
+
+        if (entity == null) return null;
+
+        return UserListDTO.builder()
+                .id(entity.getId())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
+                .email(entity.getEmail())
+                .username(entity.getUsername())
+                .roles(entity.getRoles())
                 .build();
     }
 }
