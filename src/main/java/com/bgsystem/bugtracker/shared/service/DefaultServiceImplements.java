@@ -4,6 +4,7 @@ import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
+import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENTITY, ID> implements DefaultService <DTO, MINIDTO, LISTDTO, FORM, ID> {
@@ -67,21 +67,22 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
-    public Collection<LISTDTO> getAllForList(Optional<ID> id) throws ElementNotFoundExeption {
+    public Collection<LISTDTO> getAllForList(Optional<FilterRequest> listRequestRecord) throws ElementNotFoundExeption {
 
-        return repository.findAll()
+        List<LISTDTO> list = repository.findAll()
                 .stream()
-                .map(mapper::toListDTO)
-                .collect(Collectors.toSet());
+                .map(mapper::toListDTO).toList();
 
+        return list;
     }
 
     @Override
-    public Page<LISTDTO> getPageableList(Optional<ID> id, PageableRequest pageableRequest) throws ElementNotFoundExeption {
+    public Page<LISTDTO> getPageableList(PageableRequest pageableRequest) throws ElementNotFoundExeption {
 
         PageRequest pr = pageableRequest.getPageRequest();
 
         return repository.findAll(pr).map(mapper::toListDTO);
+
 
     }
 

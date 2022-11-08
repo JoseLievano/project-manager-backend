@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class AdminServiceImplements extends DefaultServiceImplements <AdminDTO, AdminMiniDTO, AdminForm, AdminEntity, Long>{
+public class AdminServiceImplements extends DefaultServiceImplements <AdminDTO, AdminMiniDTO, AdminListDTO, AdminForm, AdminEntity, Long>{
 
     private final PasswordEncoder encoder;
 

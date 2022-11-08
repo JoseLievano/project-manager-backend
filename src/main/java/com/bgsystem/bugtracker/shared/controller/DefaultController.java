@@ -3,13 +3,16 @@ package com.bgsystem.bugtracker.shared.controller;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
+import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
+import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import com.bgsystem.bugtracker.shared.service.DefaultService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.Set;
+import java.util.Optional;
 
 public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
 
@@ -43,6 +46,30 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
     @DeleteMapping("/{id}")
     public ResponseEntity<DTO> delete (@PathVariable ID id) throws ElementNotFoundExeption {
         return ResponseEntity.ok(service.delete(id));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<Collection<LISTDTO>> getAllForList(@RequestBody Optional <FilterRequest> filterRequest) throws ElementNotFoundExeption {
+
+        if (filterRequest.isPresent()){
+            return ResponseEntity.ok(service.getAllForList(Optional.of(filterRequest.get())));
+        }else{
+            return ResponseEntity.ok(service.getAllForList(Optional.empty()));
+        }
+
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundExeption {
+
+        if(pageableRequest.isPresent()){
+
+            return ResponseEntity.ok(service.getPageableList(pageableRequest.get()));
+
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
 }

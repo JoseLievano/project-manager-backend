@@ -10,10 +10,13 @@ import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettings
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsRepository;
+import com.bgsystem.bugtracker.shared.service.EntityFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.parser.Entity;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -31,12 +34,15 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     private final BusinessMapper businessMapper;
 
+    private final EntityFactory entityFactory;
+
     @Autowired
     public BusinessServiceImplements(BusinessRepository repository, BusinessMapper mapper,
                                      ClientRepository clientRepository,
                                      PlanRepository planRepository,
                                      bsGeneralSettingsRepository bsGeneralSettingsRepository,
-                                     BusinessMapper businessMapper
+                                     BusinessMapper businessMapper,
+                                        EntityFactory entityFactory
     ){
         super(repository, mapper);
         this.repository = repository;
@@ -44,6 +50,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         this.planRepository = planRepository;
         this.bsGeneralSettingsRepository = bsGeneralSettingsRepository;
         this.businessMapper = businessMapper;
+        this.entityFactory = entityFactory;
     }
 
     @Override
@@ -85,13 +92,13 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     }
 
-    public Set<BusinessListDTO> getAllForList(Optional<Long> id) throws ElementNotFoundExeption {
+    public Set<BusinessListDTO> getAllForList(Optional<Long> id, Optional<String> className) throws ElementNotFoundExeption {
 
         Set <BusinessListDTO> businessListDTOS = new HashSet<>();
 
-        if (id.isPresent()){
+        if (id.isPresent() && className.isPresent()){
 
-            ClientEntity client = clientRepository.findById(id.get()).orElseThrow(ElementNotFoundExeption::new);
+            ClientEntity client = entityFactory.getEntity(id.get(), className.get());
 
             for (BusinessEntity business : repository.findAllByClientEntity(client)){
                 businessListDTOS.add(businessMapper.toListDTO(business));

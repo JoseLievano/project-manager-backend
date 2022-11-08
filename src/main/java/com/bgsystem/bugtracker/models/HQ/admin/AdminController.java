@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin")
-public class AdminController extends DefaultController <AdminDTO, AdminMiniDTO, AdminForm, Long> {
+public class AdminController extends DefaultController <AdminDTO, AdminMiniDTO, AdminListDTO, AdminForm, Long> {
 
-    protected AdminController(DefaultService<AdminDTO, AdminMiniDTO, AdminForm, Long> service) {
+    protected AdminController(DefaultService<AdminDTO, AdminMiniDTO, AdminListDTO, AdminForm, Long> service) {
         super(service);
     }
 

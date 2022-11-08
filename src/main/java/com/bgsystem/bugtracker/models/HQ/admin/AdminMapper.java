@@ -4,7 +4,7 @@ import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminMapper implements DefaultMapper <AdminDTO, AdminMiniDTO, AdminForm, AdminEntity> {
+public class AdminMapper implements DefaultMapper <AdminDTO, AdminMiniDTO, AdminListDTO, AdminForm, AdminEntity> {
 
     @Override
     public AdminDTO toDTO(AdminEntity adminEntity) {
@@ -48,5 +48,21 @@ public class AdminMapper implements DefaultMapper <AdminDTO, AdminMiniDTO, Admin
                 .username(adminForm.getUsername())
                 .password(adminForm.getPassword())
                 .build();
+    }
+
+    @Override
+    public AdminListDTO toListDTO(AdminEntity adminEntity) {
+
+        if (adminEntity == null)
+            return null;
+
+        return AdminListDTO.builder()
+                .id(adminEntity.getId())
+                .firstName(adminEntity.getFirstName())
+                .lastName(adminEntity.getLastName())
+                .email(adminEntity.getEmail())
+                .username(adminEntity.getUsername())
+                .build();
+
     }
 }

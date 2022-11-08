@@ -5,6 +5,7 @@ import com.bgsystem.bugtracker.shared.controller.DefaultController;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import com.bgsystem.bugtracker.shared.service.DefaultService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -21,8 +22,8 @@ public class BusinessController extends DefaultController<BusinessDTO, BusinessM
     }
 
     @GetMapping("/list")
-    public Collection<BusinessListDTO> getAllForList() throws ElementNotFoundExeption {
-        return service.getAllForList(Optional.empty());
+    public ResponseEntity<Collection<BusinessListDTO>> getAllForList() throws ElementNotFoundExeption {
+        return ResponseEntity.ok(service.getAllForList(Optional.empty())) ;
     }
 
     @GetMapping("/list/{id}")

@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.shared.models.pageableRequest;
 
+import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -21,6 +23,8 @@ public class PageableRequest {
     private int size;
 
     private List<SortInfo> sort;
+
+    private Optional<FilterRequest> filter;
 
     public PageRequest getPageRequest(){
 
