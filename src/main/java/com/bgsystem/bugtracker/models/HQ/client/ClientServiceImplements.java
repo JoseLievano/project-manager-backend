@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO, ClientMiniDTO, ClientForm, ClientEntity, Long> {
+public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO, ClientMiniDTO, ClientListDTO, ClientForm, ClientEntity, Long> {
 
     @Autowired
     private PasswordEncoder passwordEncoder;

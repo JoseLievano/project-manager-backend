@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class ClientMapper implements DefaultMapper <ClientDTO, ClientMiniDTO, ClientForm, ClientEntity> {
+public class ClientMapper implements DefaultMapper <ClientDTO, ClientMiniDTO, ClientListDTO, ClientForm, ClientEntity> {
 
     @Lazy
     @Autowired
@@ -84,6 +84,28 @@ public class ClientMapper implements DefaultMapper <ClientDTO, ClientMiniDTO, Cl
                 .isActive(form.getIsActive())
                 .dateCreated(form.getDateCreated())
                 .lastLoginDate(form.getLastLoginDate())
+                .build();
+
+    }
+
+    @Override
+    public ClientListDTO toListDTO(ClientEntity clientEntity) {
+
+        if (clientEntity == null)
+            return null;
+
+        return ClientListDTO.builder()
+                .id(clientEntity.getId())
+                .firstName(clientEntity.getFirstName())
+                .lastName(clientEntity.getLastName())
+                .email(clientEntity.getEmail())
+                .roles(clientEntity.getRoles())
+                .username(clientEntity.getUsername())
+                .isActive(clientEntity.getIsActive())
+                .dateCreated(clientEntity.getDateCreated())
+                .lastLoginDate(clientEntity.getLastLoginDate())
+                .businessCount(clientEntity.getBusinessCount())
+                .invoiceCount(clientEntity.getInvoiceCount())
                 .build();
 
     }

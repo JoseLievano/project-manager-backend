@@ -48,8 +48,14 @@ public class ClientEntity extends User {
     @OneToMany(mappedBy = "clientEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<BusinessEntity> businessEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long businessCount;
+
     @OneToMany(mappedBy = "clientEntity", orphanRemoval = true)
     private Set<InvoiceEntity> invoiceEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long invoiceCount;
 
     //Custom Builder Method for Clients
     @Builder(builderMethodName = "clientBuilder")
