@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InvoiceMapper implements DefaultMapper <InvoiceDTO, InvoiceMiniDTO, InvoiceForm, InvoiceEntity>{
+public class InvoiceMapper implements DefaultMapper <InvoiceDTO, InvoiceMiniDTO, InvoiceListDTO, InvoiceForm, InvoiceEntity>{
 
     @Lazy
     @Autowired
@@ -74,5 +74,26 @@ public class InvoiceMapper implements DefaultMapper <InvoiceDTO, InvoiceMiniDTO,
                 .isPaid(form.getIsPaid())
                 .number(form.getNumber())
                 .build();
+    }
+
+    @Override
+    public InvoiceListDTO toListDTO(InvoiceEntity invoiceEntity) {
+
+        if (invoiceEntity == null)
+            return null;
+
+        return InvoiceListDTO.builder()
+                .id(invoiceEntity.getId())
+                .amount(invoiceEntity.getAmount())
+                .dateGenerated(invoiceEntity.getDateGenerated())
+                .limitDate(invoiceEntity.getLimitDate())
+                .isPaid(invoiceEntity.getIsPaid())
+                .overDue(invoiceEntity.getOverDue())
+                .number(invoiceEntity.getNumber())
+                .plan(planMapper.toSmallDTO(invoiceEntity.getPlanEntity()))
+                .client(clientMapper.toSmallDTO(invoiceEntity.getClientEntity()))
+                .business(businessMapper.toSmallDTO(invoiceEntity.getBusinessEntity()))
+                .build();
+
     }
 }

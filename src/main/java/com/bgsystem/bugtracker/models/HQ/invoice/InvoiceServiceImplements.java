@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Service
-public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDTO, InvoiceMiniDTO, InvoiceForm, InvoiceEntity, Long> {
+public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDTO, InvoiceMiniDTO, InvoiceListDTO, InvoiceForm, InvoiceEntity, Long> {
 
     @Autowired
     private InvoiceRepository invoiceRepository;

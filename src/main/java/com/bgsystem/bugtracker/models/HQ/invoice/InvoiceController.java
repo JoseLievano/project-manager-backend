@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/invoice")
-public class InvoiceController extends DefaultController<InvoiceDTO, InvoiceMiniDTO, InvoiceForm, Long> {
+public class InvoiceController extends DefaultController<InvoiceDTO, InvoiceMiniDTO, InvoiceListDTO, InvoiceForm, Long> {
 
-    public InvoiceController(DefaultService<InvoiceDTO, InvoiceMiniDTO, InvoiceForm, Long> service) {
+    public InvoiceController(DefaultService<InvoiceDTO, InvoiceMiniDTO, InvoiceListDTO, InvoiceForm, Long> service) {
         super(service);
     }
 
