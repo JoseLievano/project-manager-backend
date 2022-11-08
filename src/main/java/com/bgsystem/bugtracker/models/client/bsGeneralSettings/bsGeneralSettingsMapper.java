@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsGeneralSettingsMapper implements DefaultMapper<bsGeneralSettingsDTO, bsGeneralSettingsMiniDTO, bsGeneralSettingsForm, bsGeneralSettingsEntity > {
+public class bsGeneralSettingsMapper implements DefaultMapper<bsGeneralSettingsDTO, bsGeneralSettingsMiniDTO, bsGeneralSettingsListDTO, bsGeneralSettingsForm, bsGeneralSettingsEntity > {
 
     private final BusinessMapper businessMapper;
 
@@ -58,5 +58,22 @@ public class bsGeneralSettingsMapper implements DefaultMapper<bsGeneralSettingsD
                 .website(form.getWebsite())
                 .email(form.getEmail())
                 .build();
+    }
+
+    @Override
+    public bsGeneralSettingsListDTO toListDTO(bsGeneralSettingsEntity bsGeneralSettingsEntity) {
+
+        if (bsGeneralSettingsEntity == null)
+            return null;
+
+        return bsGeneralSettingsListDTO.builder()
+                .id(bsGeneralSettingsEntity.getId())
+                .logoUrl(bsGeneralSettingsEntity.getLogoUrl())
+                .address(bsGeneralSettingsEntity.getAddress())
+                .website(bsGeneralSettingsEntity.getWebsite())
+                .email(bsGeneralSettingsEntity.getEmail())
+                .business(businessMapper.toSmallDTO(bsGeneralSettingsEntity.getBusiness()))
+                .build();
+
     }
 }

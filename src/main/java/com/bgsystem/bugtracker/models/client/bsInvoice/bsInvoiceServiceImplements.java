@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoiceDTO, bsInvoiceMiniDTO, bsInvoiceForm, bsInvoiceEntity, Long> {
+public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoiceDTO, bsInvoiceMiniDTO, bsInvoiceListDTO, bsInvoiceForm, bsInvoiceEntity, Long> {
 
     private final BusinessRepository businessRepository;
 

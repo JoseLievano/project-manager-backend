@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsEmployeeMapper implements DefaultMapper <bsEmployeeDTO, bsEmployeeMiniDTO, bsEmployeeForm, bsEmployeeEntity> {
+public class bsEmployeeMapper implements DefaultMapper <bsEmployeeDTO, bsEmployeeMiniDTO, bsEmployeeListDTO, bsEmployeeForm, bsEmployeeEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -68,6 +68,25 @@ public class bsEmployeeMapper implements DefaultMapper <bsEmployeeDTO, bsEmploye
                 .password(form.getPassword())
                 .dateCreated(form.getDateCreated())
                 .lastLogin(form.getLastLoginDate())
+                .build();
+
+    }
+
+    @Override
+    public bsEmployeeListDTO toListDTO(bsEmployeeEntity entity) {
+
+        if (entity == null)
+            return null;
+
+        return bsEmployeeListDTO.builder()
+                .id(entity.getId())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
+                .email(entity.getEmail())
+                .username(entity.getUsername())
+                .dateCreated(entity.getDateCreated())
+                .lastLoginDate(entity.getLastLogin())
+                .business(businessMapper.toSmallDTO(entity.getBusiness()))
                 .build();
 
     }

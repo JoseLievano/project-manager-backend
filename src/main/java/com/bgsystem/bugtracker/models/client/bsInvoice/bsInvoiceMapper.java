@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsInvoiceMapper implements DefaultMapper <bsInvoiceDTO, bsInvoiceMiniDTO, bsInvoiceForm, bsInvoiceEntity> {
+public class bsInvoiceMapper implements DefaultMapper <bsInvoiceDTO, bsInvoiceMiniDTO, bsInvoiceListDTO, bsInvoiceForm, bsInvoiceEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -85,6 +85,27 @@ public class bsInvoiceMapper implements DefaultMapper <bsInvoiceDTO, bsInvoiceMi
                 .isPaid(form.getIsPaid())
                 .isOverDue(form.getIsOverDue())
                 .number(form.getNumber())
+                .build();
+    }
+
+    @Override
+    public bsInvoiceListDTO toListDTO(bsInvoiceEntity bsInvoiceEntity) {
+
+        if (bsInvoiceEntity == null)
+            return null;
+
+        return bsInvoiceListDTO.builder()
+                .id(bsInvoiceEntity.getId())
+                .dateGenerated(bsInvoiceEntity.getDateGenerated())
+                .limitDate(bsInvoiceEntity.getLimitDate())
+                .amount(bsInvoiceEntity.getAmount())
+                .isPaid(bsInvoiceEntity.getIsPaid())
+                .isOverDue(bsInvoiceEntity.getIsOverDue())
+                .number(bsInvoiceEntity.getNumber())
+                .business(businessMapper.toSmallDTO(bsInvoiceEntity.getBusiness()))
+                .client(clientMapper.toSmallDTO(bsInvoiceEntity.getClient()))
+                .project(projectMapper.toSmallDTO(bsInvoiceEntity.getProject()))
+                .task(taskMapper.toSmallDTO(bsInvoiceEntity.getTask()))
                 .build();
     }
 }

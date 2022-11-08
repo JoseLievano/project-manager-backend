@@ -45,6 +45,8 @@ public class bsEmployeeEntity extends User {
                             BusinessEntity business) {
         super(id, firstName, lastName, email, roles, username, password, channels, channelsAuthor, comments);
         this.business = business;
+        this.dateCreated = dateCreated;
+        this.lastLogin = lastLogin;
     }
 
 }

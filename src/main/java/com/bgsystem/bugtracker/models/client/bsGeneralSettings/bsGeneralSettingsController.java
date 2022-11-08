@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/bs_general_settings")
-public class bsGeneralSettingsController extends DefaultController<bsGeneralSettingsDTO, bsGeneralSettingsMiniDTO, bsGeneralSettingsForm, Long> {
+public class bsGeneralSettingsController extends DefaultController<bsGeneralSettingsDTO, bsGeneralSettingsMiniDTO, bsGeneralSettingsListDTO, bsGeneralSettingsForm, Long> {
 
     protected bsGeneralSettingsController(bsGeneralSettingsServiceImplements service) {
         super(service);

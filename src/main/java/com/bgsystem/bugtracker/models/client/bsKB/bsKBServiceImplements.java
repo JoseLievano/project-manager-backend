@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsKBServiceImplements extends DefaultServiceImplements <bsKBDTO, bsKBMiniDTO, bsKBForm, bsKBEntity, Long> {
+public class bsKBServiceImplements extends DefaultServiceImplements <bsKBDTO, bsKBMiniDTO, bsKBListDTO, bsKBForm, bsKBEntity, Long> {
 
     private final bsKBRepository bsKBRepository;
 

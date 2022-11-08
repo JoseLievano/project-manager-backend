@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/bs_employee")
-public class bsEmployeeController extends DefaultController<bsEmployeeDTO, bsEmployeeMiniDTO, bsEmployeeForm, Long> {
+public class bsEmployeeController extends DefaultController<bsEmployeeDTO, bsEmployeeMiniDTO, bsEmployeeListDTO, bsEmployeeForm, Long> {
 
     public bsEmployeeController(bsEmployeeServiceImplements service) {
         super(service);
