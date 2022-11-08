@@ -4,7 +4,7 @@ import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmployeeMapper implements DefaultMapper <EmployeeDTO, EmployeeMiniDTO, EmployeeForm, EmployeeEntity> {
+public class EmployeeMapper implements DefaultMapper <EmployeeDTO, EmployeeMiniDTO, EmployeeListDTO, EmployeeForm, EmployeeEntity> {
 
     @Override
     public EmployeeDTO toDTO(EmployeeEntity entity) {
@@ -51,5 +51,22 @@ public class EmployeeMapper implements DefaultMapper <EmployeeDTO, EmployeeMiniD
                 .password(form.getPassword())
                 .email(form.getEmail())
                 .build();
+    }
+
+    @Override
+    public EmployeeListDTO toListDTO(EmployeeEntity employeeEntity) {
+
+        if (employeeEntity == null)
+            return null;
+
+        return EmployeeListDTO.builder()
+                .id(employeeEntity.getId())
+                .firstName(employeeEntity.getFirstName())
+                .lastName(employeeEntity.getLastName())
+                .username(employeeEntity.getUsername())
+                .email(employeeEntity.getEmail())
+                .roles(employeeEntity.getRoles())
+                .build();
+
     }
 }

@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/employee")
-public class EmployeeController extends DefaultController <EmployeeDTO, EmployeeMiniDTO, EmployeeForm, Long> {
+public class EmployeeController extends DefaultController <EmployeeDTO, EmployeeMiniDTO, EmployeeListDTO, EmployeeForm, Long> {
 
 
-    protected EmployeeController(DefaultService<EmployeeDTO, EmployeeMiniDTO, EmployeeForm, Long> service) {
+    protected EmployeeController(DefaultService<EmployeeDTO, EmployeeMiniDTO, EmployeeListDTO, EmployeeForm, Long> service) {
         super(service);
     }
 

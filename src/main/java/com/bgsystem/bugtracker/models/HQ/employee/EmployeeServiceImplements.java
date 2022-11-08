@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class EmployeeServiceImplements extends DefaultServiceImplements<EmployeeDTO, EmployeeMiniDTO, EmployeeForm, EmployeeEntity, Long> {
+public class EmployeeServiceImplements extends DefaultServiceImplements<EmployeeDTO, EmployeeMiniDTO, EmployeeListDTO, EmployeeForm, EmployeeEntity, Long> {
 
     @Autowired
     private EmployeeRepository employeeRepository;
