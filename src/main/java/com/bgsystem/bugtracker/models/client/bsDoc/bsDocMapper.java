@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class bsDocMapper implements DefaultMapper <bsDocDTO, bsDocMiniDTO, bsDocForm, bsDocEntity> {
+public class bsDocMapper implements DefaultMapper <bsDocDTO, bsDocMiniDTO, bsDocListDTO, bsDocForm, bsDocEntity> {
 
     private final bsDocsCategoryMapper bsDocsCategoryMapper;
 
@@ -60,6 +60,22 @@ public class bsDocMapper implements DefaultMapper <bsDocDTO, bsDocMiniDTO, bsDoc
                 .id(form.getId())
                 .title(form.getTitle())
                 .content(form.getContent())
+                .build();
+
+    }
+
+    @Override
+    public bsDocListDTO toListDTO(bsDocEntity bsDocEntity) {
+
+        if (bsDocEntity == null)
+            return null;
+
+        return bsDocListDTO.builder()
+                .id(bsDocEntity.getId())
+                .title(bsDocEntity.getTitle())
+                .content(bsDocEntity.getContent())
+                .bsDocsCategory(bsDocsCategoryMapper.toSmallDTO(bsDocEntity.getBsDocsCategory()))
+                .business(businessMapper.toSmallDTO(bsDocEntity.getBusiness()))
                 .build();
 
     }

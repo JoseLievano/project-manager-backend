@@ -30,4 +30,7 @@ public class bsDocsCategoryEntity {
     @OneToMany(mappedBy = "bsDocsCategory" , orphanRemoval = true)
     private Set<bsDocEntity> bsDocs;
 
+    @Column
+    private Long bsDocsCount;
+
 }

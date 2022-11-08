@@ -38,9 +38,14 @@ public class bsClientEntity extends User {
     @OneToMany(mappedBy = "client", orphanRemoval = true)
     private Set <bsProjectEntity> projects = new LinkedHashSet<>();
 
+    @Column
+    private Long projectsCount;
+
     @OneToMany(mappedBy = "client")
     private Set <bsInvoiceEntity> invoices;
 
+    @Column
+    private Long invoicesCount;
 
     @Builder(builderMethodName = "bsClientBuilder")
     public bsClientEntity(Long id,

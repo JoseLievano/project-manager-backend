@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, bsDocsCategoryMiniDTO, bsDocsCategoryForm, bsDocsCategoryEntity> {
+public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, bsDocsCategoryMiniDTO, bsDocsCategoryListDTO, bsDocsCategoryForm, bsDocsCategoryEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -63,6 +63,21 @@ public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, b
         return bsDocsCategoryEntity.builder()
                 .id(form.getId())
                 .name(form.getName())
+                .build();
+
+    }
+
+    @Override
+    public bsDocsCategoryListDTO toListDTO(bsDocsCategoryEntity bsDocsCategoryEntity) {
+
+        if (bsDocsCategoryEntity == null)
+            return null;
+
+        return bsDocsCategoryListDTO.builder()
+                .id(bsDocsCategoryEntity.getId())
+                .name(bsDocsCategoryEntity.getName())
+                .business(businessMapper.toSmallDTO(bsDocsCategoryEntity.getBusiness()))
+                .bsDocsCount(bsDocsCategoryEntity.getBsDocsCount())
                 .build();
 
     }

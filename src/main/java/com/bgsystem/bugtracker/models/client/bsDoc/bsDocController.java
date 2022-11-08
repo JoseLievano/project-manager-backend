@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("bs_doc")
-public class bsDocController extends DefaultController<bsDocDTO, bsDocMiniDTO, bsDocForm, Long> {
+public class bsDocController extends DefaultController<bsDocDTO, bsDocMiniDTO, bsDocListDTO, bsDocForm, Long> {
 
     public bsDocController(bsDocServiceImplements service) {
         super(service);

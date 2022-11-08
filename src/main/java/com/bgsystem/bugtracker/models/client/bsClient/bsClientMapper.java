@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniDTO, bsClientForm, bsClientEntity> {
+public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniDTO, bsClientListDTO, bsClientForm, bsClientEntity> {
 
     private final BusinessMapper businessMapper;
 
@@ -94,5 +94,26 @@ public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniD
                 .dateCreated(form.getDateCreated())
                 .lastLogin(form.getLastLoginDate())
                 .build();
+    }
+
+    @Override
+    public bsClientListDTO toListDTO(bsClientEntity bsClientEntity) {
+
+        if (bsClientEntity == null)
+            return null;
+
+        return bsClientListDTO.builder()
+                .id(bsClientEntity.getId())
+                .firstName(bsClientEntity.getFirstName())
+                .lastName(bsClientEntity.getLastName())
+                .email(bsClientEntity.getEmail())
+                .username(bsClientEntity.getUsername())
+                .isActive(bsClientEntity.getIsActive())
+                .dateCreated(bsClientEntity.getDateCreated())
+                .lastLoginDate(bsClientEntity.getLastLogin())
+                .projectsCount(bsClientEntity.getProjectsCount())
+                .invoicesCount(bsClientEntity.getInvoicesCount())
+                .build();
+
     }
 }
