@@ -30,13 +30,25 @@ public class MainHQEntity {
     @OneToMany(mappedBy = "mainHQEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<PlanEntity> planEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long planCount;
+
     @OneToMany(mappedBy = "mainHQEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<InvoiceEntity> invoiceEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long invoiceCount;
 
     @OneToMany(mappedBy = "mainHQEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<ClientEntity> clientEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long clientCount;
+
     @OneToMany(mappedBy = "mainHQEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<EmployeeEntity> employeeEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long employeeCount;
 
 }

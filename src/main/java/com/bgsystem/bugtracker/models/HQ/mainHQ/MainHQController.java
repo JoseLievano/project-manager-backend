@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/mainHQ")
-public class MainHQController extends DefaultController<MainHQDTO, MainHQMiniDTO, MainHQForm, Long> {
+public class MainHQController extends DefaultController<MainHQDTO, MainHQMiniDTO, MainHQListDTO, MainHQForm, Long> {
 
-    protected MainHQController(DefaultService<MainHQDTO, MainHQMiniDTO, MainHQForm, Long> service) {
+    protected MainHQController(DefaultService<MainHQDTO, MainHQMiniDTO, MainHQListDTO, MainHQForm, Long> service) {
         super(service);
     }
 

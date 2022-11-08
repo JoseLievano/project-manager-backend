@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class MainHQMapper implements DefaultMapper<MainHQDTO, MainHQMiniDTO, MainHQForm, MainHQEntity> {
+public class MainHQMapper implements DefaultMapper<MainHQDTO, MainHQMiniDTO, MainHQListDTO, MainHQForm, MainHQEntity> {
 
     @Lazy
     @Autowired
@@ -82,5 +82,22 @@ public class MainHQMapper implements DefaultMapper<MainHQDTO, MainHQMiniDTO, Mai
         return MainHQEntity.builder()
                 .name(form.getName())
                 .build();
+    }
+
+    @Override
+    public MainHQListDTO toListDTO(MainHQEntity mainHQEntity) {
+
+        if (mainHQEntity == null)
+            return null;
+
+        return MainHQListDTO.builder()
+                .id(mainHQEntity.getId())
+                .name(mainHQEntity.getName())
+                .planCount(mainHQEntity.getPlanCount())
+                .clientCount(mainHQEntity.getClientCount())
+                .employeeCount(mainHQEntity.getEmployeeCount())
+                .invoiceCount(mainHQEntity.getInvoiceCount())
+                .build();
+
     }
 }

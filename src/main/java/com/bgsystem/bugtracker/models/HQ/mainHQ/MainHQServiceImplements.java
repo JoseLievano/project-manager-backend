@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class MainHQServiceImplements extends DefaultServiceImplements<MainHQDTO, MainHQMiniDTO, MainHQForm, MainHQEntity, Long> {
+public class MainHQServiceImplements extends DefaultServiceImplements<MainHQDTO, MainHQMiniDTO, MainHQListDTO, MainHQForm, MainHQEntity, Long> {
 
     @Autowired
     private MainHQRepository mainHQRepository;
