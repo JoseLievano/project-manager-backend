@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class PlanMapper implements DefaultMapper <PlanDTO, PlanMiniDTO, PlanForm, PlanEntity>{
+public class PlanMapper implements DefaultMapper <PlanDTO, PlanMiniDTO, PlanListDTO, PlanForm, PlanEntity>{
 
     @Lazy
     @Autowired
@@ -75,5 +75,24 @@ public class PlanMapper implements DefaultMapper <PlanDTO, PlanMiniDTO, PlanForm
                 .diskLimit(form.getDiskLimit())
                 .maxProjects(form.getMaxProjects())
                 .build();
+    }
+
+    @Override
+    public PlanListDTO toListDTO(PlanEntity planEntity) {
+
+        if (planEntity == null)
+            return null;
+
+        return PlanListDTO.builder()
+                .id(planEntity.getId())
+                .name(planEntity.getName())
+                .price(planEntity.getPrice())
+                .userLimit(planEntity.getUserLimit())
+                .diskLimit(planEntity.getDiskLimit())
+                .maxProjects(planEntity.getMaxProjects())
+                .invoiceCount(planEntity.getInvoiceCount())
+                .businessCount(planEntity.getBusinessCount())
+                .build();
+
     }
 }

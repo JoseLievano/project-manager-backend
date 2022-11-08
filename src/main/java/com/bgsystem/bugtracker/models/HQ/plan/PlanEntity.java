@@ -47,8 +47,14 @@ public class PlanEntity {
     @OneToMany(mappedBy = "planEntity", orphanRemoval = true)
     private Set<InvoiceEntity> invoiceEntities = new LinkedHashSet<>();
 
+    @Column
+    private Long invoiceCount;
+
     @OneToMany(mappedBy = "planEntity", orphanRemoval = true)
     private Set<BusinessEntity> businessEntities = new LinkedHashSet<>();
+
+    @Column
+    private Long businessCount;
 
     @Override
     public boolean equals(Object o) {

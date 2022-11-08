@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class PlanServiceImplements extends DefaultServiceImplements<PlanDTO, PlanMiniDTO, PlanForm, PlanEntity, Long> {
+public class PlanServiceImplements extends DefaultServiceImplements<PlanDTO, PlanMiniDTO, PlanListDTO, PlanForm, PlanEntity, Long> {
 
     @Autowired
     private PlanRepository planRepository;

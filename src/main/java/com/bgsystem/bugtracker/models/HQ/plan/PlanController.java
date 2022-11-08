@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/plan")
-public class PlanController extends DefaultController<PlanDTO, PlanMiniDTO, PlanForm, Long> {
+public class PlanController extends DefaultController<PlanDTO, PlanMiniDTO, PlanListDTO, PlanForm, Long> {
 
-    protected PlanController(DefaultService<PlanDTO, PlanMiniDTO, PlanForm, Long> service) {
+    protected PlanController(DefaultService<PlanDTO, PlanMiniDTO, PlanListDTO, PlanForm, Long> service) {
         super(service);
     }
 
