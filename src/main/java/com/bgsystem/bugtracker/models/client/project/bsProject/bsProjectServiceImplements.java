@@ -67,7 +67,7 @@ public class bsProjectServiceImplements extends DefaultServiceImplements <bsProj
         }
 
         //Link the business to the project
-        business.getBsProjectEntities().add(toInsert);
+        business.getBsProjects().add(toInsert);
         toInsert.setBusiness(business);
 
         //Link the client to the project

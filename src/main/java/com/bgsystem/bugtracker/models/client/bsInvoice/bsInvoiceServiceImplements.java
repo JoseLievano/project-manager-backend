@@ -53,7 +53,7 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
 
         //Get the business from the form
         BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
-        business.getBsInvoiceEntities().add(toInsert);
+        business.getBsInvoices().add(toInsert);
 
         //Get the client from the form
         bsClientEntity client = clientRepository.findById(form.getClient()).orElseThrow(() -> new ElementNotFoundException("Client not found"));

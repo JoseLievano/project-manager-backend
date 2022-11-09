@@ -46,7 +46,7 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
         toInsert.setBusiness(business);
 
         //Add the doc to the business
-        business.getBsDocEntities().add(toInsert);
+        business.getBsDocs().add(toInsert);
 
         //Get the category entity
         bsDocsCategoryEntity category = bsDocsCategoryRepository.findById(form.getBsDocsCategory()).orElseThrow(() -> new ElementNotFoundException("Category not found"));

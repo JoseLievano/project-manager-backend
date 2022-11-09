@@ -60,7 +60,7 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
         toInsert.setBusiness(business);
 
         //Insert the client into the business
-        business.getBsClientEntities().add(toInsert);
+        business.getBsClients().add(toInsert);
 
 
         repository.save(toInsert);

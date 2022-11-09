@@ -81,7 +81,7 @@ public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDT
         //Set invoice business based on the business selected
         BusinessEntity businessEntity = businessRepository.findById(form.getBusiness()).orElseThrow(ElementNotFoundException::new);
         toInsert.setBusinessEntity(businessEntity);
-        businessEntity.getInvoiceEntities().add(toInsert);
+        businessEntity.getInvoices().add(toInsert);
         businessRepository.save(businessEntity);
 
         //Set the generated date of the invoice

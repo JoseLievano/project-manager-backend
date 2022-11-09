@@ -51,7 +51,7 @@ public class bsKBServiceImplements extends DefaultServiceImplements <bsKBDTO, bs
 
         toInsert.setBsKBCategory(bsKBCategory);
 
-        business.getBsKBEntities().add(toInsert);
+        business.getBsKBs().add(toInsert);
 
         bsKBCategory.getBsKBEntities().add(toInsert);
 

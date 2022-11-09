@@ -45,7 +45,7 @@ public class ClientEntity extends User {
     @JoinColumn(name = "main_hq_entity_id", nullable = false)
     private MainHQEntity mainHQEntity;
 
-    @OneToMany(mappedBy = "clientEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<BusinessEntity> businessEntities = new LinkedHashSet<>();
 
     @Column

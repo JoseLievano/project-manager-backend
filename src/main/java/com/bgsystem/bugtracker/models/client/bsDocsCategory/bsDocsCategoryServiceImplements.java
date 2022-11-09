@@ -39,7 +39,7 @@ public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <b
 
         toInsert.setBusiness(business);
 
-        business.getBsDocsCategoryEntities().add(toInsert);
+        business.getBsDocsCategories().add(toInsert);
 
         repository.save(toInsert);
 

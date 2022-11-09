@@ -41,7 +41,7 @@ public class bsKBCategoryServiceImplements extends DefaultServiceImplements <bsK
         BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
         toInsert.setBusiness(business);
 
-        business.getBsKBCategoryEntities().add(toInsert);
+        business.getBsKBCategories().add(toInsert);
 
         repository.save(toInsert);
 

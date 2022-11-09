@@ -45,7 +45,7 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
         toInsert.setBusiness(business);
 
         //Set the task category in the business
-        business.getBsTaskCategoryEntities().add(toInsert);
+        business.getBsTaskCategories().add(toInsert);
 
         repository.save(toInsert);
 

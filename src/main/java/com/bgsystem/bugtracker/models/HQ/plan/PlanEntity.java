@@ -50,7 +50,7 @@ public class PlanEntity {
     @Column
     private Long invoiceCount;
 
-    @OneToMany(mappedBy = "planEntity", orphanRemoval = true)
+    @OneToMany(mappedBy = "plan", orphanRemoval = true)
     private Set<BusinessEntity> businessEntities = new LinkedHashSet<>();
 
     @Column

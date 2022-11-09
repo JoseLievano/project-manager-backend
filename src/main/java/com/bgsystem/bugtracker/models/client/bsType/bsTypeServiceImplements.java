@@ -41,7 +41,7 @@ public class bsTypeServiceImplements extends DefaultServiceImplements <bsTypeDTO
 
         toInsert.setBusiness(business);
 
-        business.getBsTypeEntities().add(toInsert);
+        business.getBsTypes().add(toInsert);
 
         repository.save(toInsert);
 

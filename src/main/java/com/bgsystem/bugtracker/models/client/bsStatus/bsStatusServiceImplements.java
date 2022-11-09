@@ -41,7 +41,7 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
 
         toInsert.setBusiness(business);
 
-        business.getBsStatusEntities().add(toInsert);
+        business.getBsStatuses().add(toInsert);
 
         repository.save(toInsert);
 

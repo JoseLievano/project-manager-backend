@@ -46,7 +46,7 @@ public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPri
         toInsert.setBusiness(business);
 
         //Add the new priority to the business
-        business.getBsPriorityEntities().add(toInsert);
+        business.getBsPriorities().add(toInsert);
 
         //Save the business
         businessRepository.save(business);

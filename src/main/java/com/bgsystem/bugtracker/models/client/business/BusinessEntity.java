@@ -60,101 +60,101 @@ public class BusinessEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_entity_id", nullable = false)
-    private ClientEntity clientEntity;
+    private ClientEntity client;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "plan_entity_id", nullable = false)
-    private PlanEntity planEntity;
+    private PlanEntity plan;
 
     @OneToOne(mappedBy = "business", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private bsGeneralSettingsEntity bsGeneralSettings;
 
     @OneToMany(mappedBy = "businessEntity", orphanRemoval = true)
-    private Set<InvoiceEntity> invoiceEntities = new LinkedHashSet<>();
+    private Set<InvoiceEntity> invoices = new LinkedHashSet<>();
 
     @Column
     private Long invoiceCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsClientEntity> bsClientEntities = new LinkedHashSet<>();
+    private Set<bsClientEntity> bsClients = new LinkedHashSet<>();
 
     @Column
     private Long bsClientCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsManagerEntity> bsManagerEntities = new LinkedHashSet<>();
+    private Set<bsManagerEntity> bsManagers = new LinkedHashSet<>();
 
     @Column
     private Long bsManagerCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsEmployeeEntity> bsEmployeeEntities = new LinkedHashSet<>();
+    private Set<bsEmployeeEntity> bsEmployees = new LinkedHashSet<>();
 
     @Column
     private Long bsEmployeeCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsStatusEntity> bsStatusEntities = new LinkedHashSet<>();
+    private Set<bsStatusEntity> bsStatuses = new LinkedHashSet<>();
 
     @Column
     private Long bsStatusCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsPriorityEntity> bsPriorityEntities = new LinkedHashSet<>();
+    private Set<bsPriorityEntity> bsPriorities = new LinkedHashSet<>();
 
     @Column
     private Long bsPriorityCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsTypeEntity> bsTypeEntities = new LinkedHashSet<>();
+    private Set<bsTypeEntity> bsTypes = new LinkedHashSet<>();
 
     @Column
     private Long bsTypeCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsDocsCategoryEntity> bsDocsCategoryEntities = new LinkedHashSet<>();
+    private Set<bsDocsCategoryEntity> bsDocsCategories = new LinkedHashSet<>();
 
     @Column
     private Long bsDocsCategoryCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsDocEntity> bsDocEntities = new LinkedHashSet<>();
+    private Set<bsDocEntity> bsDocs = new LinkedHashSet<>();
 
     @Column
     private Long bsDocCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsKBCategoryEntity> bsKBCategoryEntities = new LinkedHashSet<>();
+    private Set<bsKBCategoryEntity> bsKBCategories = new LinkedHashSet<>();
 
     @Column
     private Long bsKBCategoryCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsKBEntity> bsKBEntities = new LinkedHashSet<>();
+    private Set<bsKBEntity> bsKBs = new LinkedHashSet<>();
 
     @Column
     private Long bsKBCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsProjectEntity> bsProjectEntities = new LinkedHashSet<>();
+    private Set<bsProjectEntity> bsProjects = new LinkedHashSet<>();
 
     @Column
     private Long bsProjectCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsTaskCategoryEntity> bsTaskCategoryEntities = new LinkedHashSet<>();
+    private Set<bsTaskCategoryEntity> bsTaskCategories = new LinkedHashSet<>();
 
     @Column
     private Long bsTaskCategoryCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsPrTaskEntity> bsPrTaskEntities = new LinkedHashSet<>();
+    private Set<bsPrTaskEntity> bsPrTasks = new LinkedHashSet<>();
 
     @Column
     private Long bsPrTaskCount;
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
-    private Set<bsInvoiceEntity> bsInvoiceEntities = new LinkedHashSet<>();
+    private Set<bsInvoiceEntity> bsInvoices = new LinkedHashSet<>();
 
     @Column
     private Long bsInvoiceCount;

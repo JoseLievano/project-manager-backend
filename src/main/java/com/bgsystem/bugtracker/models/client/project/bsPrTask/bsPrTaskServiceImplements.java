@@ -70,7 +70,7 @@ public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTas
 
         //Check if the associated business exists
         BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
-        business.getBsPrTaskEntities().add(toInsert);
+        business.getBsPrTasks().add(toInsert);
 
         //Check if the associated project exists
         bsProjectEntity project = projectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundException("Project not found"));

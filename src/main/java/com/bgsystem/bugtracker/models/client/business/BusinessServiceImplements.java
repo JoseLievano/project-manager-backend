@@ -68,10 +68,10 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         BusinessEntity toInsert = mapper.toEntity(form);
 
         //Insert the Business client.
-        toInsert.setClientEntity(clientRepository.findById(form.getClient()).orElseThrow(ElementAlreadyExist::new));
+        toInsert.setClient(clientRepository.findById(form.getClient()).orElseThrow(ElementAlreadyExist::new));
 
         //Insert the Business plan.
-        toInsert.setPlanEntity(planRepository.findById(form.getPlan()).orElseThrow(ElementNotFoundException::new));
+        toInsert.setPlan(planRepository.findById(form.getPlan()).orElseThrow(ElementNotFoundException::new));
 
         //Create an insert a bsGeneralSettingsEntity for this business.
         bsGeneralSettingsEntity GeneralSettingsEntity = bsGeneralSettingsEntity.builder()
@@ -134,22 +134,22 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     private BusinessEntity updateListFields(BusinessEntity business){
 
-        business.setInvoiceCount(business.getInvoiceEntities() == null ? 0 : (long) business.getInvoiceEntities().size());
-        business.setBsClientCount(business.getBsClientEntities() == null ? 0 : (long) business.getBsClientEntities().size());
-        business.setBsManagerCount(business.getBsManagerEntities() == null ? 0 : (long) business.getBsManagerEntities().size());
-        business.setBsEmployeeCount(business.getBsEmployeeEntities() == null ? 0 : (long) business.getBsEmployeeEntities().size());
-        business.setBsStatusCount(business.getBsStatusEntities() == null ? 0 : (long) business.getBsStatusEntities().size());
-        business.setBsPriorityCount(business.getBsPriorityEntities() == null ? 0 : (long) business.getBsPriorityEntities().size());
-        business.setBsPriorityCount(business.getBsPriorityEntities() == null ? 0 : (long) business.getBsPriorityEntities().size());
-        business.setBsTypeCount(business.getBsTypeEntities() == null ? 0 : (long) business.getBsTypeEntities().size());
-        business.setBsDocsCategoryCount(business.getBsDocsCategoryEntities() == null ? 0 : (long) business.getBsDocsCategoryEntities().size());
-        business.setBsDocCount(business.getBsDocEntities() == null ? 0 : (long) business.getBsDocEntities().size());
-        business.setBsKBCategoryCount(business.getBsKBCategoryEntities() == null ? 0 : (long) business.getBsKBCategoryEntities().size());
-        business.setBsKBCount(business.getBsKBEntities() == null ? 0 : (long) business.getBsKBEntities().size());
-        business.setBsProjectCount(business.getBsProjectEntities() == null ? 0 : (long) business.getBsProjectEntities().size());
-        business.setBsTaskCategoryCount(business.getBsTaskCategoryEntities() == null ? 0 : (long) business.getBsTaskCategoryEntities().size());
-        business.setBsPrTaskCount(business.getBsPrTaskEntities() == null ? 0 : (long) business.getBsPrTaskEntities().size());
-        business.setBsInvoiceCount(business.getBsInvoiceEntities() == null ? 0 : (long) business.getBsInvoiceEntities().size());
+        business.setInvoiceCount(business.getInvoices() == null ? 0 : (long) business.getInvoices().size());
+        business.setBsClientCount(business.getBsClients() == null ? 0 : (long) business.getBsClients().size());
+        business.setBsManagerCount(business.getBsManagers() == null ? 0 : (long) business.getBsManagers().size());
+        business.setBsEmployeeCount(business.getBsEmployees() == null ? 0 : (long) business.getBsEmployees().size());
+        business.setBsStatusCount(business.getBsStatuses() == null ? 0 : (long) business.getBsStatuses().size());
+        business.setBsPriorityCount(business.getBsPriorities() == null ? 0 : (long) business.getBsPriorities().size());
+        business.setBsPriorityCount(business.getBsPriorities() == null ? 0 : (long) business.getBsPriorities().size());
+        business.setBsTypeCount(business.getBsTypes() == null ? 0 : (long) business.getBsTypes().size());
+        business.setBsDocsCategoryCount(business.getBsDocsCategories() == null ? 0 : (long) business.getBsDocsCategories().size());
+        business.setBsDocCount(business.getBsDocs() == null ? 0 : (long) business.getBsDocs().size());
+        business.setBsKBCategoryCount(business.getBsKBCategories() == null ? 0 : (long) business.getBsKBCategories().size());
+        business.setBsKBCount(business.getBsKBs() == null ? 0 : (long) business.getBsKBs().size());
+        business.setBsProjectCount(business.getBsProjects() == null ? 0 : (long) business.getBsProjects().size());
+        business.setBsTaskCategoryCount(business.getBsTaskCategories() == null ? 0 : (long) business.getBsTaskCategories().size());
+        business.setBsPrTaskCount(business.getBsPrTasks() == null ? 0 : (long) business.getBsPrTasks().size());
+        business.setBsInvoiceCount(business.getBsInvoices() == null ? 0 : (long) business.getBsInvoices().size());
 
         return business;
     }
@@ -160,13 +160,13 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
             ClientEntity client = clientRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
 
-            return repository.findAllByClientEntity(client).stream().toList();
+            return repository.findAllByClient(client).stream().toList();
 
         }else if (filterRequest.getBy().equals("plan")){
 
             PlanEntity plan = planRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
 
-            return repository.findAllByPlanEntity(plan).stream().toList();
+            return repository.findAllByPlan(plan).stream().toList();
 
         }else{
             throw new ElementNotFoundException("The filter is not valid");
@@ -186,13 +186,13 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
                 ClientEntity client = clientRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
 
-                return repository.findByClientEntity(pageRequest.getPageRequest(), client).map(businessMapper::toListDTO);
+                return repository.findByClient(pageRequest.getPageRequest(), client).map(businessMapper::toListDTO);
 
             }else if (filterRequest.getBy().equals("plan")){
 
                 PlanEntity plan = planRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
 
-                return repository.findByPlanEntity(pageRequest.getPageRequest(), plan).map(businessMapper::toListDTO);
+                return repository.findByPlan(pageRequest.getPageRequest(), plan).map(businessMapper::toListDTO);
 
             }else{
                 throw new ElementNotFoundException("The filter is not valid");

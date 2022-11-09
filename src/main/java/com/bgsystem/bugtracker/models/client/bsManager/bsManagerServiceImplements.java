@@ -60,7 +60,7 @@ public class bsManagerServiceImplements extends DefaultServiceImplements <bsMana
         toInsert.setBusiness(business);
 
         //Insert the manager into the business
-        business.getBsManagerEntities().add(toInsert);
+        business.getBsManagers().add(toInsert);
 
         repository.save(toInsert);
 
