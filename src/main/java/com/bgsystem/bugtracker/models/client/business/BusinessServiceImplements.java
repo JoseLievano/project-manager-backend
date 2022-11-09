@@ -202,5 +202,10 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     }
 
+    public Page<BusinessListDTO> test(){
+
+        return null;
+
+    }
 
 }
