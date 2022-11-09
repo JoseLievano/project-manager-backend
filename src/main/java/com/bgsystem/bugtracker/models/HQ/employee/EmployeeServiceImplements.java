@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.HQ.employee;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQEntity;
 import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQRepository;
@@ -29,7 +29,7 @@ public class EmployeeServiceImplements extends DefaultServiceImplements<Employee
     }
 
     @Override
-public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (employeeForm == null || employeeForm.getPassword() == null || employeeForm.getEmail() == null) {
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new employee");
@@ -58,7 +58,7 @@ public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundE
         MainHQEntity mainHQEntity = mainHQRepository.findAll().get(0);
 
         if (mainHQEntity == null) {
-            throw new ElementNotFoundExeption("The MainHQ is not found in our DB");
+            throw new ElementNotFoundException("The MainHQ is not found in our DB");
         }else {
             toInsert.setMainHQEntity(mainHQEntity);
 
@@ -74,9 +74,9 @@ public EmployeeMiniDTO insert(EmployeeForm employeeForm) throws ElementNotFoundE
     }
 
     @Override
-    public EmployeeDTO delete(Long id) throws ElementNotFoundExeption {
+    public EmployeeDTO delete(Long id) throws ElementNotFoundException {
 
-        EmployeeEntity toDelete = employeeRepository.findById(id).orElseThrow(() -> new ElementNotFoundExeption("The employee is not found"));
+        EmployeeEntity toDelete = employeeRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("The employee is not found"));
 
         EmployeeDTO employeeDTO = mapper.toDTO(toDelete);
 

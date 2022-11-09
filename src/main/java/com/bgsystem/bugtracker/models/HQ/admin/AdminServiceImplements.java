@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.HQ.admin;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class AdminServiceImplements extends DefaultServiceImplements <AdminDTO, 
     }
 
     @Override
-    public AdminMiniDTO insert(AdminForm userForm) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public AdminMiniDTO insert(AdminForm userForm) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (userForm == null || userForm.getPassword() == null || userForm.getEmail() == null){
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new admin");
@@ -54,9 +54,9 @@ public class AdminServiceImplements extends DefaultServiceImplements <AdminDTO, 
     }
 
     @Override
-    public AdminDTO delete(Long id) throws ElementNotFoundExeption {
+    public AdminDTO delete(Long id) throws ElementNotFoundException {
 
-        AdminEntity toDelete = repository.findById(id).orElseThrow(() -> new ElementNotFoundExeption("The admin is not found"));
+        AdminEntity toDelete = repository.findById(id).orElseThrow(() -> new ElementNotFoundException("The admin is not found"));
 
         AdminDTO adminDTO = mapper.toDTO(toDelete);
 

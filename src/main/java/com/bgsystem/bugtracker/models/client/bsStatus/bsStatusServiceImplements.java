@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsStatus;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessRepository;
@@ -24,7 +24,7 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
     }
 
     @Override
-    public bsStatusMiniDTO insert(bsStatusForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsStatusMiniDTO insert(bsStatusForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getBusiness() == null || form.getName() == null || form.getColor() == null) {
             throw new InvalidInsertDeails("Invalid insert details, can´t create new status");
@@ -37,7 +37,7 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
 
         bsStatusEntity toInsert = mapper.toEntity(form);
 
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundExeption("Business not found"));
+        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
 
         toInsert.setBusiness(business);
 

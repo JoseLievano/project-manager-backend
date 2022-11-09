@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsClient;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessRepository;
@@ -30,7 +30,7 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
     }
 
     @Override
-    public bsClientMiniDTO insert(bsClientForm bsClientForm) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsClientMiniDTO insert(bsClientForm bsClientForm) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (bsClientForm == null || bsClientForm.getPassword() == null || bsClientForm.getEmail() == null || bsClientForm.getBusiness() == null) {
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new client");
@@ -56,7 +56,7 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
         toInsert.setRoles(roles);
 
         //Insert the Business
-        BusinessEntity business = businessRepository.findById(bsClientForm.getBusiness()).orElseThrow(ElementNotFoundExeption::new);
+        BusinessEntity business = businessRepository.findById(bsClientForm.getBusiness()).orElseThrow(ElementNotFoundException::new);
         toInsert.setBusiness(business);
 
         //Insert the client into the business

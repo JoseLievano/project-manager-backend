@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsEmployee;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessRepository;
@@ -30,7 +30,7 @@ public class bsEmployeeServiceImplements extends DefaultServiceImplements<bsEmpl
     }
 
     @Override
-    public bsEmployeeMiniDTO insert(bsEmployeeForm bsEmployeeForm) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsEmployeeMiniDTO insert(bsEmployeeForm bsEmployeeForm) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (bsEmployeeForm == null || bsEmployeeForm.getBusiness() == null || bsEmployeeForm.getEmail() == null || bsEmployeeForm.getUsername() == null)
             throw new InvalidInsertDeails("Invalid insert details");
@@ -53,7 +53,7 @@ public class bsEmployeeServiceImplements extends DefaultServiceImplements<bsEmpl
         toInsert.setRoles(roles);
 
         //Insert the business
-        BusinessEntity business = businessRepository.findById(bsEmployeeForm.getBusiness()).orElseThrow(ElementNotFoundExeption::new);
+        BusinessEntity business = businessRepository.findById(bsEmployeeForm.getBusiness()).orElseThrow(ElementNotFoundException::new);
 
         toInsert.setBusiness(business);
 

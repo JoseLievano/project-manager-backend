@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrTask;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityEntity;
 import com.bgsystem.bugtracker.models.client.bsPriority.bsPriorityRepository;
@@ -59,7 +59,7 @@ public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTas
     }
 
     @Override
-    public bsPrTaskMiniDTO insert(bsPrTaskForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsPrTaskMiniDTO insert(bsPrTaskForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getBusiness() == null || form.getCategory() == null || form.getProject() == null || form.getType() == null || form.getPriority() == null || form.getStatus() == null || form.getName() == null ) {
             throw new InvalidInsertDeails("Invalid insert details");
@@ -69,27 +69,27 @@ public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTas
         bsPrTaskEntity toInsert = mapper.toEntity(form);
 
         //Check if the associated business exists
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundExeption("Business not found"));
+        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
         business.getBsPrTaskEntities().add(toInsert);
 
         //Check if the associated project exists
-        bsProjectEntity project = projectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundExeption("Project not found"));
+        bsProjectEntity project = projectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundException("Project not found"));
         project.getTasks().add(toInsert);
 
         //Check if the associated category exists
-        bsTaskCategoryEntity category = categoryRepository.findById(form.getCategory()).orElseThrow(() -> new ElementNotFoundExeption("Category not found"));
+        bsTaskCategoryEntity category = categoryRepository.findById(form.getCategory()).orElseThrow(() -> new ElementNotFoundException("Category not found"));
         category.getTasks().add(toInsert);
 
         //Check if the associated type exists
-        bsTypeEntity type = typeRepository.findById(form.getType()).orElseThrow(() -> new ElementNotFoundExeption("Type not found"));
+        bsTypeEntity type = typeRepository.findById(form.getType()).orElseThrow(() -> new ElementNotFoundException("Type not found"));
         type.getTasks().add(toInsert);
 
         //Check if the associated priority exists
-        bsPriorityEntity priority = priorityRepository.findById(form.getPriority()).orElseThrow(() -> new ElementNotFoundExeption("Priority not found"));
+        bsPriorityEntity priority = priorityRepository.findById(form.getPriority()).orElseThrow(() -> new ElementNotFoundException("Priority not found"));
         priority.getTasks().add(toInsert);
 
         //Check if the associated status exists
-        bsStatusEntity status = statusRepository.findById(form.getStatus()).orElseThrow(() -> new ElementNotFoundExeption("Status not found"));
+        bsStatusEntity status = statusRepository.findById(form.getStatus()).orElseThrow(() -> new ElementNotFoundException("Status not found"));
         status.getTasks().add(toInsert);
 
         //Check if a task with the same name in the same business, project and category already exists

@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrDocs;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.project.bsPrDocsCategory.bsPrDocsCategoryEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrDocsCategory.bsPrDocsCategoryRepository;
@@ -34,7 +34,7 @@ public class bsPrDocsServiceImplements extends DefaultServiceImplements <bsPrDoc
     }
 
     @Override
-    public bsPrDocsMiniDTO insert(bsPrDocsForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsPrDocsMiniDTO insert(bsPrDocsForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getTitle() == null || form.getCategory() == null || form.getProject() == null || form.getContent() == null) {
             throw new InvalidInsertDeails("Invalid insert details");
@@ -44,12 +44,12 @@ public class bsPrDocsServiceImplements extends DefaultServiceImplements <bsPrDoc
         bsPrDocsEntity toInsert = mapper.toEntity(form);
 
         //Check if the category exists
-        bsPrDocsCategoryEntity category = bsPrDocsCategoryRepository.findById(form.getCategory()).orElseThrow(() -> new ElementNotFoundExeption("Category not found"));
+        bsPrDocsCategoryEntity category = bsPrDocsCategoryRepository.findById(form.getCategory()).orElseThrow(() -> new ElementNotFoundException("Category not found"));
         category.getDocs().add(toInsert);
         toInsert.setCategory(category);
 
         //Check if the project exists
-        bsProjectEntity project =  bsProjectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundExeption("Project not found"));
+        bsProjectEntity project =  bsProjectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundException("Project not found"));
         project.getDocs().add(toInsert);
         toInsert.setProject(project);
 

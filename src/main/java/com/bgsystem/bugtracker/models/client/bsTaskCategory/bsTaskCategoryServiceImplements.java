@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsTaskCategory;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessRepository;
@@ -24,7 +24,7 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
     }
 
     @Override
-    public bsTaskCategoryMiniDTO insert(bsTaskCategoryForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsTaskCategoryMiniDTO insert(bsTaskCategoryForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         //Validate form
         if(form == null || form.getBusiness() == null || form.getName() == null){
@@ -32,7 +32,7 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
         }
 
         //Check if category with same name and business already exist
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundExeption("Business not found"));
+        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
 
         if (bsTaskCategoryRepository.findByNameAndBusiness(form.getName(), business).size() > 0){
             throw new ElementAlreadyExist("Category with same name and business already exist");

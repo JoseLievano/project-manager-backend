@@ -1,14 +1,13 @@
 package com.bgsystem.bugtracker.models.HQ.mainHQ;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class MainHQServiceImplements extends DefaultServiceImplements<MainHQDTO, MainHQMiniDTO, MainHQListDTO, MainHQForm, MainHQEntity, Long> {
@@ -21,7 +20,7 @@ public class MainHQServiceImplements extends DefaultServiceImplements<MainHQDTO,
     }
 
     @Override
-    public MainHQMiniDTO insert(MainHQForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public MainHQMiniDTO insert(MainHQForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null) {
             throw new InvalidInsertDeails("Form is invalid");

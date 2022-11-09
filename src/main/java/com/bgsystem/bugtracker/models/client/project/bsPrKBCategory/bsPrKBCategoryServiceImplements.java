@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrKBCategory;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectRepository;
@@ -27,7 +27,7 @@ public class bsPrKBCategoryServiceImplements extends DefaultServiceImplements <b
     }
 
     @Override
-    public bsPrKBCategoryMiniDTO insert(bsPrKBCategoryForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsPrKBCategoryMiniDTO insert(bsPrKBCategoryForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getName() == null || form.getProject() == null) {
             throw new InvalidInsertDeails("Invalid insert details");
@@ -37,7 +37,7 @@ public class bsPrKBCategoryServiceImplements extends DefaultServiceImplements <b
         bsPrKBCategoryEntity toInsert = mapper.toEntity(form);
 
         //Checks if the project exists, and if exists then add it to the project
-        bsProjectEntity project = bsProjectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundExeption("Project not found"));
+        bsProjectEntity project = bsProjectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundException("Project not found"));
         toInsert.setProject(project);
         project.getKbCategories().add(toInsert);
 

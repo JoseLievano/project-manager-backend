@@ -1,12 +1,14 @@
 package com.bgsystem.bugtracker.models.client.business;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.HQ.client.ClientEntity;
 import com.bgsystem.bugtracker.models.HQ.client.ClientRepository;
+import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanRepository;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsEntity;
+import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsRepository;
@@ -16,10 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class BusinessServiceImplements extends DefaultServiceImplements<BusinessDTO, BusinessMiniDTO, BusinessListDTO, BusinessForm, BusinessEntity, Long> {
@@ -54,7 +53,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
     }
 
     @Override
-    public BusinessMiniDTO insert(BusinessForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public BusinessMiniDTO insert(BusinessForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getName() == null || form.getTaxID() == null || form.getClient() == null || form.getPlan() == null){
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new business");
@@ -72,7 +71,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         toInsert.setClientEntity(clientRepository.findById(form.getClient()).orElseThrow(ElementAlreadyExist::new));
 
         //Insert the Business plan.
-        toInsert.setPlanEntity(planRepository.findById(form.getPlan()).orElseThrow(ElementNotFoundExeption::new));
+        toInsert.setPlanEntity(planRepository.findById(form.getPlan()).orElseThrow(ElementNotFoundException::new));
 
         //Create an insert a bsGeneralSettingsEntity for this business.
         bsGeneralSettingsEntity GeneralSettingsEntity = bsGeneralSettingsEntity.builder()
@@ -92,46 +91,40 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     }
 
-    public Set<BusinessListDTO> getAllForList(Optional<Long> id, Optional<String> className) throws ElementNotFoundExeption {
+    @Override
+    public Collection<BusinessListDTO> getAllForList(Optional<FilterRequest> listRequestRecord) throws ElementNotFoundException {
 
-        Set <BusinessListDTO> businessListDTOS = new HashSet<>();
+        List<BusinessListDTO> businessListDTOs = new ArrayList<>();
 
-        if (id.isPresent() && className.isPresent()){
+        if (listRequestRecord.isPresent()){
 
-            ClientEntity client = entityFactory.getEntity(id.get(), className.get());
+            List<BusinessEntity> businessEntities = filterBy(listRequestRecord.get());
 
-            for (BusinessEntity business : repository.findAllByClientEntity(client)){
-                businessListDTOS.add(businessMapper.toListDTO(business));
-            }
+            businessEntities.forEach(businessEntity -> businessListDTOs.add(mapper.toListDTO(businessEntity)));
 
         }else{
 
             for (BusinessEntity businessEntity : repository.findAll()){
-                businessListDTOS.add(businessMapper.toListDTO(businessEntity));
+                businessListDTOs.add(mapper.toListDTO(businessEntity));
             }
         }
 
-        return businessListDTOS;
+        return businessListDTOs;
 
     }
 
-    public Page<BusinessListDTO> getPageableList(Optional<Long> id, PageableRequest pageableRequest) throws ElementNotFoundExeption {
+    @Override
+    public Page<BusinessListDTO> getPageableList(PageableRequest pageableRequest) throws ElementNotFoundException {
 
-        PageRequest pr = pageableRequest.getPageRequest();
-
-        if (id.isEmpty()){
-            return repository.findAll(pr).map(businessMapper::toListDTO);
-        }
-
-        ClientEntity client = clientRepository.findById(id.get()).orElseThrow(ElementNotFoundExeption::new);
-
-        return repository.findByClientEntity(pr, client).map(businessMapper::toListDTO);
+        return filterByPageable(pageableRequest);
 
     }
 
-    public BusinessListDTO updateListView(Long id) throws ElementNotFoundExeption {
 
-        BusinessEntity business = repository.findById(id).orElseThrow(ElementNotFoundExeption::new);
+    @Override
+    public BusinessListDTO updateListView(Long id) throws ElementNotFoundException {
+
+        BusinessEntity business = repository.findById(id).orElseThrow(ElementNotFoundException::new);
 
         repository.save(updateListFields(business));
 
@@ -160,5 +153,54 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
         return business;
     }
+
+    private List<BusinessEntity> filterBy (FilterRequest filterRequest) throws ElementNotFoundException {
+
+        if (filterRequest.getBy().equals("client")){
+
+            ClientEntity client = clientRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
+
+            return repository.findAllByClientEntity(client).stream().toList();
+
+        }else if (filterRequest.getBy().equals("plan")){
+
+            PlanEntity plan = planRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
+
+            return repository.findAllByPlanEntity(plan).stream().toList();
+
+        }else{
+            throw new ElementNotFoundException("The filter is not valid");
+        }
+
+    }
+
+    private Page<BusinessListDTO> filterByPageable(PageableRequest pageRequest) throws ElementNotFoundException {
+
+        if (pageRequest.getFilter().isEmpty()){
+            return repository.findAll(pageRequest.getPageRequest()).map(businessMapper::toListDTO);
+        }else{
+
+            FilterRequest filterRequest = pageRequest.getFilter().get();
+
+            if (filterRequest.getBy().equals("client")){
+
+                ClientEntity client = clientRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
+
+                return repository.findByClientEntity(pageRequest.getPageRequest(), client).map(businessMapper::toListDTO);
+
+            }else if (filterRequest.getBy().equals("plan")){
+
+                PlanEntity plan = planRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
+
+                return repository.findByPlanEntity(pageRequest.getPageRequest(), plan).map(businessMapper::toListDTO);
+
+            }else{
+                throw new ElementNotFoundException("The filter is not valid");
+            }
+
+        }
+
+    }
+
 
 }

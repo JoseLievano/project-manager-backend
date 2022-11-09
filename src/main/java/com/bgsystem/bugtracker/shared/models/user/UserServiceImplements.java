@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.shared.models.user;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UserServiceImplements extends DefaultServiceImplements <UserDTO, Us
     }
 
     @Override
-    public UserMiniDTO insert(UserForm userForm) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public UserMiniDTO insert(UserForm userForm) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         //Check if the form is valid
         String invalidDetailsMessage = "The form is not complete, is not possible to register a new user";

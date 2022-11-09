@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsKBCategory;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessRepository;
@@ -24,7 +24,7 @@ public class bsKBCategoryServiceImplements extends DefaultServiceImplements <bsK
     }
 
     @Override
-    public bsKBCategoryMiniDTO insert(bsKBCategoryForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsKBCategoryMiniDTO insert(bsKBCategoryForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getName() == null || form.getBusiness() == null) {
             throw new InvalidInsertDeails("Invalid insert details");
@@ -38,7 +38,7 @@ public class bsKBCategoryServiceImplements extends DefaultServiceImplements <bsK
         bsKBCategoryEntity toInsert = mapper.toEntity(form);
 
         //Add the business to the kb Category
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundExeption("Business not found"));
+        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
         toInsert.setBusiness(business);
 
         business.getBsKBCategoryEntities().add(toInsert);

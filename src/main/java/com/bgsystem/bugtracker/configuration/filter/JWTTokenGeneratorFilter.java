@@ -5,6 +5,7 @@ import com.bgsystem.bugtracker.shared.models.user.User;
 import com.bgsystem.bugtracker.shared.models.user.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,10 +52,9 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
             SecretKey key = Keys.hmacShaKeyFor(SecurityConstant.JWT_KEY.getBytes(StandardCharsets.UTF_8));
             String jwt = Jwts.builder().setIssuer("ProjectManager").setSubject("JWT Token")
                     .claim("username", usernameAuth)
-                    /*.claim("authorities", populateAuthorities(authentication.getAuthorities()))*/
                     .claim("authorities", roles)
                     .setIssuedAt(new Date())
-                    .setExpiration(new Date((new Date()).getTime() + 300000000))
+                    .setExpiration(new Date((new Date()).getTime() + 900000000))
                     .signWith(key).compact();
             response.setHeader(SecurityConstant.JWT_HEADER, jwt);
         }

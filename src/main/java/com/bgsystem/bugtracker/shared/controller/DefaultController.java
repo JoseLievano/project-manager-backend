@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.shared.controller;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
@@ -23,7 +23,7 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTO> getOne(@PathVariable ID id) throws ElementNotFoundExeption {
+    public ResponseEntity<DTO> getOne(@PathVariable ID id) throws ElementNotFoundException {
         return ResponseEntity.ok(service.getOne(id));
     }
 
@@ -33,23 +33,23 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
     }
 
     @PostMapping
-    public ResponseEntity<MINIDTO> insert (@Valid @RequestBody FORM form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public ResponseEntity<MINIDTO> insert (@Valid @RequestBody FORM form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         return ResponseEntity.ok(service.insert(form));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DTO> update (@PathVariable ID id, @Valid @RequestBody FORM form) throws ElementNotFoundExeption {
+    public ResponseEntity<DTO> update (@PathVariable ID id, @Valid @RequestBody FORM form) throws ElementNotFoundException {
         return ResponseEntity.ok(service.update(id, form));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DTO> delete (@PathVariable ID id) throws ElementNotFoundExeption {
+    public ResponseEntity<DTO> delete (@PathVariable ID id) throws ElementNotFoundException {
         return ResponseEntity.ok(service.delete(id));
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Collection<LISTDTO>> getAllForList(@RequestBody Optional <FilterRequest> filterRequest) throws ElementNotFoundExeption {
+    public ResponseEntity<Collection<LISTDTO>> getAllForList(@RequestBody Optional <FilterRequest> filterRequest) throws ElementNotFoundException {
 
         if (filterRequest.isPresent()){
             return ResponseEntity.ok(service.getAllForList(Optional.of(filterRequest.get())));
@@ -60,7 +60,7 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
     }
 
     @GetMapping("/pageable")
-    public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundExeption {
+    public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException {
 
         if(pageableRequest.isPresent()){
 

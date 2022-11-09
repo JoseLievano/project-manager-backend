@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsInvoice;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientRepository;
@@ -38,7 +38,7 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
     }
 
     @Override
-    public bsInvoiceMiniDTO insert(bsInvoiceForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsInvoiceMiniDTO insert(bsInvoiceForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getAmount() == null || form.getClient() == null || form.getBusiness() == null ){
             throw new InvalidInsertDeails("Invalid insert details");
@@ -52,11 +52,11 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
         bsInvoiceEntity toInsert = mapper.toEntity(form);
 
         //Get the business from the form
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundExeption("Business not found"));
+        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
         business.getBsInvoiceEntities().add(toInsert);
 
         //Get the client from the form
-        bsClientEntity client = clientRepository.findById(form.getClient()).orElseThrow(() -> new ElementNotFoundExeption("Client not found"));
+        bsClientEntity client = clientRepository.findById(form.getClient()).orElseThrow(() -> new ElementNotFoundException("Client not found"));
         client.getInvoices().add(toInsert);
 
         toInsert.setBusiness(business);
@@ -71,7 +71,7 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
         //Check if there is a task or a project associated with the invoice
         if (form.getTask() != null){
 
-            task = taskRepository.findById(form.getTask()).orElseThrow(() -> new ElementNotFoundExeption("Task not found"));
+            task = taskRepository.findById(form.getTask()).orElseThrow(() -> new ElementNotFoundException("Task not found"));
             task.setInvoice(toInsert);
             toInsert.setTask(task);
 
@@ -82,7 +82,7 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
         }else{
 
             task = null;
-            project = projectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundExeption("Project not found"));
+            project = projectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundException("Project not found"));
             project.getInvoices().add(toInsert);
 
             toInsert.setProject(project);

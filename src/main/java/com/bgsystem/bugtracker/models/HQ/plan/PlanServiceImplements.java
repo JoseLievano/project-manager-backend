@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.HQ.plan;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQEntity;
 import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQRepository;
@@ -25,7 +25,7 @@ public class PlanServiceImplements extends DefaultServiceImplements<PlanDTO, Pla
     }
 
     @Override
-    public PlanMiniDTO insert(PlanForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public PlanMiniDTO insert(PlanForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getName() == null || form.getPrice() == null) {
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new plan");
@@ -46,7 +46,7 @@ public class PlanServiceImplements extends DefaultServiceImplements<PlanDTO, Pla
         MainHQEntity mainHQEntity = mainHQRepository.findAll().get(0);
 
         if (mainHQEntity == null) {
-            throw new ElementNotFoundExeption("The MainHQ is not found in our DB");
+            throw new ElementNotFoundException("The MainHQ is not found in our DB");
         }else {
             toInsert.setMainHQEntity(mainHQEntity);
         }

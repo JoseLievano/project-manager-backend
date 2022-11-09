@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrChannel;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectEntity;
 import com.bgsystem.bugtracker.models.client.project.bsProject.bsProjectRepository;
@@ -31,7 +31,7 @@ public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPr
     }
 
     @Override
-    public bsPrChannelMiniDTO insert(bsPrChannelForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsPrChannelMiniDTO insert(bsPrChannelForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getName() == null || form.getAuthor() == null || form.getProject() == null) {
             throw new InvalidInsertDeails("Invalid insert details");
@@ -41,11 +41,11 @@ public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPr
         bsPrChannelEntity toInsert = mapper.toEntity(form);
 
         //Check if the project exist, if exist insert the project in the channel
-        bsProjectEntity project = projectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundExeption("Project not found"));
+        bsProjectEntity project = projectRepository.findById(form.getProject()).orElseThrow(() -> new ElementNotFoundException("Project not found"));
         project.getChannels().add(toInsert);
 
         //Check if the author exist, if exist insert the author in the channel
-        User author = userRepository.findById(form.getAuthor()).orElseThrow(() -> new ElementNotFoundExeption("Author not found"));
+        User author = userRepository.findById(form.getAuthor()).orElseThrow(() -> new ElementNotFoundException("Author not found"));
         author.getChannelsAuthor().add(toInsert);
 
         //Check if there are members for this channel, if there are insert them in the channel
@@ -54,7 +54,7 @@ public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPr
 
         if (hasMembers){
             for (Long memberID : form.getMembers()){
-                User member = userRepository.findById(memberID).orElseThrow(() -> new ElementNotFoundExeption("Member not found"));
+                User member = userRepository.findById(memberID).orElseThrow(() -> new ElementNotFoundException("Member not found"));
                 member.getChannels().add(toInsert);
                 toInsert.getMembers().add(member);
             }

@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.HQ.client;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQEntity;
 import com.bgsystem.bugtracker.models.HQ.mainHQ.MainHQRepository;
@@ -29,7 +29,7 @@ public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO,
     }
 
     @Override
-    public ClientMiniDTO insert(ClientForm clientForm) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public ClientMiniDTO insert(ClientForm clientForm) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (clientForm == null || clientForm.getPassword() == null || clientForm.getEmail() == null) {
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new client");
@@ -56,7 +56,7 @@ public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO,
         MainHQEntity mainHQEntity = mainHQRepository.findAll().get(0);
 
         if (mainHQEntity == null) {
-            throw new ElementNotFoundExeption("The MainHQ is not found in our DB");
+            throw new ElementNotFoundException("The MainHQ is not found in our DB");
         }else {
             toInsert.setMainHQEntity(mainHQEntity);
         }
@@ -67,9 +67,9 @@ public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO,
     }
 
     @Override
-    public ClientDTO delete(Long id) throws ElementNotFoundExeption {
+    public ClientDTO delete(Long id) throws ElementNotFoundException {
 
-        ClientEntity toDelete = repository.findById(id).orElseThrow(() -> new ElementNotFoundExeption("The client with id: " + id + " is not found"));
+        ClientEntity toDelete = repository.findById(id).orElseThrow(() -> new ElementNotFoundException("The client with id: " + id + " is not found"));
 
         ClientDTO clientDTO = mapper.toDTO(toDelete);
 
@@ -87,13 +87,13 @@ public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO,
     }
 
     @Override
-    public ClientDTO update(Long ID, ClientForm form) throws ElementNotFoundExeption {
+    public ClientDTO update(Long ID, ClientForm form) throws ElementNotFoundException {
 
         if (form.getUsername() == null){
-            throw new ElementNotFoundExeption("You must specify the username");
+            throw new ElementNotFoundException("You must specify the username");
         }
 
-        ClientEntity toUpdate = repository.findById(ID).orElse(clientRepository.findByUsername(form.getUsername()).stream().findFirst().orElseThrow(() -> new ElementNotFoundExeption("The client is not found")));
+        ClientEntity toUpdate = repository.findById(ID).orElse(clientRepository.findByUsername(form.getUsername()).stream().findFirst().orElseThrow(() -> new ElementNotFoundException("The client is not found")));
 
         if (form.getFirstName() != null && !form.getFirstName().equals(toUpdate.getFirstName())){
             toUpdate.setFirstName(form.getFirstName());

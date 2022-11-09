@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrComment;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelRepository;
@@ -54,7 +54,7 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
     }
 
     @Override
-    public bsPrCommentMiniDTO insert(bsPrCommentForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsPrCommentMiniDTO insert(bsPrCommentForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getAuthor() == null || form.getCommentContent() == null || form.getChannel() == null){
             throw new InvalidInsertDeails("Invalid insert details");
@@ -64,7 +64,7 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
         bsPrCommentEntity toInsert = mapper.toEntity(form);
 
         //Check if the channel exist, if exist insert the channel in the comment
-        bsPrChannelEntity channel = channelRepository.findById(form.getChannel()).orElseThrow(() -> new ElementNotFoundExeption("Channel not found"));
+        bsPrChannelEntity channel = channelRepository.findById(form.getChannel()).orElseThrow(() -> new ElementNotFoundException("Channel not found"));
         channel.getComments().add(toInsert);
         toInsert.setChannel(channel);
 
@@ -73,7 +73,7 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
         toInsert.setProject(project);
 
         //Check if the author exist, if exist insert the author in the comment
-        User author = userRepository.findById(form.getAuthor()).orElseThrow(() -> new ElementNotFoundExeption("Author not found"));
+        User author = userRepository.findById(form.getAuthor()).orElseThrow(() -> new ElementNotFoundException("Author not found"));
         author.getComments().add(toInsert);
         toInsert.setAuthor(author);
 
@@ -108,9 +108,9 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
         return mapper.toSmallDTO(toInsert);
     }
 
-    public List< bsPrCommentDTO> getAllByChannel(Long channelID, Integer page, Integer size) throws ElementNotFoundExeption {
+    public List< bsPrCommentDTO> getAllByChannel(Long channelID, Integer page, Integer size) throws ElementNotFoundException {
 
-        bsPrChannelEntity channel = channelRepository.findById(channelID).orElseThrow(() -> new ElementNotFoundExeption("Channel not found"));
+        bsPrChannelEntity channel = channelRepository.findById(channelID).orElseThrow(() -> new ElementNotFoundException("Channel not found"));
 
         PageRequest pr = PageRequest.of(page, size, Sort.by("commentDate").descending());
 

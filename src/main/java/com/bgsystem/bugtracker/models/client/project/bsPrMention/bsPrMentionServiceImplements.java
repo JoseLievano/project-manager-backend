@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsPrMention;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentRepository;
@@ -33,7 +33,7 @@ public class bsPrMentionServiceImplements extends DefaultServiceImplements <bsPr
     }
 
     @Override
-    public bsPrMentionMiniDTO insert(bsPrMentionForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsPrMentionMiniDTO insert(bsPrMentionForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getAuthor() == null || form.getMentionedUser() == null || form.getComment() == null) {
             throw new InvalidInsertDeails("Invalid insert details");
@@ -48,14 +48,14 @@ public class bsPrMentionServiceImplements extends DefaultServiceImplements <bsPr
         }
 
         //Check if the author exists and insert the author in the mention
-        User author = userRepository.findById(form.getAuthor()).orElseThrow(() -> new ElementNotFoundExeption("The author does not exist"));
+        User author = userRepository.findById(form.getAuthor()).orElseThrow(() -> new ElementNotFoundException("The author does not exist"));
         toInsert.setAuthor(author);
 
-        User mentionedUser = userRepository.findById(form.getMentionedUser()).orElseThrow(() -> new ElementNotFoundExeption("The mentioned user does not exist"));
+        User mentionedUser = userRepository.findById(form.getMentionedUser()).orElseThrow(() -> new ElementNotFoundException("The mentioned user does not exist"));
         toInsert.setMentionedUser(mentionedUser);
 
         //Check if the comment exists and insert the comment in the mention
-        bsPrCommentEntity comment = commentRepository.findById(form.getComment()).orElseThrow(() -> new ElementNotFoundExeption("The comment does not exist"));
+        bsPrCommentEntity comment = commentRepository.findById(form.getComment()).orElseThrow(() -> new ElementNotFoundException("The comment does not exist"));
         toInsert.setComment(comment);
 
         //Check if the mention already exists

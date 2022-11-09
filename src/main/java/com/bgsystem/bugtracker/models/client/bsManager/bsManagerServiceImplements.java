@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsManager;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessRepository;
@@ -30,7 +30,7 @@ public class bsManagerServiceImplements extends DefaultServiceImplements <bsMana
     }
 
     @Override
-    public bsManagerMiniDTO insert(bsManagerForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsManagerMiniDTO insert(bsManagerForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getPassword() == null || form.getEmail() == null || form.getUsername() == null) {
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new manager");
@@ -55,7 +55,7 @@ public class bsManagerServiceImplements extends DefaultServiceImplements <bsMana
         toInsert.setRoles(roles);
 
         //Insert the Business
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(ElementNotFoundExeption::new);
+        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(ElementNotFoundException::new);
 
         toInsert.setBusiness(business);
 

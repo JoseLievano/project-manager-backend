@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.HQ.invoice;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.HQ.client.ClientEntity;
 import com.bgsystem.bugtracker.models.HQ.client.ClientRepository;
@@ -41,7 +41,7 @@ public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDT
     }
 
     @Override
-    public InvoiceMiniDTO insert(InvoiceForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public InvoiceMiniDTO insert(InvoiceForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         //Validating the form information
         if (form == null || form.getNumber() == null || form.getBusiness() == null || form.getClient() == null || form.getPlan() == null){
@@ -59,13 +59,13 @@ public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDT
         //Insert the MainHQ in the invoice
         MainHQEntity mainHQEntity = mainHQRepository.findAll().get(0);
         if (mainHQEntity == null) {
-            throw new ElementNotFoundExeption("The MainHQ is not found in our DB");
+            throw new ElementNotFoundException("The MainHQ is not found in our DB");
         }else {
             toInsert.setMainHQEntity(mainHQEntity);
         }
 
         //Set invoice price based on the plan selected
-        PlanEntity planEntity = planRepository.findById(form.getPlan()).orElseThrow(ElementNotFoundExeption::new);
+        PlanEntity planEntity = planRepository.findById(form.getPlan()).orElseThrow(ElementNotFoundException::new);
         toInsert.setPlanEntity(planEntity);
         toInsert.setAmount(planEntity.getPrice());
 
@@ -73,13 +73,13 @@ public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDT
         planRepository.save(planEntity);
 
         //Set invoice client based on the client selected
-        ClientEntity clientEntity = clientRepository.findById(form.getClient()).orElseThrow(ElementNotFoundExeption::new);
+        ClientEntity clientEntity = clientRepository.findById(form.getClient()).orElseThrow(ElementNotFoundException::new);
         toInsert.setClientEntity(clientEntity);
         clientEntity.getInvoiceEntities().add(toInsert);
         clientRepository.save(clientEntity);
 
         //Set invoice business based on the business selected
-        BusinessEntity businessEntity = businessRepository.findById(form.getBusiness()).orElseThrow(ElementNotFoundExeption::new);
+        BusinessEntity businessEntity = businessRepository.findById(form.getBusiness()).orElseThrow(ElementNotFoundException::new);
         toInsert.setBusinessEntity(businessEntity);
         businessEntity.getInvoiceEntities().add(toInsert);
         businessRepository.save(businessEntity);

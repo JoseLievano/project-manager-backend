@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.project.bsProject;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientEntity;
 import com.bgsystem.bugtracker.models.client.bsClient.bsClientRepository;
@@ -35,7 +35,7 @@ public class bsProjectServiceImplements extends DefaultServiceImplements <bsProj
     }
 
     @Override
-    public bsProjectMiniDTO insert(bsProjectForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsProjectMiniDTO insert(bsProjectForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getBusiness() == null || form.getName() == null || form.getClient() == null) {
             throw new InvalidInsertDeails("Invalid insert details");
@@ -56,10 +56,10 @@ public class bsProjectServiceImplements extends DefaultServiceImplements <bsProj
         toInsert.setIsCompleted(false);
 
         //Check if business exists
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundExeption("Business not found"));
+        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
 
         //Check if client exists
-        bsClientEntity client = bsClientRepository.findById(form.getClient()).orElseThrow(() -> new ElementNotFoundExeption("Client not found"));
+        bsClientEntity client = bsClientRepository.findById(form.getClient()).orElseThrow(() -> new ElementNotFoundException("Client not found"));
 
         //Check if a project with the same name, business and cliente already exists
         if (bsProjectRepository.findByNameAndBusinessAndClient(form.getName(), business, client).size() > 0) {

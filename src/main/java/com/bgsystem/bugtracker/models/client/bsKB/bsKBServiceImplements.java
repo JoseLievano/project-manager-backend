@@ -1,7 +1,7 @@
 package com.bgsystem.bugtracker.models.client.bsKB;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundExeption;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.bsKBCategory.bsKBCategoryEntity;
 import com.bgsystem.bugtracker.models.client.bsKBCategory.bsKBCategoryRepository;
@@ -29,16 +29,16 @@ public class bsKBServiceImplements extends DefaultServiceImplements <bsKBDTO, bs
     }
 
     @Override
-    public bsKBMiniDTO insert(bsKBForm form) throws ElementNotFoundExeption, ElementAlreadyExist, InvalidInsertDeails {
+    public bsKBMiniDTO insert(bsKBForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getBusiness() == null || form.getBsKBCategory() == null || form.getContent() == null || form.getTitle() == null) {
             throw new InvalidInsertDeails("Invalid insert details");
         }
 
         // Check if business exists
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundExeption("Business not found"));
+        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
         // Check if bsKBCategory exists
-        bsKBCategoryEntity bsKBCategory = bsKBCategoryRepository.findById(form.getBsKBCategory()).orElseThrow(() -> new ElementNotFoundExeption("bsKBCategory not found"));
+        bsKBCategoryEntity bsKBCategory = bsKBCategoryRepository.findById(form.getBsKBCategory()).orElseThrow(() -> new ElementNotFoundException("bsKBCategory not found"));
 
         //Check if a KB with the same title and the same business already exists
         if (bsKBRepository.findByTitleAndBusiness(form.getTitle(), business).size() > 0) {
