@@ -6,12 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
-public interface BusinessRepository extends JpaRepository <BusinessEntity, Long>, JpaSpecificationExecutor<BusinessEntity> {
+public interface BusinessRepository extends JpaRepository <BusinessEntity, Long>, QuerydslPredicateExecutor<BusinessEntity> {
 
     Set<BusinessEntity> findByName (String name);
 

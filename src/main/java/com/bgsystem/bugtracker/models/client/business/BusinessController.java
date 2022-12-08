@@ -1,6 +1,8 @@
 package com.bgsystem.bugtracker.models.client.business;
 
 import com.bgsystem.bugtracker.shared.controller.DefaultController;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,6 +13,11 @@ public class BusinessController extends DefaultController<BusinessDTO, BusinessM
     protected BusinessController(BusinessServiceImplements service) {
         super(service);
         this.service = service;
+    }
+
+    @GetMapping("test/{name}")
+    public Page<BusinessListDTO> test(@PathVariable String name){
+        return ResponseEntity.ok(service.test(name)).getBody();
     }
 
     /*

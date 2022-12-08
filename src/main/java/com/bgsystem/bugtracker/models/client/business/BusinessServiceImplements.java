@@ -51,7 +51,6 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         this.businessMapper = businessMapper;
         this.entityFactory = entityFactory;
     }
-
     @Override
     public BusinessMiniDTO insert(BusinessForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
@@ -202,9 +201,11 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     }
 
-    public Page<BusinessListDTO> test(){
+    public Page<BusinessListDTO> test(String name){
 
-        return null;
+        PageRequest pageRequest = PageRequest.of(0,10);
+
+        return repository.findAll(BusinessExpressions.nameContains(name), pageRequest).map(businessMapper::toListDTO);
 
     }
 
