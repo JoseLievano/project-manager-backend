@@ -1,6 +1,9 @@
 package com.bgsystem.bugtracker.models.client.business;
 
+import com.bgsystem.bugtracker.exeptions.BadOperator;
+import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.shared.controller.DefaultController;
+import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +18,9 @@ public class BusinessController extends DefaultController<BusinessDTO, BusinessM
         this.service = service;
     }
 
-    @GetMapping("test/{name}")
-    public Page<BusinessListDTO> test(@PathVariable String name){
-        return ResponseEntity.ok(service.test(name)).getBody();
+    @GetMapping("/test")
+    public Page<BusinessListDTO> test(@RequestBody PageableRequest pageableRequest) throws BadOperator, ElementNotFoundException {
+        return ResponseEntity.ok(service.test(pageableRequest)).getBody();
     }
 
     /*

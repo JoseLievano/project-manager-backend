@@ -5,21 +5,16 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-
 @Data
 @Builder
 @Getter
 @Setter
+public class FilterOperator {
 
-public class FilterRequest {
+    private String operator;
+
+    private String value;
 
     private String field;
 
-    private String type;
-
-    private ArrayList<FilterOperator> operations;
-
 }
-
-

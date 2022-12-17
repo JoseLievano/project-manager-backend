@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.business;
 
+import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
@@ -8,16 +9,21 @@ import com.bgsystem.bugtracker.models.HQ.client.ClientRepository;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanEntity;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanRepository;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsEntity;
+import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsRepository;
 import com.bgsystem.bugtracker.shared.service.EntityFactory;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -155,7 +161,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     private List<BusinessEntity> filterBy (FilterRequest filterRequest) throws ElementNotFoundException {
 
-        if (filterRequest.getBy().equals("client")){
+        /*if (filterRequest.getBy().equals("client")){
 
             ClientEntity client = clientRepository.findById(filterRequest.getId()).orElseThrow(ElementNotFoundException::new);
 
@@ -169,13 +175,13 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
         }else{
             throw new ElementNotFoundException("The filter is not valid");
-        }
-
+        }*/
+        return null;
     }
 
     private Page<BusinessListDTO> filterByPageable(PageableRequest pageRequest) throws ElementNotFoundException {
 
-        if (pageRequest.getFilter().isEmpty()){
+        /*if (pageRequest.getFilter().isEmpty()){
             return repository.findAll(pageRequest.getPageRequest()).map(businessMapper::toListDTO);
         }else{
 
@@ -197,16 +203,33 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
                 throw new ElementNotFoundException("The filter is not valid");
             }
 
-        }
+        }*/
+
+        return null;
+    }
+
+    public Page<BusinessListDTO> test(PageableRequest pageRequest) throws BadOperator, ElementNotFoundException {
+
+        PageRequest pr = pageRequest.getPageRequest();
+
+        ArrayList<FilterRequest> filters = pageRequest.getFilter().get();
+
+        CommonPathExpression predicate = new BusinessPredicate(filters, getEntityClass(), getEntityName());
+
+        BooleanExpression expression = predicate.getExpression();
+
+        return repository.findAll(expression, pr).map(businessMapper::toListDTO);
 
     }
 
-    public Page<BusinessListDTO> test(String name){
+    @Bean
+    private Class getEntityClass(){
+        return BusinessEntity.class;
+    }
 
-        PageRequest pageRequest = PageRequest.of(0,10);
-
-        return repository.findAll(BusinessExpressions.nameContains(name), pageRequest).map(businessMapper::toListDTO);
-
+    @Bean
+    private String getEntityName(){
+        return "businessEntity";
     }
 
 }

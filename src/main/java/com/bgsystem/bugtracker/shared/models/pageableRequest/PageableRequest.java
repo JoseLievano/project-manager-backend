@@ -24,7 +24,7 @@ public class PageableRequest {
 
     private List<SortInfo> sort;
 
-    private Optional<FilterRequest> filter;
+    private Optional<ArrayList<FilterRequest>> filter;
 
     public PageRequest getPageRequest(){
 

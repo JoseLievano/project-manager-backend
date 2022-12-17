@@ -29,10 +29,6 @@ public class SecurityUserServiceImplements implements UserDetailsService {
 
         User actualUser = user.iterator().next();
 
-        /*System.out.println(actualUser.getUsername());
-
-        System.out.println(actualUser.getRoles().size());*/
-
         return new SecurityUser(actualUser);
     }
 

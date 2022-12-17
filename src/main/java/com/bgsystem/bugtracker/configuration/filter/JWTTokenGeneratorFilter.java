@@ -25,12 +25,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
+@Service
 public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
 
-    @Autowired
+
     private UserRepository userRepository;
 
+    @Autowired
     public JWTTokenGeneratorFilter(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
