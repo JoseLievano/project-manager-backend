@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.shared.service;
 
+import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
@@ -24,7 +25,7 @@ public interface DefaultService < DTO, MINIDTO, LISTDTO, FORM, ID >{
 
     Collection<LISTDTO> getAllForList(Optional<FilterRequest> filterRequest) throws ElementNotFoundException;
 
-    Page<LISTDTO> getPageableList(PageableRequest pageableRequest) throws ElementNotFoundException;
+    Page<LISTDTO> getPageableList(PageableRequest pageableRequest) throws ElementNotFoundException, BadOperator;
 
     LISTDTO updateListView(ID id) throws ElementNotFoundException;
 

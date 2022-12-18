@@ -12,6 +12,7 @@ import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettings
 import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
+import com.bgsystem.bugtracker.shared.repository.DefaultRepository;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsRepository;
 import com.bgsystem.bugtracker.shared.service.EntityFactory;
@@ -39,23 +40,26 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     private final BusinessMapper businessMapper;
 
-    private final EntityFactory entityFactory;
+    private final BusinessPredicate businessPredicate;
 
     @Autowired
-    public BusinessServiceImplements(BusinessRepository repository, BusinessMapper mapper,
-                                     ClientRepository clientRepository,
-                                     PlanRepository planRepository,
-                                     bsGeneralSettingsRepository bsGeneralSettingsRepository,
-                                     BusinessMapper businessMapper,
-                                        EntityFactory entityFactory
+    public BusinessServiceImplements(
+                                 BusinessRepository repository,
+                                 BusinessMapper mapper,
+                                 ClientRepository clientRepository,
+                                 PlanRepository planRepository,
+                                 bsGeneralSettingsRepository bsGeneralSettingsRepository,
+                                 BusinessMapper businessMapper,
+                                 BusinessPredicate businessPredicate
+
     ){
-        super(repository, mapper);
+        super(repository, mapper, businessPredicate);
         this.repository = repository;
         this.clientRepository = clientRepository;
         this.planRepository = planRepository;
         this.bsGeneralSettingsRepository = bsGeneralSettingsRepository;
         this.businessMapper = businessMapper;
-        this.entityFactory = entityFactory;
+        this.businessPredicate = businessPredicate;
     }
     @Override
     public BusinessMiniDTO insert(BusinessForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
@@ -214,9 +218,11 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
         ArrayList<FilterRequest> filters = pageRequest.getFilter().get();
 
-        CommonPathExpression predicate = new BusinessPredicate(filters, getEntityClass(), getEntityName());
+        businessPredicate.setFilters(filters);
 
-        BooleanExpression expression = predicate.getExpression();
+        BooleanExpression expression = businessPredicate.getExpression();
+
+        System.out.println(expression.toString());
 
         return repository.findAll(expression, pr).map(businessMapper::toListDTO);
 

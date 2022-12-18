@@ -1,15 +1,19 @@
 package com.bgsystem.bugtracker.shared.service;
 
+import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
+import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
+import com.bgsystem.bugtracker.shared.repository.DefaultRepository;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -17,13 +21,16 @@ import java.util.stream.Collectors;
 
 public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENTITY, ID> implements DefaultService <DTO, MINIDTO, LISTDTO, FORM, ID> {
 
-    protected final JpaRepository<ENTITY, ID> repository;
+    protected final DefaultRepository<ENTITY, ID> repository;
     protected final DefaultMapper<DTO, MINIDTO, LISTDTO, FORM, ENTITY> mapper;
+    protected final CommonPathExpression<ENTITY> commonPathExpression;
 
-    public DefaultServiceImplements (JpaRepository<ENTITY, ID> repository, DefaultMapper<DTO, MINIDTO, LISTDTO, FORM, ENTITY> mapper){
+    public DefaultServiceImplements (DefaultRepository<ENTITY, ID> repository, DefaultMapper<DTO, MINIDTO, LISTDTO, FORM, ENTITY> mapper, CommonPathExpression<ENTITY> commonPathExpression){
         this.repository = repository;
         this.mapper = mapper;
+        this.commonPathExpression = commonPathExpression;
     }
+
 
     @Override
     public DTO getOne(ID id) throws ElementNotFoundException {
@@ -77,11 +84,19 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
-    public Page<LISTDTO> getPageableList(PageableRequest pageableRequest) throws ElementNotFoundException {
+    public Page<LISTDTO> getPageableList(PageableRequest pageRequest) throws ElementNotFoundException, BadOperator {
 
-        PageRequest pr = pageableRequest.getPageRequest();
+        PageRequest pr = pageRequest.getPageRequest();
 
-        return repository.findAll(pr).map(mapper::toListDTO);
+        ArrayList<FilterRequest> filters = pageRequest.getFilter().get();
+
+        commonPathExpression.setFilters(filters);
+
+        BooleanExpression expression = commonPathExpression.getExpression();
+
+        System.out.println(expression.toString());
+
+        return repository.findAll(expression, pr).map(mapper::toListDTO);
 
 
     }

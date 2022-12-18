@@ -4,23 +4,19 @@ import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 @Service
 public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
 
-    private QBusinessEntity businessEntity = QBusinessEntity.businessEntity;
+    private final QBusinessEntity businessEntity = QBusinessEntity.businessEntity;
 
-    public BusinessPredicate(ArrayList<FilterRequest> filters, Class entityClass, String entityName){
-        super(  filters,
-                entityClass,
-                entityName,
-                new ArrayList<String>(Arrays.asList(
-                        "client"
-                )));
+    public BusinessPredicate(){
+        super( );
+        this.entityFields.add("client");
+        this.entityPath = new PathBuilder<BusinessEntity>(BusinessEntity.class, "businessEntity");
     }
 
     @Override
@@ -58,6 +54,11 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
 
                     clientExpression = businessEntity.client.firstName.equalsIgnoreCase(operation.getValue())
                             .or(businessEntity.client.lastName.equalsIgnoreCase(operation.getValue()));
+
+                } else if (operator.equals("!=")) {
+
+                    clientExpression = businessEntity.client.firstName.notEqualsIgnoreCase(operation.getValue())
+                            .and(businessEntity.client.lastName.notEqualsIgnoreCase(operation.getValue()));
 
                 }
             }

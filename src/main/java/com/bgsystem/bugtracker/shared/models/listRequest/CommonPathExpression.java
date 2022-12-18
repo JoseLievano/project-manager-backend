@@ -16,10 +16,11 @@ public abstract class CommonPathExpression <Entity> {
 
     protected ArrayList<String> entityFields = new ArrayList<>();
 
-    public CommonPathExpression(ArrayList<FilterRequest> filters, Class entityClass, String entityName, ArrayList<String> entityFields){
+    public CommonPathExpression(){}
+
+
+    public void setFilters(ArrayList<FilterRequest> filters){
         this.filters = filters;
-        this.entityPath = new PathBuilder<Entity>(entityClass, entityName);
-        this.entityFields = entityFields;
     }
 
     public BooleanExpression getExpression() throws BadOperator {
