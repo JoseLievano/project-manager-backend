@@ -28,13 +28,24 @@ public class bsInvoiceServiceImplements extends DefaultServiceImplements<bsInvoi
 
     private final bsPrTaskRepository taskRepository;
 
+    private final bsInvoicePredicate bsInvoicePredicate;
+
     @Autowired
-    public bsInvoiceServiceImplements(bsInvoiceRepository repository, bsInvoiceMapper mapper, BusinessRepository businessRepository, bsProjectRepository projectRepository, bsClientRepository clientRepository, bsPrTaskRepository taskRepository) {
-        super(repository, mapper);
+    public bsInvoiceServiceImplements(
+                                    bsInvoiceRepository repository,
+                                    bsInvoiceMapper mapper,
+                                    BusinessRepository businessRepository,
+                                    bsProjectRepository projectRepository,
+                                    bsClientRepository clientRepository,
+                                    bsPrTaskRepository taskRepository,
+                                    bsInvoicePredicate bsInvoicePredicate
+    ) {
+        super(repository, mapper, bsInvoicePredicate);
         this.businessRepository = businessRepository;
         this.projectRepository = projectRepository;
         this.clientRepository = clientRepository;
         this.taskRepository = taskRepository;
+        this.bsInvoicePredicate = bsInvoicePredicate;
     }
 
     @Override

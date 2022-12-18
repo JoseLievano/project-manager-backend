@@ -16,11 +16,20 @@ public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <b
 
     private final BusinessRepository businessRepository;
 
+    private final bsDocsCategoryPredicate bsDocsCategoryPredicate;
+
     @Autowired
-    public bsDocsCategoryServiceImplements(bsDocsCategoryRepository repository, bsDocsCategoryMapper mapper, bsDocsCategoryRepository bsDocsCategoryRepository, BusinessRepository businessRepository) {
-        super(repository, mapper);
+    public bsDocsCategoryServiceImplements(
+                                        bsDocsCategoryRepository repository,
+                                        bsDocsCategoryMapper mapper,
+                                        bsDocsCategoryRepository bsDocsCategoryRepository,
+                                        BusinessRepository businessRepository,
+                                        bsDocsCategoryPredicate bsDocsCategoryPredicate
+    ) {
+        super(repository, mapper, bsDocsCategoryPredicate);
         this.bsDocsCategoryRepository = bsDocsCategoryRepository;
         this.businessRepository = businessRepository;
+        this.bsDocsCategoryPredicate = bsDocsCategoryPredicate;
     }
 
     @Override

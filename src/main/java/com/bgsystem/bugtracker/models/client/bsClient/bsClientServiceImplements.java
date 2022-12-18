@@ -21,12 +21,22 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
 
     private final BusinessRepository businessRepository;
 
+    private final bsClientPredicate bsClientPredicate;
+
     @Autowired
-    public bsClientServiceImplements(bsClientRepository repository, bsClientMapper mapper, PasswordEncoder encoder, bsClientRepository bsClientRepository, BusinessRepository businessRepository) {
-        super(repository, mapper);
+    public bsClientServiceImplements(
+                                    bsClientRepository repository,
+                                    bsClientMapper mapper,
+                                    PasswordEncoder encoder,
+                                    bsClientRepository bsClientRepository,
+                                    BusinessRepository businessRepository,
+                                    bsClientPredicate bsClientPredicate
+    ) {
+        super(repository, mapper, bsClientPredicate);
         this.encoder = encoder;
         this.bsClientRepository = bsClientRepository;
         this.businessRepository = businessRepository;
+        this.bsClientPredicate = bsClientPredicate;
     }
 
     @Override

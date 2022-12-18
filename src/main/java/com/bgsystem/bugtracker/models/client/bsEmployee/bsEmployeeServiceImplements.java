@@ -21,12 +21,21 @@ public class bsEmployeeServiceImplements extends DefaultServiceImplements<bsEmpl
 
     private final BusinessRepository businessRepository;
 
+    private final bsEmployeePredicate bsEmployeePredicate;
     @Autowired
-    public bsEmployeeServiceImplements(bsEmployeeRepository repository, bsEmployeeMapper mapper, PasswordEncoder passwordEncoder, bsEmployeeRepository bsEmployeeRepository, BusinessRepository businessRepository) {
-        super(repository, mapper);
+    public bsEmployeeServiceImplements(
+                                        bsEmployeeRepository repository,
+                                        bsEmployeeMapper mapper,
+                                        PasswordEncoder passwordEncoder,
+                                        bsEmployeeRepository bsEmployeeRepository,
+                                        BusinessRepository businessRepository,
+                                        bsEmployeePredicate bsEmployeePredicate
+    ) {
+        super(repository, mapper, bsEmployeePredicate);
         this.passwordEncoder = passwordEncoder;
         this.bsEmployeeRepository = bsEmployeeRepository;
         this.businessRepository = businessRepository;
+        this.bsEmployeePredicate = bsEmployeePredicate;
     }
 
     @Override

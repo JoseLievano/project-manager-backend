@@ -20,12 +20,22 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
 
     private final bsDocsCategoryRepository bsDocsCategoryRepository;
 
+    private final bsDocPredicate bsDocPredicate;
+
     @Autowired
-    public bsDocServiceImplements(bsDocRepository repository, bsDocMapper mapper, bsDocRepository bsDocRepository, BusinessRepository businessRepository, bsDocsCategoryRepository bsDocsCategoryRepository) {
-        super(repository, mapper);
+    public bsDocServiceImplements(
+                                bsDocRepository repository,
+                                bsDocMapper mapper,
+                                bsDocRepository bsDocRepository,
+                                BusinessRepository businessRepository,
+                                bsDocsCategoryRepository bsDocsCategoryRepository,
+                                bsDocPredicate bsDocPredicate
+    ) {
+        super(repository, mapper, bsDocPredicate);
         this.bsDocRepository = bsDocRepository;
         this.businessRepository = businessRepository;
         this.bsDocsCategoryRepository = bsDocsCategoryRepository;
+        this.bsDocPredicate = bsDocPredicate;
     }
 
     @Override
