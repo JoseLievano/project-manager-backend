@@ -17,11 +17,14 @@ public class AdminServiceImplements extends DefaultServiceImplements <AdminDTO, 
 
     private final AdminRepository adminRepository;
 
+    private final AdminPredicate adminPredicate;
+
     @Autowired
-    public AdminServiceImplements(AdminRepository repository, AdminMapper mapper, PasswordEncoder encoder, AdminRepository adminRepository) {
-        super(repository, mapper);
+    public AdminServiceImplements(AdminRepository repository, AdminMapper mapper, PasswordEncoder encoder, AdminRepository adminRepository, AdminPredicate adminPredicate) {
+        super(repository, mapper, adminPredicate);
         this.encoder = encoder;
         this.adminRepository = adminRepository;
+        this.adminPredicate = adminPredicate;
     }
 
     @Override

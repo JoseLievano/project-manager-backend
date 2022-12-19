@@ -16,11 +16,19 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
 
     private final bsStatusRepository bsStatusRepository;
 
+    private final bsStatusPredicate bsStatusPredicate;
     @Autowired
-    public bsStatusServiceImplements(bsStatusRepository repository, bsStatusMapper mapper, BusinessRepository businessRepository, bsStatusRepository bsStatusRepository) {
-        super(repository, mapper);
+    public bsStatusServiceImplements(
+                                    bsStatusRepository repository,
+                                    bsStatusMapper mapper,
+                                    BusinessRepository businessRepository,
+                                    bsStatusRepository bsStatusRepository,
+                                    bsStatusPredicate bsStatusPredicate
+    ) {
+        super(repository, mapper, bsStatusPredicate);
         this.businessRepository = businessRepository;
         this.bsStatusRepository = bsStatusRepository;
+        this.bsStatusPredicate = bsStatusPredicate;
     }
 
     @Override

@@ -20,16 +20,20 @@ public class bsPrMentionServiceImplements extends DefaultServiceImplements <bsPr
 
     private final bsPrCommentRepository commentRepository;
 
+    private final bsPrMentionPredicate bsPrMentionPredicate;
+
     @Autowired
     public bsPrMentionServiceImplements (bsPrMentionRepository repository,
                                          bsPrMentionMapper mapper,
                                          bsPrMentionRepository mentionRepository,
                                          UserRepository userRepository,
-                                         bsPrCommentRepository commentRepository){
-        super(repository, mapper);
+                                         bsPrCommentRepository commentRepository,
+                                         bsPrMentionPredicate bsPrMentionPredicate) {
+        super(repository, mapper, bsPrMentionPredicate);
         this.mentionRepository = mentionRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
+        this.bsPrMentionPredicate = bsPrMentionPredicate;
     }
 
     @Override

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 @Builder
 @Getter
 @Setter
-
 public class FilterRequest {
 
     private String field;

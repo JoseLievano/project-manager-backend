@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENTITY, ID> implements DefaultService <DTO, MINIDTO, LISTDTO, FORM, ID> {
 
     protected final DefaultRepository<ENTITY, ID> repository;
+
     protected final DefaultMapper<DTO, MINIDTO, LISTDTO, FORM, ENTITY> mapper;
     protected final CommonPathExpression<ENTITY> commonPathExpression;
 

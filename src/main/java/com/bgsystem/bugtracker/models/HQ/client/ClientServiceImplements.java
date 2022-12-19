@@ -15,17 +15,27 @@ import java.util.Set;
 @Service
 public class ClientServiceImplements extends DefaultServiceImplements<ClientDTO, ClientMiniDTO, ClientListDTO, ClientForm, ClientEntity, Long> {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    private final ClientRepository clientRepository;
+
+    private final MainHQRepository mainHQRepository;
+
+    private final ClientPredicate clientPredicate;
 
     @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private MainHQRepository mainHQRepository;
-
-    public ClientServiceImplements(ClientRepository repository, ClientMapper mapper) {
-        super(repository, mapper);
+    public ClientServiceImplements(
+                                    ClientRepository repository,
+                                    ClientMapper mapper,
+                                    PasswordEncoder passwordEncoder,
+                                    MainHQRepository mainHQRepository,
+                                    ClientPredicate clientPredicate
+    ) {
+        super(repository, mapper, clientPredicate);
+        this.clientRepository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.mainHQRepository = mainHQRepository;
+        this.clientPredicate = clientPredicate;
     }
 
     @Override

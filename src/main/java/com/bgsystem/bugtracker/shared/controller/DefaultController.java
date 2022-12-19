@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.shared.controller;
 
+import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
@@ -60,9 +61,13 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
     }
 
     @GetMapping("/pageable")
-    public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException {
+    public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException, BadOperator {
+
+        System.out.println("pageable " + pageableRequest.isPresent());
 
         if(pageableRequest.isPresent()){
+
+            System.out.println("in if");
 
             return ResponseEntity.ok(service.getPageableList(pageableRequest.get()));
 

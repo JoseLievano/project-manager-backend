@@ -21,12 +21,21 @@ public class bsManagerServiceImplements extends DefaultServiceImplements <bsMana
 
     private final BusinessRepository businessRepository;
 
+    private final bsManagerPredicate bsManagerPredicate;
     @Autowired
-    public bsManagerServiceImplements(bsManagerRepository repository, bsManagerMapper mapper, PasswordEncoder encoder, BusinessRepository businessRepository, bsManagerRepository bsManagerRepository) {
-        super(repository, mapper);
+    public bsManagerServiceImplements(
+                                    bsManagerRepository repository,
+                                    bsManagerMapper mapper,
+                                    PasswordEncoder encoder,
+                                    BusinessRepository businessRepository,
+                                    bsManagerRepository bsManagerRepository,
+                                    bsManagerPredicate bsManagerPredicate
+    ) {
+        super(repository, mapper, bsManagerPredicate);
         this.encoder = encoder;
         this.businessRepository = businessRepository;
         this.bsManagerRepository = bsManagerRepository;
+        this.bsManagerPredicate = bsManagerPredicate;
     }
 
     @Override

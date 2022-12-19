@@ -20,17 +20,21 @@ public class bsPrDocsServiceImplements extends DefaultServiceImplements <bsPrDoc
 
     private final bsPrDocsRepository docsRepository;
 
+    private final bsPrDocsPredicate bsPrDocsPredicate;
     @Autowired
-    public bsPrDocsServiceImplements (bsPrDocsRepository repository,
-                                      bsPrDocsMapper mapper,
-                                      bsPrDocsCategoryRepository bsPrDocsCategoryRepository,
-                                      bsProjectRepository bsProjectRepository,
-                                      bsPrDocsRepository docsRepository
-                                      ){
-        super(repository, mapper);
+    public bsPrDocsServiceImplements (
+                                    bsPrDocsRepository repository,
+                                    bsPrDocsMapper mapper,
+                                    bsPrDocsCategoryRepository bsPrDocsCategoryRepository,
+                                    bsProjectRepository bsProjectRepository,
+                                    bsPrDocsRepository docsRepository,
+                                    bsPrDocsPredicate bsPrDocsPredicate
+    ){
+        super(repository, mapper, bsPrDocsPredicate);
         this.bsPrDocsCategoryRepository = bsPrDocsCategoryRepository;
         this.bsProjectRepository = bsProjectRepository;
         this.docsRepository = docsRepository;
+        this.bsPrDocsPredicate = bsPrDocsPredicate;
     }
 
     @Override

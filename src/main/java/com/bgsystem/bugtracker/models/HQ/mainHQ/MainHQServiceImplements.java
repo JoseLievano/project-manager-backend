@@ -12,11 +12,19 @@ import java.util.List;
 @Service
 public class MainHQServiceImplements extends DefaultServiceImplements<MainHQDTO, MainHQMiniDTO, MainHQListDTO, MainHQForm, MainHQEntity, Long> {
 
-    @Autowired
-    private MainHQRepository mainHQRepository;
+    private final MainHQRepository mainHQRepository;
 
-    public MainHQServiceImplements(MainHQRepository repository, MainHQMapper mapper) {
-        super(repository, mapper);
+    private final MainHQPredicate mainHQPredicate;
+
+    @Autowired
+    public MainHQServiceImplements(
+                                    MainHQRepository repository,
+                                    MainHQMapper mapper,
+                                    MainHQPredicate mainHQPredicate
+    ) {
+        super(repository, mapper, mainHQPredicate);
+        this.mainHQRepository = repository;
+        this.mainHQPredicate = mainHQPredicate;
     }
 
     @Override

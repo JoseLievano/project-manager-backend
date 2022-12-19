@@ -2,12 +2,13 @@ package com.bgsystem.bugtracker.shared.models.listRequest;
 
 import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.querydsl.core.types.dsl.*;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+@Service
 public abstract class CommonPathExpression <Entity> {
 
     protected ArrayList<FilterRequest> filters;
@@ -17,7 +18,6 @@ public abstract class CommonPathExpression <Entity> {
     protected ArrayList<String> entityFields = new ArrayList<>();
 
     public CommonPathExpression(){}
-
 
     public void setFilters(ArrayList<FilterRequest> filters){
         this.filters = filters;

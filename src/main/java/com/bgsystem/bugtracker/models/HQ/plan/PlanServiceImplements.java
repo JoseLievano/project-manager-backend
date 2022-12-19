@@ -14,14 +14,23 @@ import java.util.Set;
 @Service
 public class PlanServiceImplements extends DefaultServiceImplements<PlanDTO, PlanMiniDTO, PlanListDTO, PlanForm, PlanEntity, Long> {
 
-    @Autowired
-    private PlanRepository planRepository;
+    private final PlanRepository planRepository;
+
+    private final MainHQRepository mainHQRepository;
+
+    private final PlanPredicate planPredicate;
 
     @Autowired
-    private MainHQRepository mainHQRepository;
-
-    public PlanServiceImplements(PlanRepository repository, PlanMapper mapper) {
-        super(repository, mapper);
+    public PlanServiceImplements(
+                                PlanRepository repository,
+                                PlanMapper mapper,
+                                MainHQRepository mainHQRepository,
+                                PlanPredicate planPredicate
+    ) {
+        super(repository, mapper, planPredicate);
+        this.planRepository = repository;
+        this.mainHQRepository = mainHQRepository;
+        this.planPredicate = planPredicate;
     }
 
     @Override

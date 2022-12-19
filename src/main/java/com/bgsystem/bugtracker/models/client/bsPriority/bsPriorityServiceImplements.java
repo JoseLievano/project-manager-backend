@@ -16,11 +16,19 @@ public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPri
 
     private final bsPriorityRepository priorityRepository;
 
+    private final bsPriorityPredicate priorityPredicate;
     @Autowired
-    public bsPriorityServiceImplements( bsPriorityRepository repository, bsPriorityMapper mapper, BusinessRepository businessRepository, bsPriorityRepository priorityRepository) {
-        super( repository, mapper );
+    public bsPriorityServiceImplements(
+                                        bsPriorityRepository repository,
+                                        bsPriorityMapper mapper,
+                                        BusinessRepository businessRepository,
+                                        bsPriorityRepository priorityRepository,
+                                        bsPriorityPredicate bsPriorityPredicate
+    ) {
+        super( repository, mapper, bsPriorityPredicate );
         this.businessRepository = businessRepository;
         this.priorityRepository = priorityRepository;
+        this.priorityPredicate = bsPriorityPredicate;
     }
 
     @Override

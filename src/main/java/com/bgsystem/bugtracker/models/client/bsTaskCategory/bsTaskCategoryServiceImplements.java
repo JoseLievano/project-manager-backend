@@ -16,11 +16,19 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
 
     private final BusinessRepository businessRepository;
 
+    private final bsTaskCategoryPredicate bsTaskCategoryPredicate;
     @Autowired
-    public bsTaskCategoryServiceImplements(bsTaskCategoryRepository repository, bsTaskCategoryMapper mapper, bsTaskCategoryRepository bsTaskCategoryRepository, BusinessRepository businessRepository) {
-        super(repository, mapper);
+    public bsTaskCategoryServiceImplements(
+                                        bsTaskCategoryRepository repository,
+                                        bsTaskCategoryMapper mapper,
+                                        bsTaskCategoryRepository bsTaskCategoryRepository,
+                                        BusinessRepository businessRepository,
+                                        bsTaskCategoryPredicate bsTaskCategoryPredicate
+    ) {
+        super(repository, mapper, bsTaskCategoryPredicate);
         this.bsTaskCategoryRepository = bsTaskCategoryRepository;
         this.businessRepository = businessRepository;
+        this.bsTaskCategoryPredicate = bsTaskCategoryPredicate;
     }
 
     @Override

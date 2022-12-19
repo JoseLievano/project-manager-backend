@@ -122,12 +122,12 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     }
 
-    @Override
-    public Page<BusinessListDTO> getPageableList(PageableRequest pageableRequest) throws ElementNotFoundException {
+
+    /*public Page<BusinessListDTO> getPageableList(PageableRequest pageableRequest) throws ElementNotFoundException {
 
         return filterByPageable(pageableRequest);
 
-    }
+    }*/
 
 
     @Override

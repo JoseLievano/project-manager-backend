@@ -19,8 +19,11 @@ public class UserServiceImplements extends DefaultServiceImplements <UserDTO, Us
     @Autowired
     UserRepository userRepository;
 
-    public UserServiceImplements(UserRepository repository, UserMapper mapper){
-        super(repository, mapper);
+    @Autowired
+    UserPredicate userPredicate;
+
+    public UserServiceImplements(UserRepository repository, UserMapper mapper, UserPredicate userPredicate) {
+        super(repository, mapper, userPredicate);
     }
 
     @Override

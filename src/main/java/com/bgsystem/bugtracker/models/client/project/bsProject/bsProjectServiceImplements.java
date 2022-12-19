@@ -22,16 +22,19 @@ public class bsProjectServiceImplements extends DefaultServiceImplements <bsProj
 
     private final bsProjectRepository bsProjectRepository;
 
+    private final bsProjectPredicate bsProjectPredicate;
     @Autowired
     public bsProjectServiceImplements (bsProjectRepository repository,
                                        bsProjectMapper mapper,
                                        BusinessRepository businessRepository,
                                        bsClientRepository bsClientRepository,
-                                       bsProjectRepository bsProjectRepository) {
-        super(repository, mapper);
+                                       bsProjectRepository bsProjectRepository,
+                                       bsProjectPredicate bsProjectPredicate) {
+        super(repository, mapper, bsProjectPredicate);
         this.businessRepository = businessRepository;
         this.bsClientRepository = bsClientRepository;
         this.bsProjectRepository = bsProjectRepository;
+        this.bsProjectPredicate = bsProjectPredicate;
     }
 
     @Override

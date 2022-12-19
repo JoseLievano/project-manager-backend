@@ -22,12 +22,21 @@ public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPr
 
     private final bsPrChannelRepository channelRepository;
 
+    private final bsPrChannelPredicate bsPrChannelPredicate;
     @Autowired
-    public bsPrChannelServiceImplements(bsPrChannelRepository respository, bsPrChannelMapper mapper, bsProjectRepository projectRepository, UserRepository userRepository, bsPrChannelRepository channelRepository) {
-        super(respository, mapper);
+    public bsPrChannelServiceImplements(
+                                        bsPrChannelRepository respository,
+                                        bsPrChannelMapper mapper,
+                                        bsProjectRepository projectRepository,
+                                        UserRepository userRepository,
+                                        bsPrChannelRepository channelRepository,
+                                        bsPrChannelPredicate bsPrChannelPredicate
+    ) {
+        super(respository, mapper, bsPrChannelPredicate);
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.channelRepository = channelRepository;
+        this.bsPrChannelPredicate = bsPrChannelPredicate;
     }
 
     @Override

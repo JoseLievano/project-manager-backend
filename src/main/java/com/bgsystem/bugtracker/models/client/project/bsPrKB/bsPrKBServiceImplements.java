@@ -20,17 +20,21 @@ public class bsPrKBServiceImplements extends DefaultServiceImplements <bsPrKBDTO
 
     private final bsPrKBCategoryRepository bsPrKBCategoryRepository;
 
+    private final bsPrKBPredicate bsPrKBPredicate;
+
     @Autowired
     public bsPrKBServiceImplements (bsPrKBRepository repository,
                                     bsPrKBMapper mapper,
                                     bsPrKBRepository bsPrKBRepository,
                                     bsProjectRepository bsProjectRepository,
-                                    bsPrKBCategoryRepository bsPrKBCategoryRepository)
+                                    bsPrKBCategoryRepository bsPrKBCategoryRepository,
+                                    bsPrKBPredicate bsPrKBPredicate)
     {
-        super (repository, mapper);
+        super (repository, mapper, bsPrKBPredicate);
         this.bsPrKBRepository = bsPrKBRepository;
         this.bsProjectRepository = bsProjectRepository;
         this.bsPrKBCategoryRepository = bsPrKBCategoryRepository;
+        this.bsPrKBPredicate = bsPrKBPredicate;
     }
 
     @Override

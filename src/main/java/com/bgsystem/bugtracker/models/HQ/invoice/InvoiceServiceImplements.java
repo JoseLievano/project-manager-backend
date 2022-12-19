@@ -21,23 +21,35 @@ import java.util.Set;
 @Service
 public class InvoiceServiceImplements extends DefaultServiceImplements<InvoiceDTO, InvoiceMiniDTO, InvoiceListDTO, InvoiceForm, InvoiceEntity, Long> {
 
-    @Autowired
-    private InvoiceRepository invoiceRepository;
+    private final InvoiceRepository invoiceRepository;
+
+    private final MainHQRepository mainHQRepository;
+
+    private final ClientRepository clientRepository;
+
+    private final BusinessRepository businessRepository;
+
+    private final PlanRepository planRepository;
+
+    private final InvoicePredicate invoicePredicate;
 
     @Autowired
-    private MainHQRepository mainHQRepository;
-
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private BusinessRepository businessRepository;
-
-    @Autowired
-    private PlanRepository planRepository;
-
-    public InvoiceServiceImplements(InvoiceRepository repository, InvoiceMapper mapper) {
-        super(repository, mapper);
+    public InvoiceServiceImplements(
+                                    InvoiceRepository repository,
+                                    InvoiceMapper mapper,
+                                    MainHQRepository mainHQRepository,
+                                    ClientRepository clientRepository,
+                                    BusinessRepository businessRepository,
+                                    PlanRepository planRepository,
+                                    InvoicePredicate invoicePredicate
+    ) {
+        super(repository, mapper, invoicePredicate);
+        this.invoiceRepository = repository;
+        this.mainHQRepository = mainHQRepository;
+        this.clientRepository = clientRepository;
+        this.businessRepository = businessRepository;
+        this.planRepository = planRepository;
+        this.invoicePredicate = invoicePredicate;
     }
 
     @Override

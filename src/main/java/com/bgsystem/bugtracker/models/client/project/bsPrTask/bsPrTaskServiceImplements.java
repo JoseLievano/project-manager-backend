@@ -38,6 +38,8 @@ public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTas
 
     private final bsTaskCategoryRepository categoryRepository;
 
+    private final bsPrTaskPredicate bsPrTaskPredicate;
+
     @Autowired
     public bsPrTaskServiceImplements(bsPrTaskRepository repository,
                                      bsPrTaskMapper mapper,
@@ -47,8 +49,9 @@ public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTas
                                      bsTypeRepository typeRepository,
                                      bsStatusRepository statusRepository,
                                      bsPriorityRepository priorityRepository,
-                                     bsTaskCategoryRepository categoryRepository) {
-        super (repository, mapper);
+                                     bsTaskCategoryRepository categoryRepository,
+                                     bsPrTaskPredicate bsPrTaskPredicate) {
+        super (repository, mapper, bsPrTaskPredicate);
         this.businessRepository = businessRepository;
         this.bsPrTaskRepository = bsPrTaskRepository;
         this.projectRepository = projectRepository;
@@ -56,6 +59,7 @@ public class bsPrTaskServiceImplements extends DefaultServiceImplements <bsPrTas
         this.statusRepository = statusRepository;
         this.priorityRepository = priorityRepository;
         this.categoryRepository = categoryRepository;
+        this.bsPrTaskPredicate = bsPrTaskPredicate;
     }
 
     @Override

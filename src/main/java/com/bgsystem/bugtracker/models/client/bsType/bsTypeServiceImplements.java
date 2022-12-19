@@ -16,11 +16,19 @@ public class bsTypeServiceImplements extends DefaultServiceImplements <bsTypeDTO
 
     private final BusinessRepository businessRepository;
 
+    private final bsTypePredicate bsTypePredicate;
     @Autowired
-    public bsTypeServiceImplements(bsTypeRepository repository, bsTypeMapper mapper, bsTypeRepository bsTypeRepository, BusinessRepository businessRepository) {
-        super(repository, mapper);
+    public bsTypeServiceImplements(
+                                bsTypeRepository repository,
+                                bsTypeMapper mapper,
+                                bsTypeRepository bsTypeRepository,
+                                BusinessRepository businessRepository,
+                                bsTypePredicate bsTypePredicate
+    ) {
+        super(repository, mapper, bsTypePredicate);
         this.bsTypeRepository = bsTypeRepository;
         this.businessRepository = businessRepository;
+        this.bsTypePredicate = bsTypePredicate;
     }
 
     @Override

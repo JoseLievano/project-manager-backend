@@ -34,23 +34,26 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
 
     private final bsPrCommentRepository commentRepository;
 
+    private final bsPrCommentPredicate bsPrCommentPredicate;
     @Autowired
     public bsPrCommentServiceImplements(
-            bsPrCommentRepository repository,
-            bsPrCommentMapper mapper,
-            bsPrChannelRepository channelRepository,
-            UserRepository userRepository,
-            bsProjectRepository projectRepository,
-            bsPrMentionRepository mentionRepository,
-            bsPrCommentRepository commentRepository
+                                        bsPrCommentRepository repository,
+                                        bsPrCommentMapper mapper,
+                                        bsPrChannelRepository channelRepository,
+                                        UserRepository userRepository,
+                                        bsProjectRepository projectRepository,
+                                        bsPrMentionRepository mentionRepository,
+                                        bsPrCommentRepository commentRepository,
+                                        bsPrCommentPredicate bsPrCommentPredicate
 
     ) {
-        super(repository, mapper);
+        super(repository, mapper, bsPrCommentPredicate);
         this.channelRepository = channelRepository;
         this.userRepository = userRepository;
         this.projectRepository = projectRepository;
         this.mentionRepository = mentionRepository;
         this.commentRepository = commentRepository;
+        this.bsPrCommentPredicate = bsPrCommentPredicate;
     }
 
     @Override
