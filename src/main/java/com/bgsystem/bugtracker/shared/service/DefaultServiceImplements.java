@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -77,28 +76,30 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     @Override
     public Collection<LISTDTO> getAllForList(Optional<FilterRequest> listRequestRecord) throws ElementNotFoundException {
 
-        List<LISTDTO> list = repository.findAll()
+        return  repository.findAll()
                 .stream()
                 .map(mapper::toListDTO).toList();
-
-        return list;
     }
 
     @Override
-    public Page<LISTDTO> getPageableList(PageableRequest pageRequest) throws ElementNotFoundException, BadOperator {
+    public Page<LISTDTO> getPageableList(PageableRequest pageRequest) throws BadOperator {
 
         PageRequest pr = pageRequest.getPageRequest();
 
-        ArrayList<FilterRequest> filters = pageRequest.getFilter().get();
+        if (pageRequest.getFilter().isPresent()) {
 
-        commonPathExpression.setFilters(filters);
+            ArrayList<FilterRequest> filters = pageRequest.getFilter().get();
 
-        BooleanExpression expression = commonPathExpression.getExpression();
+            commonPathExpression.setFilters(filters);
 
-        System.out.println(expression.toString());
+            BooleanExpression expression = commonPathExpression.getExpression();
 
-        return repository.findAll(expression, pr).map(mapper::toListDTO);
+            System.out.println(expression.toString());
 
+            return repository.findAll(expression, pr).map(mapper::toListDTO);
+        }else{
+            throw new IllegalArgumentException("Filter is not present");
+        }
 
     }
 

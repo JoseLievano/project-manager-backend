@@ -30,6 +30,7 @@ public abstract class CommonPathExpression <Entity> {
         for (FilterRequest filter : filters){
 
             expressions = expressions.and(this.entityExpressionsSeparator(filter));
+
         }
 
         return expressions;
@@ -113,15 +114,24 @@ public abstract class CommonPathExpression <Entity> {
      @throws BadOperator if the provided operator is not supported for string fields
      */
     protected BooleanExpression getStringExpression(String field, FilterOperator operator) throws BadOperator {
+
         StringPath path = entityPath.getString(field);
+
+        return getStringPathBooleanExpression(path, operator);
+
+    }
+
+    protected BooleanExpression getStringPathBooleanExpression(StringPath path, FilterOperator operator) throws BadOperator {
+
+        String value = operator.getValue();
 
         switch (operator.getOperator()) {
             case ":":
-                return path.containsIgnoreCase(operator.getValue());
+                return path.containsIgnoreCase(value);
             case "=":
-                return path.equalsIgnoreCase(operator.getValue());
+                return path.equalsIgnoreCase(value);
             case "!=":
-                return path.containsIgnoreCase(operator.getValue()).not();
+                return path.containsIgnoreCase(value).not();
             default:
                 throw new BadOperator("Bad operator for string field");
         }
@@ -131,6 +141,13 @@ public abstract class CommonPathExpression <Entity> {
     protected BooleanExpression getNumberExpression(String field, FilterOperator operator) throws BadOperator {
 
         NumberPath path = entityPath.getNumber(field, Long.class);
+
+        return getNumberPathBooleanExpression(path, operator);
+
+    }
+
+    protected BooleanExpression getNumberPathBooleanExpression(NumberPath path, FilterOperator operator) throws BadOperator{
+
         double value = Double.parseDouble(operator.getValue());
 
         switch (operator.getOperator()) {
@@ -140,10 +157,12 @@ public abstract class CommonPathExpression <Entity> {
                 return path.gt(value);
             case ">=":
                 return path.goe(value);
-            case "<":
+            case "<":/**/
                 return path.lt(value);
             case "<=":
                 return path.loe(value);
+            case "!=":
+                return path.ne(value);
             default:
                 throw new BadOperator("Bad operator for number field");
         }
@@ -162,7 +181,14 @@ public abstract class CommonPathExpression <Entity> {
 
         DatePath path = entityPath.getDate(field, java.util.Date.class);
 
+        return getDatePathBooleanExpression(path, operator);
+
+    }
+
+    protected BooleanExpression getDatePathBooleanExpression(DatePath path, FilterOperator operator) throws BadOperator {
+
         Date date = getDateFromString(operator.getValue());
+
         Date date24h = new Date(date.getTime() + 86400000);
 
         switch (operator.getOperator()) {
@@ -185,6 +211,13 @@ public abstract class CommonPathExpression <Entity> {
     protected BooleanExpression getBooleanExpression(String field, FilterOperator operator) throws BadOperator {
 
         BooleanPath path = entityPath.getBoolean(field);
+
+        return getBooleanPathBooleanExpression(path, operator);
+
+    }
+
+    protected BooleanExpression getBooleanPathBooleanExpression(BooleanPath path, FilterOperator operator) throws BadOperator {
+
         boolean value = Boolean.parseBoolean(operator.getValue());
 
         switch (operator.getOperator()) {
@@ -259,4 +292,6 @@ public abstract class CommonPathExpression <Entity> {
             return false;
         }
     }
+
+
 }

@@ -3,8 +3,10 @@ package com.bgsystem.bugtracker.models.client.business;
 import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.core.types.dsl.StringPath;
 import org.springframework.stereotype.Service;
 
 
@@ -67,5 +69,14 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
         return clientExpression;
     }
 
+    private StringPath getPath(){
+
+        StringPath path = null;
+
+        path = businessEntity.client.firstName;
+
+
+        return path;
+    }
 
 }
