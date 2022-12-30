@@ -23,27 +23,4 @@ public class BusinessController extends DefaultController<BusinessDTO, BusinessM
         return ResponseEntity.ok(service.test(pageableRequest)).getBody();
     }
 
-    /*
-    @GetMapping("/list")
-    public ResponseEntity<Collection<BusinessListDTO>> getAllForList() throws ElementNotFoundException {
-        return ResponseEntity.ok(service.getAllForList(Optional.empty())) ;
-    }
-
-    @GetMapping("/list/page")
-    public Page<BusinessListDTO> getAllForListPageable(@RequestBody PageableRequest pageableRequest) throws ElementNotFoundException{
-
-        return service.getPageableList(Optional.empty(), pageableRequest);
-
-    }
-
-    @GetMapping("/list/page/{id}")
-    public Page<BusinessListDTO> getAllForListPageable(@RequestBody PageableRequest pageableRequest, @PathVariable Long id) throws ElementNotFoundException{
-        return service.getPageableList(Optional.of(id), pageableRequest);
-    }
-
-    @GetMapping("update-list-view/{id}")
-    public BusinessListDTO updateListView(@PathVariable Long id) throws ElementNotFoundException {
-        return service.updateListView(id);
-    }*/
-
 }

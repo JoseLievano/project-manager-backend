@@ -1,13 +1,13 @@
 package com.bgsystem.bugtracker.models.client.business;
 
+import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
-import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.PathBuilder;
-import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.core.types.dsl.*;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 
 @Service
@@ -22,12 +22,18 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
     }
 
     @Override
-    protected BooleanExpression getCustomPathExpression(FilterRequest filter) {
+    protected BooleanExpression getCustomPathExpression(FilterRequest filter) throws BadOperator {
 
         BooleanExpression expression = null;
 
         if (filter.getField().equals("client")){
-            expression = this.getClientExpression(filter);
+
+            expression = getClientExpression(filter);
+
+        }else if (filter.getField().equals("plan")){
+
+            expression = getPlanExpression(filter);
+
         }
 
         return expression;
@@ -35,48 +41,85 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
     }
 
     //Expressions for client field
-    private BooleanExpression getClientExpression(FilterRequest filter){
+    private BooleanExpression getClientExpression(FilterRequest filter) throws BadOperator {
 
         BooleanExpression clientExpression = null;
 
         for (FilterOperator operation : filter.getOperations()){
 
-            if (this.isANumber(operation.getValue())){
-                clientExpression = businessEntity.client.id.eq(Long.parseLong(operation.getValue()));
-            }else {
+            if (operation.getField().equals("id")){
 
-                String operator = operation.getOperator();
+                NumberPath<Long> numberPath = businessEntity.client.id;
 
-                if (operator.equals(":")) {
+                clientExpression = addOrExpression(clientExpression, getNumberPathBooleanExpression(numberPath, operation));
 
-                    clientExpression = businessEntity.client.firstName.containsIgnoreCase(operation.getValue())
-                            .or(businessEntity.client.lastName.containsIgnoreCase(operation.getValue()));
+            } else if (operation.getField().equals("email")){
 
-                } else if (operator.equals("=")) {
+                StringPath stringPath = businessEntity.client.email;
 
-                    clientExpression = businessEntity.client.firstName.equalsIgnoreCase(operation.getValue())
-                            .or(businessEntity.client.lastName.equalsIgnoreCase(operation.getValue()));
+                clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
 
-                } else if (operator.equals("!=")) {
+            }else if (operation.getField().equals("firstName")) {
 
-                    clientExpression = businessEntity.client.firstName.notEqualsIgnoreCase(operation.getValue())
-                            .and(businessEntity.client.lastName.notEqualsIgnoreCase(operation.getValue()));
+                StringPath stringPath = businessEntity.client.firstName;
 
-                }
+                clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
+
+            }else if (operation.getField().equals("lastName")) {
+
+                StringPath stringPath = businessEntity.client.lastName;
+
+                clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
+
+            }else if (operation.getField().equals("username")) {
+
+                StringPath stringPath = businessEntity.client.username;
+
+                clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
+
+            }else if (operation.getField().equals("lastLoginDate")) {
+
+                DatePath<Date> datePath = entityPath.getDate(businessEntity.client.lastLoginDate.toString(), java.util.Date.class);
+
+                clientExpression = addOrExpression(clientExpression, getDatePathBooleanExpression(datePath, operation));
+
             }
+
         }
 
         return clientExpression;
     }
 
-    private StringPath getPath(){
+    private BooleanExpression getPlanExpression(FilterRequest filter) throws BadOperator{
 
-        StringPath path = null;
+        BooleanExpression planExpression = null;
 
-        path = businessEntity.client.firstName;
+        for (FilterOperator operation : filter.getOperations()){
 
+            if (operation.getField().equals("id")){
 
-        return path;
+                NumberPath<Long> numberPath = businessEntity.plan.id;
+
+                planExpression = addOrExpression(planExpression, getNumberPathBooleanExpression(numberPath, operation));
+
+            }else if (operation.getField().equals("name")) {
+
+                StringPath stringPath = businessEntity.plan.name;
+
+                planExpression = addOrExpression(planExpression, getStringPathBooleanExpression(stringPath, operation));
+
+            }else if (operation.getField().equals("price")){
+
+                NumberPath<Double> numberPath = businessEntity.plan.price;
+
+                planExpression = addOrExpression(planExpression, getNumberPathBooleanExpression(numberPath, operation));
+
+            }
+
+        }
+
+        return planExpression;
+
     }
 
 }

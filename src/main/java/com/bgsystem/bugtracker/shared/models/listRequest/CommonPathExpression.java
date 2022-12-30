@@ -54,18 +54,11 @@ public abstract class CommonPathExpression <Entity> {
 
     }
 
-    protected BooleanExpression getCustomPathExpression(FilterRequest filter){
+    protected BooleanExpression getCustomPathExpression(FilterRequest filter) throws BadOperator {
         return null;
     }
 
-    /**
-     * Processes a list of filter operations and returns a boolean expression that
-     * combines the operations using the `or` operator.
-     *
-     * @param filter a filter request object containing a list of filter operations
-     * @return a boolean expression representing the combined filter operations
-     * @throws BadOperator if one of the filter operations has an invalid operator
-     */
+
     protected BooleanExpression commonExpressionsSeparator(FilterRequest filter) throws BadOperator {
 
         BooleanExpression expression = null;
@@ -106,13 +99,7 @@ public abstract class CommonPathExpression <Entity> {
         return expression;
     }
 
-    /**
-     This method returns a BooleanExpression based on the provided field and operator arguments. The field argument is used to construct a StringPath instance, which is then used in the evaluation of the operator. The resulting BooleanExpression is returned by the method.
-     @param field the field to evaluate as a string
-     @param operator the operator to use in the evaluation
-     @return a BooleanExpression based on the provided arguments
-     @throws BadOperator if the provided operator is not supported for string fields
-     */
+
     protected BooleanExpression getStringExpression(String field, FilterOperator operator) throws BadOperator {
 
         StringPath path = entityPath.getString(field);
@@ -157,7 +144,7 @@ public abstract class CommonPathExpression <Entity> {
                 return path.gt(value);
             case ">=":
                 return path.goe(value);
-            case "<":/**/
+            case "<":
                 return path.lt(value);
             case "<=":
                 return path.loe(value);
@@ -169,14 +156,7 @@ public abstract class CommonPathExpression <Entity> {
 
     }
 
-    /**
-     * Gets a BooleanExpression for filtering a date field using the given operator and value.
-     *
-     * @param field the name of the date field to filter
-     * @param operator the operator to use for filtering
-     * @return a BooleanExpression for the given field, operator, and value
-     * @throws IllegalArgumentException if the operator is not valid for a date field
-     */
+
     protected BooleanExpression getDateExpression(String field, FilterOperator operator) throws BadOperator {
 
         DatePath path = entityPath.getDate(field, java.util.Date.class);
