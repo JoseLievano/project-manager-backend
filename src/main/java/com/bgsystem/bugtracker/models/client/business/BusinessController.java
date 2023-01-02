@@ -18,9 +18,4 @@ public class BusinessController extends DefaultController<BusinessDTO, BusinessM
         this.service = service;
     }
 
-    @GetMapping("/test")
-    public Page<BusinessListDTO> test(@RequestBody PageableRequest pageableRequest) throws BadOperator, ElementNotFoundException {
-        return ResponseEntity.ok(service.test(pageableRequest)).getBody();
-    }
-
 }

@@ -53,26 +53,40 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
     public ResponseEntity<Collection<LISTDTO>> getAllForList(@RequestBody Optional <FilterRequest> filterRequest) throws ElementNotFoundException {
 
         if (filterRequest.isPresent()){
-            return ResponseEntity.ok(service.getAllForList(Optional.of(filterRequest.get())));
+            return ResponseEntity.ok(service.getAllListView(Optional.of(filterRequest.get())));
         }else{
-            return ResponseEntity.ok(service.getAllForList(Optional.empty()));
+            return ResponseEntity.ok(service.getAllListView((Optional.empty())));
         }
 
     }
 
-    @GetMapping("/pageable")
-    public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException, BadOperator {
-
-        System.out.println("pageable " + pageableRequest.isPresent());
+    @GetMapping("/page")
+    public ResponseEntity<Page<DTO>> getAllPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException, BadOperator {
 
         if(pageableRequest.isPresent()){
 
-            System.out.println("in if");
-
-            return ResponseEntity.ok(service.getPageableList(pageableRequest.get()));
+            return ResponseEntity.ok(service.getPageable(pageableRequest.get()));
 
         }else{
+
             return ResponseEntity.badRequest().build();
+
+        }
+
+    }
+
+
+    @GetMapping("/page-list-view")
+    public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException, BadOperator {
+
+        if(pageableRequest.isPresent()){
+
+            return ResponseEntity.ok(service.getPageableListView(pageableRequest.get()));
+
+        }else{
+
+            return ResponseEntity.badRequest().build();
+
         }
 
     }

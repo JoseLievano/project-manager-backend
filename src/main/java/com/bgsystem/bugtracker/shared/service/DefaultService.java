@@ -23,9 +23,11 @@ public interface DefaultService < DTO, MINIDTO, LISTDTO, FORM, ID >{
 
     DTO delete (ID id) throws ElementNotFoundException;
 
-    Collection<LISTDTO> getAllForList(Optional<FilterRequest> filterRequest) throws ElementNotFoundException;
+    Collection<LISTDTO> getAllListView(Optional<FilterRequest> filterRequest) throws ElementNotFoundException;
 
-    Page<LISTDTO> getPageableList(PageableRequest pageableRequest) throws ElementNotFoundException, BadOperator;
+    Page<DTO> getPageable(PageableRequest pageableRequest) throws ElementNotFoundException, BadOperator;
+
+    Page<LISTDTO> getPageableListView(PageableRequest pageableRequest) throws ElementNotFoundException, BadOperator;
 
     LISTDTO updateListView(ID id) throws ElementNotFoundException;
 

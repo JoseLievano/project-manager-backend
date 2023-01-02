@@ -54,6 +54,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
     @Override
     public DTO update(ID id, FORM uform) throws ElementNotFoundException {
+
         ENTITY toUpdate = repository.findById(id).orElseThrow(ElementNotFoundException::new);
 
         repository.save(toUpdate);
@@ -74,15 +75,39 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
-    public Collection<LISTDTO> getAllForList(Optional<FilterRequest> listRequestRecord) throws ElementNotFoundException {
+    public Collection<LISTDTO> getAllListView(Optional<FilterRequest> listRequestRecord) throws ElementNotFoundException {
 
         return  repository.findAll()
                 .stream()
                 .map(mapper::toListDTO).toList();
+
     }
 
     @Override
-    public Page<LISTDTO> getPageableList(PageableRequest pageRequest) throws BadOperator {
+    public Page<DTO> getPageable(PageableRequest pageRequest) throws ElementNotFoundException, BadOperator {
+
+        PageRequest pr = pageRequest.getPageRequest();
+
+        if (pageRequest.getFilter().isPresent()){
+
+            ArrayList<FilterRequest> filters = pageRequest.getFilter().get();
+
+            commonPathExpression.setFilters(filters);
+
+            BooleanExpression expression = commonPathExpression.getExpression();
+
+            return repository.findAll(expression, pr).map(mapper::toDTO);
+
+        }else{
+
+            throw new IllegalArgumentException("Filter is not present");
+
+        }
+
+    }
+
+    @Override
+    public Page<LISTDTO> getPageableListView(PageableRequest pageRequest) throws BadOperator {
 
         PageRequest pr = pageRequest.getPageRequest();
 
@@ -94,11 +119,12 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
             BooleanExpression expression = commonPathExpression.getExpression();
 
-            System.out.println(expression.toString());
-
             return repository.findAll(expression, pr).map(mapper::toListDTO);
+
         }else{
+
             throw new IllegalArgumentException("Filter is not present");
+
         }
 
     }
@@ -114,7 +140,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
     }
 
-    private ENTITY updateListFields(ENTITY entity){
+    protected ENTITY updateListFields(ENTITY entity){
         return entity;
     }
 }
