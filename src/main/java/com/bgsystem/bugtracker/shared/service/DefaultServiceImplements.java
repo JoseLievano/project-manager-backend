@@ -96,6 +96,8 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
             BooleanExpression expression = commonPathExpression.getExpression();
 
+            System.out.println(expression);
+
             return repository.findAll(expression, pr).map(mapper::toDTO);
 
         }else{
@@ -119,7 +121,13 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
             BooleanExpression expression = commonPathExpression.getExpression();
 
-            return repository.findAll(expression, pr).map(mapper::toListDTO);
+            Page<ENTITY> entities = repository.findAll(expression, pr);
+
+            for (ENTITY entity : entities) {
+                updateListFields(entity);
+            }
+
+            return entities.map(mapper::toListDTO);
 
         }else{
 

@@ -80,4 +80,13 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
         return mapper.toSmallDTO(toInsert);
 
     }
+
+    @Override
+    protected bsClientEntity updateListFields(bsClientEntity bsClientEntity) {
+
+        bsClientEntity.setInvoicesCount(bsClientEntity.getInvoices() == null ? 0 : (long) bsClientEntity.getInvoices().size());
+        bsClientEntity.setProjectsCount(bsClientEntity.getProjects() == null ? 0 : (long) bsClientEntity.getProjects().size());
+
+        return bsClientEntity;
+    }
 }

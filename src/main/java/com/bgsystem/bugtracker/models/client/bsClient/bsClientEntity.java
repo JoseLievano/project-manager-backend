@@ -35,13 +35,13 @@ public class bsClientEntity extends User {
     @JoinColumn(name = "business_entity_id", nullable = false)
     private BusinessEntity business;
 
-    @OneToMany(mappedBy = "client", orphanRemoval = true)
+    @OneToMany(mappedBy = "client", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set <bsProjectEntity> projects = new LinkedHashSet<>();
 
     @Column
     private Long projectsCount;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set <bsInvoiceEntity> invoices;
 
     @Column

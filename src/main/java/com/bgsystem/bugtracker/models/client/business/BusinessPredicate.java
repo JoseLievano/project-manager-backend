@@ -17,8 +17,12 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
 
     public BusinessPredicate(){
         super( );
-        this.entityFields.add("client");
         this.entityPath = new PathBuilder<BusinessEntity>(BusinessEntity.class, "businessEntity");
+
+        this.entityFields.add("client");
+        this.entityFields.add("plan");
+        this.entityFields.add("invoice");
+
     }
 
     @Override
@@ -34,9 +38,45 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
 
             expression = getPlanExpression(filter);
 
+        }else if (filter.getField().equals("invoice")){
+
+            expression = getInvoiceExpression(filter);
+
         }
 
         return expression;
+
+    }
+
+    private BooleanExpression getInvoiceExpression(FilterRequest filter) throws BadOperator {
+
+        BooleanExpression invoiceExpression = null;
+
+        for (FilterOperator operation : filter.getOperations()){
+
+            if (operation.getField().equals("id")){
+
+                NumberPath<Long> numberPath = businessEntity.invoices.any().id;
+
+                invoiceExpression = addOrExpression(invoiceExpression, getNumberPathBooleanExpression(numberPath, operation));
+
+            } else if (operation.getField().equals("amount")) {
+
+                NumberPath<Double> numberPath = businessEntity.invoices.any().amount;
+
+                invoiceExpression = addOrExpression(invoiceExpression, getNumberPathBooleanExpression(numberPath, operation));
+
+            }else if (operation.getField().equals("number")){
+
+                StringPath stringPath = businessEntity.invoices.any().number;
+
+                invoiceExpression = addOrExpression(invoiceExpression, getStringPathBooleanExpression(stringPath, operation));
+
+            }
+
+        }
+
+        return invoiceExpression;
 
     }
 
@@ -76,12 +116,6 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
                 StringPath stringPath = businessEntity.client.username;
 
                 clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
-
-            }else if (operation.getField().equals("lastLoginDate")) {
-
-                DatePath<Date> datePath = entityPath.getDate(businessEntity.client.lastLoginDate.toString(), java.util.Date.class);
-
-                clientExpression = addOrExpression(clientExpression, getDatePathBooleanExpression(datePath, operation));
 
             }
 
