@@ -56,4 +56,13 @@ public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <b
 
         return mapper.toSmallDTO(toInsert);
     }
+
+    @Override
+    protected bsDocsCategoryEntity updateListFields(bsDocsCategoryEntity bsDocsCategoryEntity) {
+
+        bsDocsCategoryEntity.setBsDocsCount(bsDocsCategoryEntity.getBsDocs() == null ? 0 : (long) bsDocsCategoryEntity.getBsDocs().size() );
+
+        return bsDocsCategoryEntity;
+
+    }
 }

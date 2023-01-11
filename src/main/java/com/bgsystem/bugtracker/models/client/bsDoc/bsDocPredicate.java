@@ -44,43 +44,43 @@ public class bsDocPredicate extends CommonPathExpression<bsDocEntity> {
 
         BooleanExpression businessExpression = null;
 
-        for (FilterOperator operator : filter.getOperations()){
+        for (FilterOperator operation : filter.getOperations()){
 
-            if (operator.getField().equals("id")){
+            if (operation.getField().equals("id")){
 
                 NumberPath<Long> numberPath = bsDocEntity.business.id;
 
-                businessExpression = addOrExpression(businessExpression, getNumberPathBooleanExpression(numberPath, operator));
+                businessExpression = addOrExpression(businessExpression, getNumberPathBooleanExpression(numberPath, operation));
 
-            }else if (operator.getField().equals("name")){
+            }else if (operation.getField().equals("name")){
 
                 StringPath stringPath = bsDocEntity.business.name;
 
-                businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(stringPath, operator));
+                businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(stringPath, operation));
 
-            }else if (operator.getField().equals("taxID")){
+            }else if (operation.getField().equals("taxID")){
 
                 StringPath stringPath = bsDocEntity.business.taxID;
 
-                businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(stringPath, operator));
+                businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(stringPath, operation));
 
-            }else if (operator.getField().equals("pendingInvoice")){
+            }else if (operation.getField().equals("pendingInvoice")){
 
                 BooleanPath booleanPath = bsDocEntity.business.pendingInvoice;
 
-                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operator));
+                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operation));
 
-            }else if (operator.getField().equals("overDue")){
+            }else if (operation.getField().equals("overDue")){
 
                 BooleanPath booleanPath = bsDocEntity.business.overDue;
 
-                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operator));
+                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operation));
 
-            }else if (operator.getField().equals("isActive")){
+            }else if (operation.getField().equals("isActive")){
 
                 BooleanPath booleanPath = bsDocEntity.business.isActive;
 
-                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operator));
+                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operation));
 
             }
 
@@ -95,19 +95,19 @@ public class bsDocPredicate extends CommonPathExpression<bsDocEntity> {
 
         BooleanExpression categoryExpression = null;
 
-        for (FilterOperator operator : filter.getOperations()){
+        for (FilterOperator operation : filter.getOperations()){
 
-            if (operator.getField().equals("id")) {
+            if (operation.getField().equals("id")) {
 
                 NumberPath<Long> numberPath = bsDocEntity.bsDocsCategory.id;
 
-                categoryExpression = addOrExpression(categoryExpression, getNumberPathBooleanExpression(numberPath, operator));
+                categoryExpression = addOrExpression(categoryExpression, getNumberPathBooleanExpression(numberPath, operation));
 
-            }else if (operator.getField().equals("name")) {
+            }else if (operation.getField().equals("name")) {
 
                 StringPath stringPath = bsDocEntity.bsDocsCategory.name;
 
-                categoryExpression = addOrExpression(categoryExpression, getStringPathBooleanExpression(stringPath, operator));
+                categoryExpression = addOrExpression(categoryExpression, getStringPathBooleanExpression(stringPath, operation));
 
             }
 
