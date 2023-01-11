@@ -4,18 +4,16 @@ import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
-import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @Service
 public class bsInvoicePredicate extends CommonPathExpression<bsInvoiceEntity> {
 
     private final QbsInvoiceEntity bsInvoiceEntity = QbsInvoiceEntity.bsInvoiceEntity;
-    private final com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceRepository bsInvoiceRepository;
+    private final bsInvoiceRepository bsInvoiceRepository;
 
     public bsInvoicePredicate(bsInvoiceRepository bsInvoiceRepository){
         super( );
@@ -24,6 +22,7 @@ public class bsInvoicePredicate extends CommonPathExpression<bsInvoiceEntity> {
         this.entityFields.add("project");
         this.entityFields.add("business");
         this.entityFields.add("task");
+
         this.bsInvoiceRepository = bsInvoiceRepository;
     }
 
