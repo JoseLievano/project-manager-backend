@@ -1,6 +1,7 @@
 package com.bgsystem.bugtracker.models.client.business;
 
 import com.bgsystem.bugtracker.exeptions.BadOperator;
+import com.bgsystem.bugtracker.models.HQ.client.ClientRepository;
 import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
@@ -14,8 +15,9 @@ import java.util.Date;
 public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
 
     private final QBusinessEntity businessEntity = QBusinessEntity.businessEntity;
+    private final ClientRepository clientRepository;
 
-    public BusinessPredicate(){
+    public BusinessPredicate(ClientRepository clientRepository){
         super( );
         this.entityPath = new PathBuilder<BusinessEntity>(BusinessEntity.class, "businessEntity");
 
@@ -23,6 +25,7 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
         this.entityFields.add("plan");
         this.entityFields.add("invoice");
 
+        this.clientRepository = clientRepository;
     }
 
     @Override
@@ -81,7 +84,7 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
     }
 
     //Expressions for client field
-    private BooleanExpression getClientExpression(FilterRequest filter) throws BadOperator {
+    /*private BooleanExpression getClientExpression(FilterRequest filter) throws BadOperator {
 
         BooleanExpression clientExpression = null;
 
@@ -121,6 +124,40 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
 
         }
 
+        return clientExpression;
+    }*/
+    private BooleanExpression getClientExpression(FilterRequest filter) throws BadOperator {
+        BooleanExpression clientExpression = null;
+        for (FilterOperator operation : filter.getOperations()) {
+            switch (operation.getField()) {
+                case "id":
+                    NumberPath<Long> numberPath = businessEntity.client.id;
+                    clientExpression = addOrExpression(clientExpression, getNumberPathBooleanExpression(numberPath, operation));
+                    break;
+                case "email":
+                    StringPath stringPath = businessEntity.client.email;
+                    clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
+                    break;
+                case "firstName":
+                    StringPath firstNamePath = businessEntity.client.firstName;
+                    clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(firstNamePath, operation));
+                    break;
+                case "lastName":
+                    StringPath lastNamePath = businessEntity.client.lastName;
+                    clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(lastNamePath, operation));
+                    break;
+                case "username":
+                    StringPath usernamePath = businessEntity.client.username;
+                    clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(usernamePath, operation));
+                    break;
+                case "lastLogin":
+                    DatePath<Date> datePath = entityPath.getDate(businessEntity.client.lastLoginDate.toString(), java.util.Date.class);
+                    clientExpression = addOrExpression(clientExpression, getDatePathBooleanExpression(datePath, operation));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid field: " + operation.getField());
+            }
+        }
         return clientExpression;
     }
 
