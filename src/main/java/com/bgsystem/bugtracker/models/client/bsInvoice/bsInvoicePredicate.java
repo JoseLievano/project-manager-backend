@@ -15,14 +15,16 @@ import java.util.Date;
 public class bsInvoicePredicate extends CommonPathExpression<bsInvoiceEntity> {
 
     private final QbsInvoiceEntity bsInvoiceEntity = QbsInvoiceEntity.bsInvoiceEntity;
+    private final com.bgsystem.bugtracker.models.client.bsInvoice.bsInvoiceRepository bsInvoiceRepository;
 
-    public bsInvoicePredicate(){
+    public bsInvoicePredicate(bsInvoiceRepository bsInvoiceRepository){
         super( );
         this.entityPath = new PathBuilder<bsInvoiceEntity>(bsInvoiceEntity.class, "bsInvoiceEntity");
         this.entityFields.add("client");
         this.entityFields.add("project");
         this.entityFields.add("business");
         this.entityFields.add("task");
+        this.bsInvoiceRepository = bsInvoiceRepository;
     }
 
     @Override
@@ -31,8 +33,51 @@ public class bsInvoicePredicate extends CommonPathExpression<bsInvoiceEntity> {
         return switch (filter.getField()) {
             case "client" -> getClientExpression(filter);
             case "project" -> getProjectExpression(filter);
+            case "business" -> getBusinessExpression(filter);
             default -> throw new IllegalArgumentException("Invalid field: " + filter.getField());
         };
+
+    }
+
+    private BooleanExpression getBusinessExpression(FilterRequest filter) throws BadOperator{
+
+        BooleanExpression businessExpression = null;
+
+        for (FilterOperator operation : filter.getOperations()){
+
+            switch (operation.getField()){
+
+                case "id" -> {
+                    NumberPath<Long> idPath = bsInvoiceEntity.business.id;
+                    businessExpression = addOrExpression(businessExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "name" -> {
+                    StringPath namePath = bsInvoiceEntity.business.name;
+                    businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(namePath, operation));
+                }
+                case "taxID" -> {
+                    StringPath taxIDPath = bsInvoiceEntity.business.taxID;
+                    businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(taxIDPath, operation));
+                }
+                case "pendingInvoice" -> {
+                    BooleanPath pendingInvoicePath = bsInvoiceEntity.business.pendingInvoice;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(pendingInvoicePath, operation));
+                }
+                case "overDue" -> {
+                    BooleanPath overDuePath = bsInvoiceEntity.business.overDue;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(overDuePath, operation));
+                }
+                case "isActive" -> {
+                    BooleanPath isActivePath = bsInvoiceEntity.business.isActive;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(isActivePath, operation));
+                }
+                default -> throw new IllegalArgumentException("Field is invalid: " + operation.getField());
+
+            }
+
+        }
+
+        return null;
 
     }
 
@@ -40,46 +85,80 @@ public class bsInvoicePredicate extends CommonPathExpression<bsInvoiceEntity> {
 
         BooleanExpression projectExpression = null;
 
+        for (FilterOperator operation : filter.getOperations()){
+
+            switch (operation.getField()){
+
+                case "id" -> {
+                    NumberPath<Long> idPath = bsInvoiceEntity.project.id;
+                    projectExpression = addOrExpression(projectExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "name" -> {
+                    StringPath namePath = bsInvoiceEntity.project.name;
+                    projectExpression = addOrExpression(projectExpression, getStringPathBooleanExpression(namePath, operation));
+                }
+                case "isCompleted" -> {
+                    BooleanPath isCompletedPath = bsInvoiceEntity.project.isCompleted;
+                    projectExpression = addOrExpression(projectExpression, getBooleanPathBooleanExpression(isCompletedPath, operation));
+                }
+                case "created" -> {
+                    DatePath<Date> createdPath = entityPath.getDate(bsInvoiceEntity.project.created.toString(), java.util.Date.class);
+                    projectExpression = addOrExpression(projectExpression, getDatePathBooleanExpression(createdPath, operation));
+                }
+                case "dueDate" -> {
+                    DatePath<Date> dueDatePath = entityPath.getDate(bsInvoiceEntity.project.dueDate.toString(), java.util.Date.class);
+                    projectExpression = addOrExpression(projectExpression, getDatePathBooleanExpression(dueDatePath, operation));
+                }
+                default -> throw new IllegalArgumentException("Invalid field: " + operation.getField());
+
+            }
+
+        }
+
         return projectExpression;
 
     }
 
     private BooleanExpression getClientExpression(FilterRequest filter) throws BadOperator {
+
         BooleanExpression clientExpression = null;
+
         for (FilterOperator operation : filter.getOperations()) {
+
             switch (operation.getField()) {
-                case "id":
+                case "id" -> {
                     NumberPath<Long> numberPath = bsInvoiceEntity.client.id;
                     clientExpression = addOrExpression(clientExpression, getNumberPathBooleanExpression(numberPath, operation));
-                    break;
-                case "firstName":
+                }
+                case "firstName" -> {
                     StringPath stringPath = bsInvoiceEntity.client.firstName;
                     clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
-                    break;
-                case "lastName":
+                }
+                case "lastName" -> {
                     StringPath lastNamePath = bsInvoiceEntity.client.lastName;
                     clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(lastNamePath, operation));
-                    break;
-                case "username":
+                }
+                case "username" -> {
                     StringPath usernamePath = bsInvoiceEntity.client.username;
                     clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(usernamePath, operation));
-                    break;
-                case "email":
+                }
+                case "email" -> {
                     StringPath emailPath = bsInvoiceEntity.client.email;
                     clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(emailPath, operation));
-                    break;
-                case "isActive":
+                }
+                case "isActive" -> {
                     BooleanPath booleanPath = bsInvoiceEntity.client.isActive;
                     clientExpression = addOrExpression(clientExpression, getBooleanPathBooleanExpression(booleanPath, operation));
-                    break;
-                case "lastLogin":
-                    DatePath<Date> datePath = entityPath.getDate(bsInvoiceEntity.client.lastLogin.toString(), java.util.Date.class);
+                }
+                case "lastLogin" -> {
+                    DatePath<Date> datePath = entityPath.getDate(bsInvoiceEntity.client.lastLogin.toString(), Date.class);
                     clientExpression = addOrExpression(clientExpression, getDatePathBooleanExpression(datePath, operation));
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid field: " + operation.getField());
+                }
+                default -> throw new IllegalArgumentException("Invalid field: " + operation.getField());
             }
+
         }
+
         return clientExpression;
     }
 

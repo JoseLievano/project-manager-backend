@@ -30,26 +30,14 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
 
     @Override
     protected BooleanExpression getCustomPathExpression(FilterRequest filter) throws BadOperator {
-
-        BooleanExpression expression = null;
-
-        if (filter.getField().equals("client")){
-
-            expression = getClientExpression(filter);
-
-        }else if (filter.getField().equals("plan")){
-
-            expression = getPlanExpression(filter);
-
-        }else if (filter.getField().equals("invoice")){
-
-            expression = getInvoiceExpression(filter);
-
-        }
-
-        return expression;
-
+        return switch (filter.getField()) {
+            case "client" -> getClientExpression(filter);
+            case "plan" -> getPlanExpression(filter);
+            case "invoice" -> getInvoiceExpression(filter);
+            default -> throw new IllegalArgumentException("Invalid field: " + filter.getField());
+        };
     }
+
 
     private BooleanExpression getInvoiceExpression(FilterRequest filter) throws BadOperator {
 
@@ -57,140 +45,85 @@ public class BusinessPredicate extends CommonPathExpression<BusinessEntity> {
 
         for (FilterOperator operation : filter.getOperations()){
 
-            if (operation.getField().equals("id")){
-
-                NumberPath<Long> numberPath = businessEntity.invoices.any().id;
-
-                invoiceExpression = addOrExpression(invoiceExpression, getNumberPathBooleanExpression(numberPath, operation));
-
-            } else if (operation.getField().equals("amount")) {
-
-                NumberPath<Double> numberPath = businessEntity.invoices.any().amount;
-
-                invoiceExpression = addOrExpression(invoiceExpression, getNumberPathBooleanExpression(numberPath, operation));
-
-            }else if (operation.getField().equals("number")){
-
-                StringPath stringPath = businessEntity.invoices.any().number;
-
-                invoiceExpression = addOrExpression(invoiceExpression, getStringPathBooleanExpression(stringPath, operation));
-
+            switch (operation.getField()) {
+                case "id" -> {
+                    NumberPath<Long> idPath = businessEntity.invoices.any().id;
+                    invoiceExpression = addOrExpression(invoiceExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "amount" -> {
+                    NumberPath<Double> amountPath = businessEntity.invoices.any().amount;
+                    invoiceExpression = addOrExpression(invoiceExpression, getNumberPathBooleanExpression(amountPath, operation));
+                }
+                case "number" -> {
+                    StringPath numberPath = businessEntity.invoices.any().number;
+                    invoiceExpression = addOrExpression(invoiceExpression, getStringPathBooleanExpression(numberPath, operation));
+                }
+                default -> throw new IllegalArgumentException("Invalid field: " + operation.getField());
             }
 
         }
 
         return invoiceExpression;
-
     }
 
+
     //Expressions for client field
-    /*private BooleanExpression getClientExpression(FilterRequest filter) throws BadOperator {
-
-        BooleanExpression clientExpression = null;
-
-        for (FilterOperator operation : filter.getOperations()){
-
-            if (operation.getField().equals("id")){
-
-                NumberPath<Long> numberPath = businessEntity.client.id;
-
-                clientExpression = addOrExpression(clientExpression, getNumberPathBooleanExpression(numberPath, operation));
-
-            } else if (operation.getField().equals("email")){
-
-                StringPath stringPath = businessEntity.client.email;
-
-                clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
-
-            }else if (operation.getField().equals("firstName")) {
-
-                StringPath stringPath = businessEntity.client.firstName;
-
-                clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
-
-            }else if (operation.getField().equals("lastName")) {
-
-                StringPath stringPath = businessEntity.client.lastName;
-
-                clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
-
-            }else if (operation.getField().equals("username")) {
-
-                StringPath stringPath = businessEntity.client.username;
-
-                clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
-
-            }
-
-        }
-
-        return clientExpression;
-    }*/
     private BooleanExpression getClientExpression(FilterRequest filter) throws BadOperator {
         BooleanExpression clientExpression = null;
         for (FilterOperator operation : filter.getOperations()) {
             switch (operation.getField()) {
-                case "id":
-                    NumberPath<Long> numberPath = businessEntity.client.id;
-                    clientExpression = addOrExpression(clientExpression, getNumberPathBooleanExpression(numberPath, operation));
-                    break;
-                case "email":
-                    StringPath stringPath = businessEntity.client.email;
-                    clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(stringPath, operation));
-                    break;
-                case "firstName":
+                case "id" -> {
+                    NumberPath<Long> idPath = businessEntity.client.id;
+                    clientExpression = addOrExpression(clientExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "email" -> {
+                    StringPath emailPath = businessEntity.client.email;
+                    clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(emailPath, operation));
+                }
+                case "firstName" -> {
                     StringPath firstNamePath = businessEntity.client.firstName;
                     clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(firstNamePath, operation));
-                    break;
-                case "lastName":
+                }
+                case "lastName" -> {
                     StringPath lastNamePath = businessEntity.client.lastName;
                     clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(lastNamePath, operation));
-                    break;
-                case "username":
+                }
+                case "username" -> {
                     StringPath usernamePath = businessEntity.client.username;
                     clientExpression = addOrExpression(clientExpression, getStringPathBooleanExpression(usernamePath, operation));
-                    break;
-                case "lastLogin":
-                    DatePath<Date> datePath = entityPath.getDate(businessEntity.client.lastLoginDate.toString(), java.util.Date.class);
+                }
+                case "lastLogin" -> {
+                    DatePath<Date> datePath = entityPath.getDate(businessEntity.client.lastLoginDate.toString(), Date.class);
                     clientExpression = addOrExpression(clientExpression, getDatePathBooleanExpression(datePath, operation));
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid field: " + operation.getField());
+                }
+                default -> throw new IllegalArgumentException("Invalid field: " + operation.getField());
             }
         }
         return clientExpression;
     }
 
     private BooleanExpression getPlanExpression(FilterRequest filter) throws BadOperator{
-
         BooleanExpression planExpression = null;
 
         for (FilterOperator operation : filter.getOperations()){
-
-            if (operation.getField().equals("id")){
-
-                NumberPath<Long> numberPath = businessEntity.plan.id;
-
-                planExpression = addOrExpression(planExpression, getNumberPathBooleanExpression(numberPath, operation));
-
-            }else if (operation.getField().equals("name")) {
-
-                StringPath stringPath = businessEntity.plan.name;
-
-                planExpression = addOrExpression(planExpression, getStringPathBooleanExpression(stringPath, operation));
-
-            }else if (operation.getField().equals("price")){
-
-                NumberPath<Double> numberPath = businessEntity.plan.price;
-
-                planExpression = addOrExpression(planExpression, getNumberPathBooleanExpression(numberPath, operation));
-
+            switch (operation.getField()) {
+                case "id" -> {
+                    NumberPath<Long> idPath = businessEntity.plan.id;
+                    planExpression = addOrExpression(planExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "name" -> {
+                    StringPath namePath = businessEntity.plan.name;
+                    planExpression = addOrExpression(planExpression, getStringPathBooleanExpression(namePath, operation));
+                }
+                case "price" -> {
+                    NumberPath<Double> pricePath = businessEntity.plan.price;
+                    planExpression = addOrExpression(planExpression, getNumberPathBooleanExpression(pricePath, operation));
+                }
+                default -> throw new IllegalArgumentException("Invalid field provided: " + operation.getField());
             }
-
         }
-
         return planExpression;
-
     }
+
 
 }
