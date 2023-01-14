@@ -58,4 +58,10 @@ public class bsKBCategoryServiceImplements extends DefaultServiceImplements <bsK
         return mapper.toSmallDTO(toInsert);
 
     }
+
+    @Override
+    protected bsKBCategoryEntity updateListFields(bsKBCategoryEntity bsKBCategoryEntity) {
+        bsKBCategoryEntity.setBsKBCount(bsKBCategoryEntity.getBsKBEntities() == null ? 0 : (long) bsKBCategoryEntity.getBsKBEntities().size());
+        return bsKBCategoryEntity;
+    }
 }
