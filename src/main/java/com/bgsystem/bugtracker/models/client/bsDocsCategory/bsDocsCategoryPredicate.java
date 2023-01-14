@@ -24,19 +24,13 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
 
     @Override
     protected BooleanExpression getCustomPathExpression(FilterRequest filter) throws BadOperator {
-        BooleanExpression expression = null;
 
-        if (filter.getField().equals("business")){
+        return switch (filter.getField()){
+            case "business" -> getBusinessExpression(filter);
+            case "docs" -> getDocsExpression(filter);
+            default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
+        };
 
-            expression = getBusinessExpression(filter);
-
-        } else if (filter.getField().equals("docs")) {
-
-            expression = getDocsExpression(filter);
-
-        }
-
-        return expression;
     }
 
     private BooleanExpression getDocsExpression(FilterRequest filter) throws BadOperator {
@@ -45,24 +39,19 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
 
         for (FilterOperator operation : filter.getOperations()){
 
-            if (operation.getField().equals("id")){
-
-                NumberPath<Long> numberPath = bsDocsCategoryEntity.bsDocs.any().id;
-
-                docsExpression = addOrExpression(docsExpression, getNumberPathBooleanExpression(numberPath, operation));
-
-            }else if (operation.getField().equals("title")){
-
-                StringPath stringPath = bsDocsCategoryEntity.bsDocs.any().title;
-
-                docsExpression = addOrExpression(docsExpression, getStringPathBooleanExpression(stringPath, operation));
-
+            switch (filter.getField()){
+                case "id" ->{
+                    NumberPath<Long> idPath = bsDocsCategoryEntity.bsDocs.any().id;
+                    docsExpression = addOrExpression(docsExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "title" ->{
+                    StringPath titlePath = bsDocsCategoryEntity.bsDocs.any().title;
+                    docsExpression = addOrExpression(docsExpression, getStringPathBooleanExpression(titlePath, operation));
+                }
+                default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
             }
-
         }
-
         return docsExpression;
-
     }
 
     private BooleanExpression getBusinessExpression(FilterRequest filter) throws BadOperator {
@@ -71,44 +60,33 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
 
         for (FilterOperator operation : filter.getOperations()){
 
-            if (operation.getField().equals("id")){
-
-                NumberPath<Long> numberPath = bsDocsCategoryEntity.business.id;
-
-                businessExpression = addOrExpression(businessExpression, getNumberPathBooleanExpression(numberPath, operation));
-
-            }else if (operation.getField().equals("name")){
-
-                StringPath stringPath = bsDocsCategoryEntity.business.name;
-
-                businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(stringPath, operation));
-
-            }else if (operation.getField().equals("taxID")){
-
-                StringPath stringPath = bsDocsCategoryEntity.business.taxID;
-
-                businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(stringPath, operation));
-
-            }else if (operation.getField().equals("pendingInvoice")){
-
-                BooleanPath booleanPath = bsDocsCategoryEntity.business.pendingInvoice;
-
-                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operation));
-
-            }else if (operation.getField().equals("overDue")){
-
-                BooleanPath booleanPath = bsDocsCategoryEntity.business.overDue;
-
-                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operation));
-
-            }else if (operation.getField().equals("isActive")){
-
-                BooleanPath booleanPath = bsDocsCategoryEntity.business.isActive;
-
-                businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(booleanPath, operation));
-
+            switch (filter.getField()){
+                case "id" ->{
+                    NumberPath<Long> idPath = bsDocsCategoryEntity.business.id;
+                    businessExpression = addOrExpression(businessExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "name" ->{
+                    StringPath namePath = bsDocsCategoryEntity.business.name;
+                    businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(namePath, operation));
+                }
+                case "taxID" ->{
+                    StringPath taxIDPath = bsDocsCategoryEntity.business.taxID;
+                    businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(taxIDPath, operation));
+                }
+                case "pendingInvoice" ->{
+                    BooleanPath pendingInvoicePath = bsDocsCategoryEntity.business.pendingInvoice;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(pendingInvoicePath, operation));
+                }
+                case "overDue" ->{
+                    BooleanPath overDuePath = bsDocsCategoryEntity.business.overDue;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(overDuePath, operation));
+                }
+                case "isActive" ->{
+                    BooleanPath isActivePath = bsDocsCategoryEntity.business.isActive;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(isActivePath, operation));
+                }
+                default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
             }
-
         }
 
         return businessExpression;
