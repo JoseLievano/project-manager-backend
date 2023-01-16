@@ -49,7 +49,7 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
         return ResponseEntity.ok(service.delete(id));
     }
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ResponseEntity<Collection<LISTDTO>> getAllForList(@RequestBody Optional <FilterRequest> filterRequest) throws ElementNotFoundException {
 
         if (filterRequest.isPresent()){
@@ -60,35 +60,26 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
 
     }
 
-    @GetMapping("/page")
+    @PostMapping("/page")
     public ResponseEntity<Page<DTO>> getAllPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException, BadOperator {
 
         if(pageableRequest.isPresent()){
-
             return ResponseEntity.ok(service.getPageable(pageableRequest.get()));
-
         }else{
-
             return ResponseEntity.badRequest().build();
-
         }
 
     }
 
 
-    @GetMapping("/page-list-view")
+    @PostMapping("/page-list-view")
     public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException, BadOperator {
 
         if(pageableRequest.isPresent()){
-
             return ResponseEntity.ok(service.getPageableListView(pageableRequest.get()));
-
         }else{
-
             return ResponseEntity.badRequest().build();
-
         }
 
     }
-
 }

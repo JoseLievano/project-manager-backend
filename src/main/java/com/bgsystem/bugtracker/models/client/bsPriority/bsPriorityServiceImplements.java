@@ -65,4 +65,10 @@ public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPri
         return mapper.toSmallDTO(toInsert);
 
     }
+
+    @Override
+    protected bsPriorityEntity updateListFields(bsPriorityEntity bsPriorityEntity) {
+        bsPriorityEntity.setTaskCount(bsPriorityEntity.getTasks() != null ? 0 : (long) bsPriorityEntity.getTasks().size());
+        return bsPriorityEntity;
+    }
 }
