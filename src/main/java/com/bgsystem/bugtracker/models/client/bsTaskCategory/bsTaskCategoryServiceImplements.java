@@ -62,4 +62,13 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
         return mapper.toSmallDTO(toInsert);
 
     }
+
+    @Override
+    protected bsTaskCategoryEntity updateListFields(bsTaskCategoryEntity bsTaskCategoryEntity) {
+
+        bsTaskCategoryEntity.setTaskCount(bsTaskCategoryEntity.getTasks() != null ? 0 : (long) bsTaskCategoryEntity.getTasks().size());
+
+        return bsTaskCategoryEntity;
+
+    }
 }
