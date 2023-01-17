@@ -102,4 +102,14 @@ public class bsPrChannelServiceImplements extends DefaultServiceImplements <bsPr
 
         return mapper.toSmallDTO(toInsert);
     }
+
+    @Override
+    protected bsPrChannelEntity updateListFields(bsPrChannelEntity bsPrChannelEntity) {
+
+        bsPrChannelEntity.setCommentsCount(bsPrChannelEntity.getComments() != null ? 0 : (long) bsPrChannelEntity.getComments().size());
+        bsPrChannelEntity.setMembersCount(bsPrChannelEntity.getMembers() != null ? 0 : (long) bsPrChannelEntity.getMembers().size());
+
+        return bsPrChannelEntity;
+
+    }
 }
