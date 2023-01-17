@@ -16,6 +16,7 @@ public class bsTypePredicate extends CommonPathExpression<bsTypeEntity> {
         super( );
         this.entityPath = new PathBuilder<bsTypeEntity>(bsTypeEntity.class, "bsTypeEntity");
         this.entityFields.add("task");
+        this.entityFields.add("business");
     }
 
     @Override
@@ -23,8 +24,47 @@ public class bsTypePredicate extends CommonPathExpression<bsTypeEntity> {
 
         return switch (filter.getField()){
             case "task" -> getTaskExpression(filter);
+            case "business" -> getBusinessExpression(filter);
             default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
         };
+
+    }
+
+    private BooleanExpression getBusinessExpression(FilterRequest filter) throws BadOperator {
+
+        BooleanExpression businessExpression = null;
+
+        for (FilterOperator operation : filter.getOperations()){
+            switch (operation.getField()){
+                case "id" -> {
+                    NumberPath<Long> idPath = bsTypeEntity.business.id;
+                    businessExpression = addOrExpression(businessExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "name" -> {
+                    StringPath namePath = bsTypeEntity.business.name;
+                    businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(namePath, operation));
+                }
+                case "taxID" -> {
+                    StringPath taxIDPath = bsTypeEntity.business.taxID;
+                    businessExpression = addOrExpression(businessExpression, getStringPathBooleanExpression(taxIDPath, operation));
+                }
+                case "pendingInvoice" -> {
+                    BooleanPath pendingInvoicePath = bsTypeEntity.business.pendingInvoice;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(pendingInvoicePath, operation));
+                }
+                case "overDue" -> {
+                    BooleanPath overDuePath = bsTypeEntity.business.overDue;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(overDuePath, operation));
+                }
+                case "isActive" -> {
+                    BooleanPath isActivePath = bsTypeEntity.business.isActive;
+                    businessExpression = addOrExpression(businessExpression, getBooleanPathBooleanExpression(isActivePath, operation));
+                }
+                default -> throw new IllegalArgumentException("Illegal field: " + operation.getField());
+            }
+        }
+
+        return businessExpression;
 
     }
 
