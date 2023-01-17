@@ -58,4 +58,13 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
         return mapper.toSmallDTO(toInsert);
 
     }
+
+    @Override
+    protected bsStatusEntity updateListFields(bsStatusEntity bsStatusEntity) {
+
+        bsStatusEntity.setTaskCount(bsStatusEntity.getTasks() != null ? 0 : (long) bsStatusEntity.getTasks().size());
+
+        return bsStatusEntity;
+
+    }
 }
