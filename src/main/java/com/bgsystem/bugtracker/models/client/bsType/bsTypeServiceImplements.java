@@ -62,7 +62,7 @@ public class bsTypeServiceImplements extends DefaultServiceImplements <bsTypeDTO
     @Override
     protected bsTypeEntity updateListFields(bsTypeEntity bsTypeEntity) {
 
-        bsTypeEntity.setTaskCount(bsTypeEntity.getTasks() != null ? 0 : (long) bsTypeEntity.getTasks().size());
+        bsTypeEntity.setTaskCount(bsTypeEntity.getTasks() == null ? 0 : (long) bsTypeEntity.getTasks().size());
 
         return bsTypeEntity;
 

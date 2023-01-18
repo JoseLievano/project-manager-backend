@@ -122,4 +122,13 @@ public class bsPrCommentServiceImplements extends DefaultServiceImplements <bsPr
         return actualPage.getContent();
 
     }
+
+    @Override
+    protected bsPrCommentEntity updateListFields(bsPrCommentEntity bsPrCommentEntity) {
+
+        bsPrCommentEntity.setMentionCount(bsPrCommentEntity.getMentions() == null ? 0 : (long) bsPrCommentEntity.getMentions().size());
+
+        return bsPrCommentEntity;
+
+    }
 }

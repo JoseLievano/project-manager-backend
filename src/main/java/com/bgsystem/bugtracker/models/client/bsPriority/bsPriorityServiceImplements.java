@@ -68,7 +68,7 @@ public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPri
 
     @Override
     protected bsPriorityEntity updateListFields(bsPriorityEntity bsPriorityEntity) {
-        bsPriorityEntity.setTaskCount(bsPriorityEntity.getTasks() != null ? 0 : (long) bsPriorityEntity.getTasks().size());
+        bsPriorityEntity.setTaskCount(bsPriorityEntity.getTasks() == null ? 0 : (long) bsPriorityEntity.getTasks().size());
         return bsPriorityEntity;
     }
 }

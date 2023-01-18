@@ -62,7 +62,7 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
     @Override
     protected bsStatusEntity updateListFields(bsStatusEntity bsStatusEntity) {
 
-        bsStatusEntity.setTaskCount(bsStatusEntity.getTasks() != null ? 0 : (long) bsStatusEntity.getTasks().size());
+        bsStatusEntity.setTaskCount(bsStatusEntity.getTasks() == null ? 0 : (long) bsStatusEntity.getTasks().size());
 
         return bsStatusEntity;
 

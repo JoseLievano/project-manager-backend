@@ -66,7 +66,7 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
     @Override
     protected bsTaskCategoryEntity updateListFields(bsTaskCategoryEntity bsTaskCategoryEntity) {
 
-        bsTaskCategoryEntity.setTaskCount(bsTaskCategoryEntity.getTasks() != null ? 0 : (long) bsTaskCategoryEntity.getTasks().size());
+        bsTaskCategoryEntity.setTaskCount(bsTaskCategoryEntity.getTasks() == null ? 0 : (long) bsTaskCategoryEntity.getTasks().size());
 
         return bsTaskCategoryEntity;
 

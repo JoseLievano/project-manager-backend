@@ -4,23 +4,26 @@ import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterOperator;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.core.types.dsl.PathBuilder;
-import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.core.types.dsl.*;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class bsPrChannelPredicate extends CommonPathExpression<bsPrChannelEntity> {
 
     private final QbsPrChannelEntity bsPrChannelEntity = QbsPrChannelEntity.bsPrChannelEntity;
+    private final com.bgsystem.bugtracker.models.client.project.bsPrChannel.bsPrChannelRepository bsPrChannelRepository;
 
-    public bsPrChannelPredicate(){
+    public bsPrChannelPredicate(bsPrChannelRepository bsPrChannelRepository){
 
         super();
         this.entityPath = new PathBuilder<bsPrChannelEntity>(bsPrChannelEntity.class, "bsPrChannelEntity");
         this.entityFields.add("member");
         this.entityFields.add("comment");
+        this.entityFields.add("project");
+        this.entityFields.add("author");
+        this.bsPrChannelRepository = bsPrChannelRepository;
     }
 
     @Override
@@ -29,8 +32,78 @@ public class bsPrChannelPredicate extends CommonPathExpression<bsPrChannelEntity
         return switch (filter.getField()){
             case "member" -> getMemberExpression(filter);
             case "comment" -> getCommentExpression(filter);
+            case "project" -> getProjectExpression(filter);
+            case "author" -> getAuthorExpression(filter);
             default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
         };
+
+    }
+
+    private BooleanExpression getAuthorExpression(FilterRequest filter) throws BadOperator {
+
+        BooleanExpression authorExpression = null;
+
+        for (FilterOperator operation : filter.getOperations()){
+            switch (operation.getField()){
+                case "id" -> {
+                    NumberPath<Long> idPath = bsPrChannelEntity.author.id;
+                    authorExpression = addOrExpression(authorExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "firstName" -> {
+                    StringPath firstNamePath = bsPrChannelEntity.author.firstName;
+                    authorExpression = addOrExpression(authorExpression, getStringPathBooleanExpression(firstNamePath, operation));
+                }
+                case "lastName" -> {
+                    StringPath lastNamePath = bsPrChannelEntity.author.lastName;
+                    authorExpression = addOrExpression(authorExpression, getStringPathBooleanExpression(lastNamePath, operation));
+                }
+                case "email" -> {
+                    StringPath emailPath = bsPrChannelEntity.author.email;
+                    authorExpression = addOrExpression(authorExpression, getStringPathBooleanExpression(emailPath, operation));
+                }
+                case "username" -> {
+                    StringPath usernamePath = bsPrChannelEntity.author.username;
+                    authorExpression = addOrExpression(authorExpression, getStringPathBooleanExpression(usernamePath, operation));
+                }
+                default -> throw new IllegalArgumentException("Illegal field: " + operation.getField());
+            }
+        }
+
+        return authorExpression;
+
+    }
+
+    private BooleanExpression getProjectExpression(FilterRequest filter) throws BadOperator {
+
+        BooleanExpression projectExpression = null;
+
+        for (FilterOperator operation : filter.getOperations()){
+            switch (operation.getField()){
+                case "id" -> {
+                    NumberPath<Long> idPath = bsPrChannelEntity.project.id;
+                    projectExpression = addOrExpression(projectExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "name" -> {
+                    StringPath namePath = bsPrChannelEntity.project.name;
+                    projectExpression = addOrExpression(projectExpression, getStringPathBooleanExpression(namePath, operation));
+                }
+                case "isCompleted" -> {
+                    BooleanPath isCompletedPath = bsPrChannelEntity.project.isCompleted;
+                    projectExpression = addOrExpression(projectExpression, getBooleanPathBooleanExpression(isCompletedPath, operation));
+                }
+                case "created" -> {
+                    DatePath<Date> createdPath = entityPath.getDate(bsPrChannelEntity.project.created.toString(), java.util.Date.class);
+                    projectExpression = addOrExpression(projectExpression, getDatePathBooleanExpression(createdPath, operation));
+                }
+                case "dueDate" -> {
+                    DatePath<Date> dueDatePath = entityPath.getDate(bsPrChannelEntity.project.dueDate.toString(), java.util.Date.class);
+                    projectExpression = addOrExpression(projectExpression, getDatePathBooleanExpression(dueDatePath, operation));
+                }
+                default -> throw new IllegalArgumentException("Illegal field: " + operation.getField());
+            }
+        }
+
+        return projectExpression;
 
     }
 
