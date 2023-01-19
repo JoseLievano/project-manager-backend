@@ -86,4 +86,19 @@ public class bsProjectServiceImplements extends DefaultServiceImplements <bsProj
         return mapper.toSmallDTO(toInsert);
 
     }
+
+    @Override
+    protected bsProjectEntity updateListFields(bsProjectEntity bsProjectEntity) {
+
+        bsProjectEntity.setTaskCount(bsProjectEntity.getTasks() == null ? 0 : (long) bsProjectEntity.getTasks().size());
+        bsProjectEntity.setInvoiceCount(bsProjectEntity.getInvoices() == null ? 0 : (long) bsProjectEntity.getInvoices().size());
+        bsProjectEntity.setChannelCount(bsProjectEntity.getChannels() == null ? 0 : (long) bsProjectEntity.getChannels().size());
+        bsProjectEntity.setDocsCategoryCount(bsProjectEntity.getDocsCategories() == null ? 0 : (long) bsProjectEntity.getDocsCategories().size());
+        bsProjectEntity.setDocsCount(bsProjectEntity.getDocs() == null ? 0 : (long) bsProjectEntity.getDocs().size());
+        bsProjectEntity.setKbCategoryCount(bsProjectEntity.getKbCategories() == null ? 0 : (long) bsProjectEntity.getKbCategories().size());
+        bsProjectEntity.setKbCount(bsProjectEntity.getKbs() == null ? 0 : (long) bsProjectEntity.getKbs().size());
+
+        return bsProjectEntity;
+
+    }
 }
