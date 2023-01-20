@@ -19,8 +19,8 @@ public class bsPrChannelPredicate extends CommonPathExpression<bsPrChannelEntity
 
         super();
         this.entityPath = new PathBuilder<bsPrChannelEntity>(bsPrChannelEntity.class, "bsPrChannelEntity");
-        this.entityFields.add("member");
-        this.entityFields.add("comment");
+        this.entityFields.add("members");
+        this.entityFields.add("comments");
         this.entityFields.add("project");
         this.entityFields.add("author");
         this.bsPrChannelRepository = bsPrChannelRepository;
@@ -30,8 +30,8 @@ public class bsPrChannelPredicate extends CommonPathExpression<bsPrChannelEntity
     protected BooleanExpression getCustomPathExpression(FilterRequest filter) throws BadOperator {
 
         return switch (filter.getField()){
-            case "member" -> getMemberExpression(filter);
-            case "comment" -> getCommentExpression(filter);
+            case "members" -> getMemberExpression(filter);
+            case "comments" -> getCommentExpression(filter);
             case "project" -> getProjectExpression(filter);
             case "author" -> getAuthorExpression(filter);
             default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());

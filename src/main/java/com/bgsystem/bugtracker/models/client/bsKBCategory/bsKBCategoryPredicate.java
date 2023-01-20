@@ -16,14 +16,14 @@ public class bsKBCategoryPredicate extends CommonPathExpression<bsKBCategoryEnti
         super( );
         this.entityPath = new PathBuilder<bsKBCategoryEntity>(bsKBCategoryEntity.class, "bsKBCategoryEntity");
         this.entityFields.add("business");
-        this.entityFields.add("bsKB");
+        this.entityFields.add("kbs");
     }
 
     @Override
     protected BooleanExpression getCustomPathExpression(FilterRequest filter) throws BadOperator {
         return switch (filter.getField()) {
             case "business" -> getBusinessExpression(filter);
-            case "bsKB" -> getbsKBExpression(filter);
+            case "kbs" -> getbsKBExpression(filter);
             default -> throw new IllegalArgumentException("Invalid field: " + filter.getField());
         };
     }

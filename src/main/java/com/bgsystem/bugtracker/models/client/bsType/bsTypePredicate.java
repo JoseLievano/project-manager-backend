@@ -15,7 +15,7 @@ public class bsTypePredicate extends CommonPathExpression<bsTypeEntity> {
     public bsTypePredicate(){
         super( );
         this.entityPath = new PathBuilder<bsTypeEntity>(bsTypeEntity.class, "bsTypeEntity");
-        this.entityFields.add("task");
+        this.entityFields.add("tasks");
         this.entityFields.add("business");
     }
 

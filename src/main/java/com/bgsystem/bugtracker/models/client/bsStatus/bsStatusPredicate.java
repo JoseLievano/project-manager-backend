@@ -15,14 +15,14 @@ public class bsStatusPredicate extends CommonPathExpression<bsStatusEntity> {
     public bsStatusPredicate(){
         super( );
         this.entityPath = new PathBuilder<bsStatusEntity>(bsStatusEntity.class, "bsStatusEntity");
-        this.entityFields.add("task");
+        this.entityFields.add("tasks");
         this.entityFields.add("business");
     }
 
     @Override
     protected BooleanExpression getCustomPathExpression(FilterRequest filter) throws BadOperator {
         return switch (filter.getField()){
-            case "task" -> getTaskExpression(filter);
+            case "tasks" -> getTaskExpression(filter);
             case "business" -> getBusinessExpression(filter);
             default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
         };

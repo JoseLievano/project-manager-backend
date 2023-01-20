@@ -18,7 +18,7 @@ public class bsPrDocsCategoryPredicate extends CommonPathExpression<bsPrDocsCate
         super();
         this.entityPath = new PathBuilder<bsPrDocsCategoryEntity>(bsPrDocsCategoryEntity.class, "bsPrDocsCategoryEntity");
         this.entityFields.add("project");
-        this.entityFields.add("doc");
+        this.entityFields.add("docs");
     }
 
     @Override
@@ -26,7 +26,7 @@ public class bsPrDocsCategoryPredicate extends CommonPathExpression<bsPrDocsCate
 
         return switch (filter.getField()){
             case "project" -> getProjectExpression(filter);
-            case "doc" -> getDocExpression(filter);
+            case "docs" -> getDocExpression(filter);
             default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
         };
 

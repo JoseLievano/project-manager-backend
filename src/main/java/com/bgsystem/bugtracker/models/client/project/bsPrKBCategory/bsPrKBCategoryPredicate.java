@@ -18,7 +18,7 @@ public class bsPrKBCategoryPredicate extends CommonPathExpression<bsPrKBCategory
         super( );
         this.entityPath = new PathBuilder<bsPrKBCategoryEntity>(bsPrKBCategoryEntity.class, "bsPrKBCategoryEntity");
         this.entityFields.add("project");
-        this.entityFields.add("kb");
+        this.entityFields.add("kbs");
     }
 
     @Override
@@ -26,7 +26,7 @@ public class bsPrKBCategoryPredicate extends CommonPathExpression<bsPrKBCategory
 
         return switch (filter.getField()){
             case "project" -> getProjectExpression(filter);
-            case "kb" -> getKBExpression(filter);
+            case "kbs" -> getKBExpression(filter);
             default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
         };
 

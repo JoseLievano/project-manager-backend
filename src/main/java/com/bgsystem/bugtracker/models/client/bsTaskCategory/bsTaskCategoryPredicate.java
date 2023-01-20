@@ -15,7 +15,7 @@ public class bsTaskCategoryPredicate extends CommonPathExpression<bsTaskCategory
     public bsTaskCategoryPredicate(){
         super( );
         this.entityPath = new PathBuilder<bsTaskCategoryEntity>(bsTaskCategoryEntity.class, "bsTaskCategoryEntity");
-        this.entityFields.add("task");
+        this.entityFields.add("tasks");
         this.entityFields.add("business");
     }
 
@@ -23,7 +23,7 @@ public class bsTaskCategoryPredicate extends CommonPathExpression<bsTaskCategory
     protected BooleanExpression getCustomPathExpression(FilterRequest filter) throws BadOperator {
 
         return switch (filter.getField()){
-            case "task" -> getTaskExpression(filter);
+            case "tasks" -> getTaskExpression(filter);
             case "business" -> getBusinessExpression(filter);
             default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
         };
