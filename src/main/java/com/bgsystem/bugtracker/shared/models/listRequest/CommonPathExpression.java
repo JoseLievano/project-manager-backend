@@ -127,7 +127,6 @@ public abstract class CommonPathExpression <Entity> {
 
     protected BooleanExpression getNumberPathBooleanExpression(NumberPath path, FilterOperator operator) throws BadOperator{
 
-        //If statement to check if the path class is java.lang.Long
         if (path.getType().equals(Long.class)){
 
             Long value = operator.getValue() == null ? null : Long.parseLong(operator.getValue());
@@ -142,7 +141,21 @@ public abstract class CommonPathExpression <Entity> {
                 default -> throw new BadOperator("Bad operator for number field");
             };
 
-        } else if (path.getType().equals(Double.class)) {
+        } else if (path.getType().equals(Integer.class)) {
+
+            Integer value = operator.getValue() == null ? null : Integer.parseInt(operator.getValue());
+
+            return switch (operator.getOperator()) {
+                case "=" -> path.eq(value);
+                case ">" -> path.gt(value);
+                case ">=" -> path.goe(value);
+                case "<" -> path.lt(value);
+                case "<=" -> path.loe(value);
+                case "!=" -> path.ne(value);
+                default -> throw new BadOperator("Bad operator for number field");
+            };
+
+        }  else if (path.getType().equals(Double.class)) {
 
             double value = Double.parseDouble(operator.getValue());
 
@@ -155,9 +168,10 @@ public abstract class CommonPathExpression <Entity> {
                 case "!=" -> path.ne(value);
                 default -> throw new BadOperator("Bad operator for number field");
             };
+
         }
 
-        return null;
+        throw new BadOperator("Bad operator for number field");
 
     }
 
