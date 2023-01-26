@@ -131,7 +131,9 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
         }else{
 
-            throw new IllegalArgumentException("Filter is not present");
+            Page<ENTITY> entities = repository.findAll(pr);
+
+            return entities.map(mapper::toListDTO);
 
         }
 
