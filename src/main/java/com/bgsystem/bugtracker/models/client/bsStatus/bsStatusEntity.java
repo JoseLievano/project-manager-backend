@@ -30,7 +30,7 @@ public class bsStatusEntity {
     @JoinColumn(name = "business_entity_id", nullable = false)
     private BusinessEntity business;
 
-    @OneToMany(mappedBy = "status")
+    @OneToMany(mappedBy = "status", fetch = FetchType.EAGER)
     private Set<bsPrTaskEntity> tasks;
 
     @Column
