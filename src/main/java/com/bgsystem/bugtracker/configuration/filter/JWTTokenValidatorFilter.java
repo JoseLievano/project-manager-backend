@@ -25,7 +25,7 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 
-    private SecurityUserServiceImplements userRepository;
+    private final SecurityUserServiceImplements userRepository;
 
     @Autowired
     public JWTTokenValidatorFilter(SecurityUserServiceImplements userRepository) {
