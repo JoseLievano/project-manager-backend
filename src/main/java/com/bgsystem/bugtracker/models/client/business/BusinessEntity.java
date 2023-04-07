@@ -163,7 +163,7 @@ public class BusinessEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PlanEntity that = (PlanEntity) o;
+        BusinessEntity that = (BusinessEntity) o;
         return id != null && Objects.equals(id, that.getId());
     }
 
