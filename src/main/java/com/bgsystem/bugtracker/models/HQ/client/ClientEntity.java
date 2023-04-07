@@ -9,6 +9,7 @@ import com.bgsystem.bugtracker.models.client.project.bsPrComment.bsPrCommentEnti
 import com.bgsystem.bugtracker.shared.models.user.User;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -88,7 +89,7 @@ public class ClientEntity extends User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PlanEntity that = (PlanEntity) o;
+        ClientEntity that = (ClientEntity) o;
         return id != null && Objects.equals(id, that.getId());
     }
 
