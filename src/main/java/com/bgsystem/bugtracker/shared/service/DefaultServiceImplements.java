@@ -12,6 +12,7 @@ import com.bgsystem.bugtracker.shared.repository.DefaultRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +34,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
 
     @Override
+    @Transactional
     public DTO getOne(ID id) throws ElementNotFoundException {
         return repository.findById(id)
                 .map(mapper::toDTO)
