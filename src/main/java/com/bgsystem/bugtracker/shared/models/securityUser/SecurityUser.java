@@ -21,8 +21,6 @@ public class SecurityUser implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        /*System.out.println("Dentro del security user:" +  user.getUsername());
-        System.out.println(user.getRoles().size());*/
         user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
         return authorities;
     }
