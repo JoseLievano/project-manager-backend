@@ -1,14 +1,18 @@
 package com.bgsystem.bugtracker.models.client.business;
 
+import com.bgsystem.bugtracker.exeptions.BadOperator;
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.HQ.client.ClientRepository;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanRepository;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsEntity;
+import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -40,7 +44,9 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         this.planRepository = planRepository;
         this.bsGeneralSettingsRepository = bsGeneralSettingsRepository;
     }
+
     @Override
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
     public BusinessMiniDTO insert(BusinessForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         if (form == null || form.getName() == null || form.getTaxID() == null || form.getClient() == null || form.getPlan() == null){
@@ -49,7 +55,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
         //Check if the business already exist in our DB
         Set<BusinessEntity> businessExistenceCheck = repository.findByName(form.getName());
-        if (businessExistenceCheck.size() > 0) {
+        if (!businessExistenceCheck.isEmpty()) {
             throw new ElementAlreadyExist("The business already exist in our DB");
         }
 
@@ -76,7 +82,30 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
         bsGeneralSettingsRepository.save(GeneralSettingsEntity);
 
         return mapper.toSmallDTO(toInsert);
+    }
 
+    @Override
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
+    public BusinessDTO delete(Long aLong) throws ElementNotFoundException {
+        return super.delete(aLong);
+    }
+
+    @Override
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public Collection<BusinessDTO> getAll() {
+        return super.getAll();
+    }
+
+    @Override
+    public BusinessDTO update(Long aLong, BusinessForm uform) throws ElementNotFoundException {
+        return super.update(aLong, uform);
+    }
+
+
+    @Override
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
+    public Page<BusinessListDTO> getPageableListView(PageableRequest pageRequest) throws BadOperator {
+        return super.getPageableListView(pageRequest);
     }
 
     @Override
