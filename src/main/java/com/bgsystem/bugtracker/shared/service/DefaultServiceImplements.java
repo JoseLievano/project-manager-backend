@@ -42,6 +42,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
+    @Transactional
     public Collection<DTO> getAll() {
         return repository.findAll()
                 .stream()
@@ -55,6 +56,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
+    @Transactional
     public DTO update(ID id, FORM uform) throws ElementNotFoundException {
 
         ENTITY toUpdate = repository.findById(id).orElseThrow(ElementNotFoundException::new);
@@ -66,6 +68,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
+    @Transactional
     public DTO delete(ID id) throws ElementNotFoundException {
 
         ENTITY toDelete = repository.findById(id).orElseThrow(ElementNotFoundException::new);
