@@ -14,4 +14,5 @@ public class bsDocsCategoryMiniDTO {
 
     private String name;
 
+    private String description;
 }

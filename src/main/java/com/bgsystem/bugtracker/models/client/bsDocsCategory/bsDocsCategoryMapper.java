@@ -32,6 +32,7 @@ public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, b
         return bsDocsCategoryDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .description(entity.getDescription())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
                 .bsDocs(entity.getBsDocs()
                         .stream()

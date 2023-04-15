@@ -23,6 +23,9 @@ public class bsDocsCategoryEntity {
     @Column
     private String name;
 
+    @Column
+    private String description;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "business_entity_id", nullable = false)
     private BusinessEntity business;

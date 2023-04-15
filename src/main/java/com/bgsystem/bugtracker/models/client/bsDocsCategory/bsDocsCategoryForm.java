@@ -15,6 +15,8 @@ public class bsDocsCategoryForm {
 
     private String name;
 
+    private String description;
+
     private Long business;
 
 }

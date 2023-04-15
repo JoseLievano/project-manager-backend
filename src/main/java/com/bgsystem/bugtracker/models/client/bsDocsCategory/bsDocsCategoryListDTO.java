@@ -15,6 +15,8 @@ public class bsDocsCategoryListDTO {
 
     private String name;
 
+    private String description;
+
     private BusinessMiniDTO business;
 
     private Long bsDocsCount;

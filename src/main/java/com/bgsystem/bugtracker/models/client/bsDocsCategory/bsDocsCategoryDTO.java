@@ -18,6 +18,8 @@ public class bsDocsCategoryDTO {
 
     private String name;
 
+    private String description;
+
     private BusinessMiniDTO business;
 
     private Set<bsDocMiniDTO> bsDocs;
