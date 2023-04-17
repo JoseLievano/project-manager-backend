@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional
 public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENTITY, ID> implements DefaultService <DTO, MINIDTO, LISTDTO, FORM, ID> {
 
     protected final DefaultRepository<ENTITY, ID> repository;
@@ -80,6 +81,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
+    @Transactional
     public Collection<LISTDTO> getAllListView(Optional<FilterRequest> listRequestRecord) throws ElementNotFoundException {
 
         return  repository.findAll()
@@ -89,6 +91,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
+    @Transactional
     public Page<DTO> getPageable(PageableRequest pageRequest) throws ElementNotFoundException, BadOperator {
 
         PageRequest pr = pageRequest.getPageRequest();
@@ -115,6 +118,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
+    @Transactional
     public Page<LISTDTO> getPageableListView(PageableRequest pageRequest) throws BadOperator {
 
         PageRequest pr = pageRequest.getPageRequest();
@@ -146,6 +150,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
     }
 
     @Override
+    @Transactional
     public LISTDTO updateListView(ID id) throws ElementNotFoundException {
 
         ENTITY toUpdate = repository.findById(id).orElseThrow(ElementNotFoundException::new);
@@ -155,6 +160,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
         return mapper.toListDTO(toUpdate);
 
     }
+
 
     protected ENTITY updateListFields(ENTITY entity){
         return entity;
