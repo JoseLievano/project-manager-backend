@@ -9,6 +9,8 @@ import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <bsDocsCategoryDTO, bsDocsCategoryMiniDTO, bsDocsCategoryListDTO, bsDocsCategoryForm, bsDocsCategoryEntity, Long> {
 
@@ -35,7 +37,7 @@ public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <b
     @Override
     public bsDocsCategoryMiniDTO insert(bsDocsCategoryForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
-        if (form == null || form.getBusiness() == null || form.getName() == null)
+        if (form == null || form.getBusiness() == null || form.getName() == null || form.getDescription() == null)
             throw new InvalidInsertDeails("Invalid insert details");
 
         //Check if the category already exists
@@ -44,23 +46,88 @@ public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <b
 
         bsDocsCategoryEntity toInsert = mapper.toEntity(form);
 
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
+        //Set parent category
+        if (form.getParentCategory() != null){
+            bsDocsCategoryEntity parentCategory = repository.findById(form.getParentCategory()).orElseThrow(() -> new ElementNotFoundException("Parent category not found"));
+            toInsert.setParentCategory(parentCategory);
+            parentCategory.getSubCategories().add(toInsert);
+            Boolean isAParentCategory = parentCategory.getIsAParentCategory() != null && parentCategory.getIsAParentCategory();
+            if (!isAParentCategory){
+                parentCategory.setIsAParentCategory(true);
+            }
 
-        toInsert.setBusiness(business);
+            //Set the business based in the parent business
+            BusinessEntity parentBusiness = parentCategory.getBusiness();
+            parentBusiness.getBsDocsCategories().add(toInsert);
+            toInsert.setBusiness(parentBusiness);
 
-        business.getBsDocsCategories().add(toInsert);
+            toInsert.setLevel(parentCategory.getLevel() + 1);
+
+            businessRepository.save(parentBusiness);
+            repository.save(parentCategory);
+
+        }else {
+
+            toInsert.setLevel(0L);
+
+            //Set the business category
+            BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
+            toInsert.setBusiness(business);
+            business.getBsDocsCategories().add(toInsert);
+            businessRepository.save(business);
+        }
+
+        toInsert.setIsAParentCategory(false);
 
         repository.save(toInsert);
 
-        businessRepository.save(business);
-
         return mapper.toSmallDTO(toInsert);
+    }
+
+    @Override
+    public bsDocsCategoryDTO update(Long id, bsDocsCategoryForm form) throws ElementNotFoundException {
+
+        bsDocsCategoryEntity toUpdate = repository.findById(id).orElseThrow(() -> new ElementNotFoundException("Category not found"));
+
+        if (form.getName() != null){
+            toUpdate.setName(form.getName());
+        }
+
+        if (form.getDescription() != null){
+            toUpdate.setDescription(form.getDescription());
+        }
+
+        if (form.getParentCategory() != null){
+            bsDocsCategoryEntity parentCategory = repository.findById(form.getParentCategory()).orElseThrow(() -> new ElementNotFoundException("Parent category not found"));
+            if (Objects.equals(parentCategory.getId(), toUpdate.getId())) {
+                throw new ElementNotFoundException("Parent category cannot be the same as the current category");
+            }
+            toUpdate.setParentCategory(parentCategory);
+            parentCategory.getSubCategories().add(toUpdate);
+            parentCategory.setIsAParentCategory(true);
+            repository.save(parentCategory);
+
+            toUpdate.setLevel(parentCategory.getLevel() + 1);
+        }
+
+        //Check category level
+        if (toUpdate.getParentCategory() == null){
+            toUpdate.setLevel(0L);
+        }else if (toUpdate.getLevel() == null){
+            toUpdate.setLevel(toUpdate.getParentCategory().getLevel() + 1);
+        }
+
+        repository.save(toUpdate);
+
+        return mapper.toDTO(toUpdate);
+
     }
 
     @Override
     protected bsDocsCategoryEntity updateListFields(bsDocsCategoryEntity bsDocsCategoryEntity) {
 
         bsDocsCategoryEntity.setBsDocsCount(bsDocsCategoryEntity.getBsDocs() == null ? 0 : (long) bsDocsCategoryEntity.getBsDocs().size() );
+        bsDocsCategoryEntity.setSubCategoriesCount(bsDocsCategoryEntity.getBsDocsCount() == null ? 0 : (long) bsDocsCategoryEntity.getSubCategories().size());
 
         return bsDocsCategoryEntity;
 
