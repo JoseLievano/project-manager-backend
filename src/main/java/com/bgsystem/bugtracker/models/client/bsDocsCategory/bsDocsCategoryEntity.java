@@ -26,12 +26,28 @@ public class bsDocsCategoryEntity {
     @Column
     private String description;
 
+    @Column
+    private Boolean isAParentCategory;
+
+    @Column
+    private Long level;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_category_id")
+    private bsDocsCategoryEntity parentCategory;
+
+    @OneToMany(mappedBy = "parentCategory", orphanRemoval = true)
+    private Set<bsDocsCategoryEntity> subCategories;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "business_entity_id", nullable = false)
     private BusinessEntity business;
 
     @OneToMany(mappedBy = "bsDocsCategory" , orphanRemoval = true)
     private Set<bsDocEntity> bsDocs;
+
+    @Column
+    private Long subCategoriesCount;
 
     @Column
     private Long bsDocsCount;
