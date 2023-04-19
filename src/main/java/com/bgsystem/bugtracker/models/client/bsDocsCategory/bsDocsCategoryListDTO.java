@@ -17,8 +17,16 @@ public class bsDocsCategoryListDTO {
 
     private String description;
 
+    private Boolean isAParentCategory;
+
+    private Long level;
+
+    private bsDocsCategoryMiniDTO parentCategory;
+
     private BusinessMiniDTO business;
 
-    private Long bsDocsCount;
+    private Long subCategories;
+
+    private Long bsDocs;
 
 }
