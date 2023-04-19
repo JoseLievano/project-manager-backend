@@ -20,7 +20,15 @@ public class bsDocsCategoryDTO {
 
     private String description;
 
+    private Boolean isAParentCategory;
+
+    private Long level;
+
+    private bsDocsCategoryMiniDTO parentCategory;
+
     private BusinessMiniDTO business;
+
+    private Set<bsDocsCategoryMiniDTO> subCategories;
 
     private Set<bsDocMiniDTO> bsDocs;
 
