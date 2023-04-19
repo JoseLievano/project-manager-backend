@@ -24,12 +24,30 @@ public class bsKBCategoryEntity {
     @Column
     private String name;
 
+    @Column
+    private String description;
+
+    @Column
+    private Boolean isAParentKBCategory;
+
+    @Column
+    private Long level;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_kb_id")
+    private bsKBCategoryEntity parentKB;
+
+    @OneToMany(mappedBy = "parentKB", orphanRemoval = true)
+    private Set<bsKBCategoryEntity> subKBCategories;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "business_entity_id", nullable = false)
     private BusinessEntity business;
 
     @OneToMany(mappedBy = "bsKBCategory", orphanRemoval = true)
     private Set<bsKBEntity> bsKBEntities = new HashSet<>();
+
+    private Long subKBCategoriesCount;
 
     private Long bsKBCount;
 
