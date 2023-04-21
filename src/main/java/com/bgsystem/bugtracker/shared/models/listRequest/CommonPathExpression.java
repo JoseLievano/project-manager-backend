@@ -1,9 +1,11 @@
 package com.bgsystem.bugtracker.shared.models.listRequest;
 
 import com.bgsystem.bugtracker.exeptions.BadOperator;
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.*;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,12 +62,22 @@ public abstract class CommonPathExpression <Entity> {
         BooleanExpression expression = null;
 
         String field = filter.getField();
+        Class<?> entityClass = entityPath.getType();
+        Class<?> fieldType = null;
+        try {
+            Field entityField = entityClass.getDeclaredField(filter.getField());
+            fieldType = entityField.getType();
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Type: " + fieldType);
 
         for (FilterOperator operator : filter.getOperations()){
 
-            if (isANumber(operator.getValue())){
+            if (Number.class.isAssignableFrom(fieldType)){
 
-                expression = this.addOrExpression(expression, this.getNumberExpression(field, operator));
+                expression = this.addOrExpression(expression, this.getNumberExpression(field, operator, fieldType));
 
             }else if (isADate(operator.getValue())){
 
@@ -76,6 +88,8 @@ public abstract class CommonPathExpression <Entity> {
                 expression = this.addOrExpression(expression, this.getBooleanExpression(field, operator));
 
             }else{
+
+                System.out.println("Not anything");
 
                 expression = this.addOrExpression(expression, this.getStringExpression(field, operator));
 
@@ -94,7 +108,6 @@ public abstract class CommonPathExpression <Entity> {
         }
         return expression;
     }
-
 
     protected BooleanExpression getStringExpression(String field, FilterOperator operator) throws BadOperator {
 
@@ -117,63 +130,58 @@ public abstract class CommonPathExpression <Entity> {
     }
 
 
-    protected BooleanExpression getNumberExpression(String field, FilterOperator operator) throws BadOperator {
+    protected BooleanExpression getNumberExpression(String field, FilterOperator operator, Class<?> type) throws BadOperator {
 
-        NumberPath<Long> path = entityPath.getNumber(field, Long.class);
 
-        return getNumberPathBooleanExpression(path, operator);
+        if (Long.class.isAssignableFrom(type)){
 
-    }
+            NumberPath<Long> path = entityPath.getNumber(field, Long.class);
 
-    protected BooleanExpression getNumberPathBooleanExpression(NumberPath path, FilterOperator operator) throws BadOperator{
+            return getNumberPathBooleanExpression(path, operator);
 
-        if (path.getType().equals(Long.class)){
+        }else if (Integer.class.isAssignableFrom(type)){
 
-            Long value = operator.getValue() == null ? null : Long.parseLong(operator.getValue());
+            NumberPath<Integer> path = entityPath.getNumber(field, Integer.class);
 
-            return switch (operator.getOperator()) {
-                case "=" -> path.eq(value);
-                case ">" -> path.gt(value);
-                case ">=" -> path.goe(value);
-                case "<" -> path.lt(value);
-                case "<=" -> path.loe(value);
-                case "!=" -> path.ne(value);
-                default -> throw new BadOperator("Bad operator for number field");
-            };
+            return getNumberPathBooleanExpression(path, operator);
 
-        } else if (path.getType().equals(Integer.class)) {
+        }else if (Double.class.isAssignableFrom(type)){
 
-            Integer value = operator.getValue() == null ? null : Integer.parseInt(operator.getValue());
+            NumberPath<Double> path = entityPath.getNumber(field, Double.class);
 
-            return switch (operator.getOperator()) {
-                case "=" -> path.eq(value);
-                case ">" -> path.gt(value);
-                case ">=" -> path.goe(value);
-                case "<" -> path.lt(value);
-                case "<=" -> path.loe(value);
-                case "!=" -> path.ne(value);
-                default -> throw new BadOperator("Bad operator for number field");
-            };
+            return getNumberPathBooleanExpression(path, operator);
 
-        }  else if (path.getType().equals(Double.class)) {
-
-            double value = Double.parseDouble(operator.getValue());
-
-            return switch (operator.getOperator()) {
-                case "=" -> path.eq(value);
-                case ">" -> path.gt(value);
-                case ">=" -> path.goe(value);
-                case "<" -> path.lt(value);
-                case "<=" -> path.loe(value);
-                case "!=" -> path.ne(value);
-                default -> throw new BadOperator("Bad operator for number field");
-            };
-
+        }else{
+            throw new BadOperator("Bad operator for number field");
         }
 
-        throw new BadOperator("Bad operator for number field");
-
     }
+
+    protected <T extends Number & Comparable<T>> BooleanExpression getNumberPathBooleanExpression(NumberPath<T> path, FilterOperator operator) throws BadOperator {
+
+        T value;
+
+        if (Long.class.isAssignableFrom(path.getType())) {
+            value = (T) Long.valueOf(operator.getValue());
+        } else if (Integer.class.isAssignableFrom(path.getType())) {
+            value = (T) Integer.valueOf(operator.getValue());
+        } else if (Double.class.isAssignableFrom(path.getType())) {
+            value = (T) Double.valueOf(operator.getValue());
+        } else {
+            throw new BadOperator("Unsupported number type");
+        }
+
+        return switch (operator.getOperator()) {
+            case "=" -> path.eq(value);
+            case ">" -> path.gt(value);
+            case ">=" -> path.goe(value);
+            case "<" -> path.lt(value);
+            case "<=" -> path.loe(value);
+            case "!=" -> path.ne(value);
+            default -> throw new BadOperator("Bad operator for number field");
+        };
+    }
+
 
 
     protected BooleanExpression getDateExpression(String field, FilterOperator operator) throws BadOperator {
@@ -243,6 +251,7 @@ public abstract class CommonPathExpression <Entity> {
      * @return true if the value is a valid number, false otherwise
      */
     protected boolean isANumber(String value){
+        System.out.println("isANumber: " + value);
         try {
             Long.parseLong(value);
             return true;
