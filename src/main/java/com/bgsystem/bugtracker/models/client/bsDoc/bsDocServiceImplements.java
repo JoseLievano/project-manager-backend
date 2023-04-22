@@ -41,7 +41,7 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
     @Override
     public bsDocMiniDTO insert(bsDocForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
-        if (form == null || form.getBusiness() == null || form.getTitle() == null || form.getBsDocsCategory() == null || form.getContent() == null)
+        if (form == null || form.getTitle() == null || form.getBsDocsCategory() == null || form.getContent() == null)
             throw new InvalidInsertDeails("Invalid insert details");
 
         //Check if the doc already exists
@@ -51,16 +51,16 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
         //Get the entity to insert
         bsDocEntity toInsert = mapper.toEntity(form);
 
-        //Get the business entity
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
+        //Get the category entity
+        bsDocsCategoryEntity category = bsDocsCategoryRepository.findById(form.getBsDocsCategory()).orElseThrow(() -> new ElementNotFoundException("Category not found"));
+        toInsert.setBsDocsCategory(category);
+
+        //Get the business entity from category
+        BusinessEntity business = category.getBusiness();
         toInsert.setBusiness(business);
 
         //Add the doc to the business
         business.getBsDocs().add(toInsert);
-
-        //Get the category entity
-        bsDocsCategoryEntity category = bsDocsCategoryRepository.findById(form.getBsDocsCategory()).orElseThrow(() -> new ElementNotFoundException("Category not found"));
-        toInsert.setBsDocsCategory(category);
 
         //Add the doc to the category
         category.getBsDocs().add(toInsert);
