@@ -33,7 +33,15 @@ public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, b
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
+                .isAParentCategory(entity.getIsAParentCategory())
+                .parentCategory(toSmallDTO(entity.getParentCategory()))
+                .level(entity.getLevel())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .subCategories(entity.getSubCategories()
+                        .stream()
+                        .map(this::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
                 .bsDocs(entity.getBsDocs()
                         .stream()
                         .map(bsDocMapper::toSmallDTO)
@@ -52,6 +60,9 @@ public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, b
             return bsDocsCategoryMiniDTO.builder()
                     .id(entity.getId())
                     .name(entity.getName())
+                    .description(entity.getDescription())
+                    .isAParentCategory(entity.getIsAParentCategory())
+                    .level(entity.getLevel())
                     .build();
     }
 
@@ -64,21 +75,27 @@ public class bsDocsCategoryMapper implements DefaultMapper <bsDocsCategoryDTO, b
         return bsDocsCategoryEntity.builder()
                 .id(form.getId())
                 .name(form.getName())
+                .description(form.getDescription())
                 .build();
 
     }
 
     @Override
-    public bsDocsCategoryListDTO toListDTO(bsDocsCategoryEntity bsDocsCategoryEntity) {
+    public bsDocsCategoryListDTO toListDTO(bsDocsCategoryEntity entity) {
 
-        if (bsDocsCategoryEntity == null)
+        if (entity == null)
             return null;
 
         return bsDocsCategoryListDTO.builder()
-                .id(bsDocsCategoryEntity.getId())
-                .name(bsDocsCategoryEntity.getName())
-                .business(businessMapper.toSmallDTO(bsDocsCategoryEntity.getBusiness()))
-                .bsDocsCount(bsDocsCategoryEntity.getBsDocsCount())
+                .id(entity.getId())
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .isAParentCategory(entity.getIsAParentCategory())
+                .parentCategory(toSmallDTO(entity.getParentCategory()))
+                .level(entity.getLevel())
+                .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .subCategories(entity.getSubCategoriesCount())
+                .bsDocs(entity.getBsDocsCount())
                 .build();
 
     }
