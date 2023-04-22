@@ -9,6 +9,8 @@ import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class bsKBCategoryServiceImplements extends DefaultServiceImplements <bsKBCategoryDTO, bsKBCategoryMiniDTO, bsKBCategoryListDTO, bsKBCategoryForm, bsKBCategoryEntity, Long> {
 
@@ -45,23 +47,84 @@ public class bsKBCategoryServiceImplements extends DefaultServiceImplements <bsK
 
         bsKBCategoryEntity toInsert = mapper.toEntity(form);
 
-        //Add the business to the kb Category
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
-        toInsert.setBusiness(business);
+        //Set parent KB Category
+        if (form.getParentKB() != null){
+            bsKBCategoryEntity parentCategory = repository.findById(form.getParentKB()).orElseThrow(() -> new ElementNotFoundException("KB Category not found"));
+            toInsert.setParentKB(parentCategory);
+            boolean isAParentCategory = parentCategory.getIsAParentKBCategory() != null && parentCategory.getIsAParentKBCategory();
+            if (!isAParentCategory){
+                parentCategory.setIsAParentKBCategory(true);
+            }
 
-        business.getBsKBCategories().add(toInsert);
+            //Set the business based in the parent category business
+            BusinessEntity business = parentCategory.getBusiness();
+            business.getBsKBCategories().add(toInsert);
+            toInsert.setBusiness(business);
+
+            toInsert.setLevel(parentCategory.getLevel() + 1);
+
+            businessRepository.save(business);
+            repository.save(parentCategory);
+
+        }else {
+            toInsert.setLevel(0L);
+            BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
+            toInsert.setBusiness(business);
+            business.getBsKBCategories().add(toInsert);
+            businessRepository.save(business);
+        }
 
         repository.save(toInsert);
-
-        businessRepository.save(business);
 
         return mapper.toSmallDTO(toInsert);
 
     }
 
     @Override
+    public bsKBCategoryDTO update(Long id, bsKBCategoryForm form) throws ElementNotFoundException {
+
+        bsKBCategoryEntity toUpdate = repository.findById(id).orElseThrow(() -> new ElementNotFoundException("KB Category not found"));
+
+        if (form.getName() != null){
+            toUpdate.setName(form.getName());
+        }
+
+        if (form.getDescription() != null) {
+            toUpdate.setDescription(form.getDescription());
+        }
+
+
+        if (form.getParentKB() != null){
+            bsKBCategoryEntity parentCategory = repository.findById(form.getParentKB()).orElseThrow(() -> new ElementNotFoundException("KB Category not found"));
+            if (Objects.equals(parentCategory.getId(), toUpdate.getId())){
+                throw new ElementNotFoundException("KB Category cannot be the parent of itself");
+            }
+            toUpdate.setParentKB(parentCategory);
+            parentCategory.getSubKBCategories().add(toUpdate);
+            parentCategory.setIsAParentKBCategory(true);
+            repository.save(parentCategory);
+            toUpdate.setLevel(parentCategory.getLevel() + 1);
+        }
+
+        //Check Category level
+        if (toUpdate.getParentKB()  == null){
+            toUpdate.setLevel(0L);
+        } else if (toUpdate.getLevel() == null) {
+            toUpdate.setLevel(toUpdate.getParentKB().getLevel() + 1);
+        }
+
+        repository.save(toUpdate);
+
+        return mapper.toDTO(toUpdate);
+
+    }
+
+    @Override
     protected bsKBCategoryEntity updateListFields(bsKBCategoryEntity bsKBCategoryEntity) {
+
         bsKBCategoryEntity.setBsKBCount(bsKBCategoryEntity.getBsKBEntities() == null ? 0 : (long) bsKBCategoryEntity.getBsKBEntities().size());
+        bsKBCategoryEntity.setSubKBCategoriesCount(bsKBCategoryEntity.getSubKBCategories() == null ? 0 : (long) bsKBCategoryEntity.getSubKBCategories().size());
+
         return bsKBCategoryEntity;
     }
 }
