@@ -15,6 +15,9 @@ public class bsKBCategoryForm {
 
     private String name;
 
-    private Long business;
+    private String description;
 
+    private Long parentKB;
+
+    private Long business;
 }
