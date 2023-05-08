@@ -39,7 +39,7 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
 
         for (FilterOperator operation : filter.getOperations()){
 
-            switch (filter.getField()){
+            switch (operation.getField()){
                 case "id" ->{
                     NumberPath<Long> idPath = bsDocsCategoryEntity.bsDocs.any().id;
                     docsExpression = addOrExpression(docsExpression, getNumberPathBooleanExpression(idPath, operation));
@@ -48,7 +48,7 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
                     StringPath titlePath = bsDocsCategoryEntity.bsDocs.any().title;
                     docsExpression = addOrExpression(docsExpression, getStringPathBooleanExpression(titlePath, operation));
                 }
-                default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
+                default -> throw new IllegalArgumentException("Illegal field in get doc expression: " + filter.getField());
             }
         }
         return docsExpression;
@@ -60,7 +60,7 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
 
         for (FilterOperator operation : filter.getOperations()){
 
-            switch (filter.getField()){
+            switch (operation.getField()){
                 case "id" ->{
                     NumberPath<Long> idPath = bsDocsCategoryEntity.business.id;
                     businessExpression = addOrExpression(businessExpression, getNumberPathBooleanExpression(idPath, operation));
