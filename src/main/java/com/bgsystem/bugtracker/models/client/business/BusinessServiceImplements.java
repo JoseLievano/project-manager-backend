@@ -91,7 +91,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN' , 'CLIENT')")
     public Collection<BusinessDTO> getAll() {
         return super.getAll();
     }
