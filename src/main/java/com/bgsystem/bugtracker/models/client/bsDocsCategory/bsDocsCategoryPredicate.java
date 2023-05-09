@@ -19,6 +19,7 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
         this.entityPath = new PathBuilder<bsDocsCategoryEntity>(bsDocsCategoryEntity.class, "bsDocsCategoryEntity");
         this.entityFields.add("business");
         this.entityFields.add("docs");
+        this.entityFields.add("parentCategory");
         this.businessRepository = businessRepository;
     }
 
@@ -28,6 +29,7 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
         return switch (filter.getField()){
             case "business" -> getBusinessExpression(filter);
             case "docs" -> getDocsExpression(filter);
+            case "parentCategory" -> getParentCategory(filter);
             default -> throw new IllegalArgumentException("Illegal field: " + filter.getField());
         };
 
@@ -91,5 +93,25 @@ public class bsDocsCategoryPredicate extends CommonPathExpression<bsDocsCategory
 
         return businessExpression;
 
+    }
+
+    private BooleanExpression getParentCategory(FilterRequest filter) throws BadOperator{
+
+        BooleanExpression parentExpression = null;
+
+        for (FilterOperator operation : filter.getOperations()){
+
+            switch (operation.getField()){
+                case "id" -> {
+                    NumberPath<Long> idPath = bsDocsCategoryEntity.parentCategory.id;
+                    parentExpression = addOrExpression(parentExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "name" -> {
+                    StringPath namePath = bsDocsCategoryEntity.parentCategory.name;
+                    parentExpression = addOrExpression(parentExpression, getStringPathBooleanExpression(namePath, operation));
+                }
+            }
+        }
+        return parentExpression;
     }
 }
