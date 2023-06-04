@@ -15,4 +15,8 @@ public class bsDocsCategoryMiniDTO {
     private String name;
 
     private String description;
+
+    private Boolean isAParentCategory;
+
+    private Long level;
 }
