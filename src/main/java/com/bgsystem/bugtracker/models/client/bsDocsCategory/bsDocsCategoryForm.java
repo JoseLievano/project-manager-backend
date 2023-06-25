@@ -17,6 +17,8 @@ public class bsDocsCategoryForm {
 
     private String description;
 
+    private Long parentCategory;
+
     private Long business;
 
 }
