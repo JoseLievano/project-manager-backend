@@ -31,7 +31,7 @@ public class bsDocMapper implements DefaultMapper <bsDocDTO, bsDocMiniDTO, bsDoc
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
-                .bsDocsCategory(bsDocsCategoryMapper.toSmallDTO(entity.getBsDocsCategory()))
+                .category(bsDocsCategoryMapper.toSmallDTO(entity.getBsDocsCategory()))
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
                 .build();
 
@@ -74,7 +74,7 @@ public class bsDocMapper implements DefaultMapper <bsDocDTO, bsDocMiniDTO, bsDoc
                 .id(bsDocEntity.getId())
                 .title(bsDocEntity.getTitle())
                 .content(bsDocEntity.getContent())
-                .bsDocsCategory(bsDocsCategoryMapper.toSmallDTO(bsDocEntity.getBsDocsCategory()))
+                .category(bsDocsCategoryMapper.toSmallDTO(bsDocEntity.getBsDocsCategory()))
                 .business(businessMapper.toSmallDTO(bsDocEntity.getBusiness()))
                 .build();
 
