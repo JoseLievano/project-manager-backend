@@ -20,8 +20,6 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
 
     private final bsDocsCategoryRepository bsDocsCategoryRepository;
 
-    private final bsDocPredicate bsDocPredicate;
-
     @Autowired
     public bsDocServiceImplements(
                                 bsDocRepository repository,
@@ -35,13 +33,12 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
         this.bsDocRepository = bsDocRepository;
         this.businessRepository = businessRepository;
         this.bsDocsCategoryRepository = bsDocsCategoryRepository;
-        this.bsDocPredicate = bsDocPredicate;
     }
 
     @Override
     public bsDocMiniDTO insert(bsDocForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
-        if (form == null || form.getTitle() == null || form.getBsDocsCategory() == null || form.getContent() == null)
+        if (form == null || form.getTitle() == null || form.getCategory() == null || form.getContent() == null)
             throw new InvalidInsertDeails("Invalid insert details");
 
         //Check if the doc already exists
@@ -52,7 +49,7 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
         bsDocEntity toInsert = mapper.toEntity(form);
 
         //Get the category entity
-        bsDocsCategoryEntity category = bsDocsCategoryRepository.findById(form.getBsDocsCategory()).orElseThrow(() -> new ElementNotFoundException("Category not found"));
+        bsDocsCategoryEntity category = bsDocsCategoryRepository.findById(form.getCategory()).orElseThrow(() -> new ElementNotFoundException("Category not found"));
         toInsert.setBsDocsCategory(category);
 
         //Get the business entity from category
@@ -68,11 +65,47 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
         //Save the entity
         repository.save(toInsert);
 
-        //Persiste changes inside business and category
+        //Persist changes inside business and category
         businessRepository.save(business);
         bsDocsCategoryRepository.save(category);
 
         return mapper.toSmallDTO(toInsert);
+
+    }
+
+    @Override
+    public bsDocDTO update(Long id, bsDocForm form) throws ElementNotFoundException, InvalidInsertDeails {
+
+        if (form == null)
+            throw new InvalidInsertDeails("Invalid insert details");
+
+        bsDocEntity newEntityData = mapper.toEntity(form);
+
+        //Get the entity we are going to modify
+        bsDocEntity toUpdate = repository.findById(id).orElseThrow(ElementNotFoundException::new);
+
+        //Get toUpdate actual category
+        bsDocsCategoryEntity category = bsDocsCategoryRepository.findById(toUpdate.getBsDocsCategory().getId()).orElseThrow(ElementNotFoundException::new);
+
+        if (form.getTitle() != null){
+            toUpdate.setTitle(newEntityData.getTitle());
+        }
+
+        if (form.getContent() != null){
+            toUpdate.setContent(newEntityData.getContent());
+        }
+
+        if (form.getCategory() != null) {
+            category = bsDocsCategoryRepository.findById(form.getCategory()).orElseThrow(ElementNotFoundException::new);
+            toUpdate.setBsDocsCategory(category);
+        }
+
+        repository.save(toUpdate);
+
+        if (form.getCategory() != null)
+            bsDocsCategoryRepository.save(category);
+
+        return mapper.toDTO(toUpdate);
 
     }
 }
