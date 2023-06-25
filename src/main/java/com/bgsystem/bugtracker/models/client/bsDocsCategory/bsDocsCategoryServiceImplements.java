@@ -37,7 +37,7 @@ public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <b
     @Override
     public bsDocsCategoryMiniDTO insert(bsDocsCategoryForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
-        if (form == null || form.getBusiness() == null || form.getName() == null || form.getDescription() == null)
+        if (form == null || form.getBusiness() == null || form.getName() == null)
             throw new InvalidInsertDeails("Invalid insert details");
 
         //Check if the category already exists
@@ -51,7 +51,7 @@ public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <b
             bsDocsCategoryEntity parentCategory = repository.findById(form.getParentCategory()).orElseThrow(() -> new ElementNotFoundException("Parent category not found"));
             toInsert.setParentCategory(parentCategory);
             parentCategory.getSubCategories().add(toInsert);
-            Boolean isAParentCategory = parentCategory.getIsAParentCategory() != null && parentCategory.getIsAParentCategory();
+            boolean isAParentCategory = parentCategory.getIsAParentCategory() != null && parentCategory.getIsAParentCategory();
             if (!isAParentCategory){
                 parentCategory.setIsAParentCategory(true);
             }
@@ -67,9 +67,7 @@ public class bsDocsCategoryServiceImplements extends DefaultServiceImplements <b
             repository.save(parentCategory);
 
         }else {
-
             toInsert.setLevel(0L);
-
             //Set the business category
             BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
             toInsert.setBusiness(business);
