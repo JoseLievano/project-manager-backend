@@ -17,7 +17,7 @@ public class bsDocForm {
 
     private String content;
 
-    private Long bsDocsCategory;
+    private Long category;
 
     private Long business;
 
