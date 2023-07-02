@@ -1,9 +1,6 @@
 package com.bgsystem.bugtracker.shared.service;
 
-import com.bgsystem.bugtracker.exeptions.BadOperator;
-import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
-import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
+import com.bgsystem.bugtracker.exeptions.*;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import org.springframework.data.domain.Page;
@@ -19,9 +16,9 @@ public interface DefaultService < DTO, MINIDTO, LISTDTO, FORM, ID >{
 
     MINIDTO insert(FORM form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails;
 
-    DTO update(ID id, FORM form) throws ElementNotFoundException;
+    DTO update(ID id, FORM form) throws ElementNotFoundException, InvalidInsertDeails;
 
-    DTO delete (ID id) throws ElementNotFoundException;
+    DTO delete (ID id) throws ElementNotFoundException, InvalidDeleteOperation;
 
     Collection<LISTDTO> getAllListView(Optional<FilterRequest> filterRequest) throws ElementNotFoundException;
 
