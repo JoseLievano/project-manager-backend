@@ -1,9 +1,6 @@
 package com.bgsystem.bugtracker.models.client.business;
 
-import com.bgsystem.bugtracker.exeptions.BadOperator;
-import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
-import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
+import com.bgsystem.bugtracker.exeptions.*;
 import com.bgsystem.bugtracker.models.HQ.client.ClientRepository;
 import com.bgsystem.bugtracker.models.HQ.plan.PlanRepository;
 import com.bgsystem.bugtracker.models.client.bsGeneralSettings.bsGeneralSettingsEntity;
@@ -86,7 +83,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
 
     @Override
     @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
-    public BusinessDTO delete(Long aLong) throws ElementNotFoundException {
+    public BusinessDTO delete(Long aLong) throws ElementNotFoundException, InvalidDeleteOperation {
         return super.delete(aLong);
     }
 
@@ -97,7 +94,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
     }
 
     @Override
-    public BusinessDTO update(Long aLong, BusinessForm uform) throws ElementNotFoundException {
+    public BusinessDTO update(Long aLong, BusinessForm uform) throws ElementNotFoundException, InvalidInsertDeails {
         return super.update(aLong, uform);
     }
 
