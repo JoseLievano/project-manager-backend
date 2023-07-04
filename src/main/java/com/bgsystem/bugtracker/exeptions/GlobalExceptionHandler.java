@@ -14,8 +14,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException e, HttpServletRequest request){
-        //String errorMessage = "You do not have the required permissions to perform this action";
-
         ErrorResponseBody errorResponseBody = ErrorResponseBody.builder()
                 .message("You do not have the required permissions to perform this action")
                 .error("Forbidden")
@@ -24,8 +22,6 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .trace(e.getLocalizedMessage())
                 .build();
-
         return new ResponseEntity<>(errorResponseBody, HttpStatus.FORBIDDEN);
     }
-
 }
