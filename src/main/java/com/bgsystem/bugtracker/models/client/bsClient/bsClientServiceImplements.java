@@ -25,12 +25,12 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
 
     @Autowired
     public bsClientServiceImplements(
-                                    bsClientRepository repository,
-                                    bsClientMapper mapper,
-                                    PasswordEncoder encoder,
-                                    bsClientRepository bsClientRepository,
-                                    BusinessRepository businessRepository,
-                                    bsClientPredicate bsClientPredicate
+        bsClientRepository repository,
+        bsClientMapper mapper,
+        PasswordEncoder encoder,
+        bsClientRepository bsClientRepository,
+        BusinessRepository businessRepository,
+        bsClientPredicate bsClientPredicate
     ) {
         super(repository, mapper, bsClientPredicate);
         this.encoder = encoder;
