@@ -18,6 +18,16 @@ public class bsKBCategoryDTO {
 
     private String name;
 
+    private String description;
+
+    private Long level;
+
+    private Boolean isAParentKBCategory;
+
+    private bsKBCategoryMiniDTO parentCategory;
+
+    private Set<bsKBCategoryMiniDTO> subCategories;
+
     private BusinessMiniDTO business;
 
     private Set<bsKBMiniDTO> bsKBs;
