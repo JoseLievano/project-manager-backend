@@ -17,6 +17,7 @@ public class bsKBCategoryPredicate extends CommonPathExpression<bsKBCategoryEnti
         this.entityPath = new PathBuilder<bsKBCategoryEntity>(bsKBCategoryEntity.class, "bsKBCategoryEntity");
         this.entityFields.add("business");
         this.entityFields.add("kbs");
+        this.entityFields.add("parentCategory");
     }
 
     @Override
@@ -24,6 +25,7 @@ public class bsKBCategoryPredicate extends CommonPathExpression<bsKBCategoryEnti
         return switch (filter.getField()) {
             case "business" -> getBusinessExpression(filter);
             case "kbs" -> getbsKBExpression(filter);
+            case "parentCategory" -> getParentCategory(filter);
             default -> throw new IllegalArgumentException("Invalid field: " + filter.getField());
         };
     }
@@ -84,8 +86,30 @@ public class bsKBCategoryPredicate extends CommonPathExpression<bsKBCategoryEnti
                 default -> throw new IllegalArgumentException("Invalid field: " + operation.getField());
             }
         }
-
         return businessExpression;
+    }
+
+    private BooleanExpression getParentCategory(FilterRequest filter) throws BadOperator {
+
+        BooleanExpression parentExpression = null;
+
+        for (FilterOperator operation : filter.getOperations()){
+
+            switch (operation.getField()){
+                case "id" -> {
+                    NumberPath<Long> idPath = bsKBCategoryEntity.parentKB.id;
+                    parentExpression = addOrExpression(parentExpression, getNumberPathBooleanExpression(idPath, operation));
+                }
+                case "name" -> {
+                    StringPath namePath = bsKBCategoryEntity.parentKB.name;
+                    parentExpression = addOrExpression(parentExpression, getStringPathBooleanExpression(namePath, operation));
+                }
+            }
+
+        }
+
+        return parentExpression;
 
     }
+
 }
