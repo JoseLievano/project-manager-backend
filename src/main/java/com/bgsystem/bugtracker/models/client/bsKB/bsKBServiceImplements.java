@@ -20,57 +20,87 @@ public class bsKBServiceImplements extends DefaultServiceImplements <bsKBDTO, bs
 
     private final bsKBCategoryRepository bsKBCategoryRepository;
 
-    private final bsKBPredicate bsKBPredicate;
     @Autowired
     public bsKBServiceImplements(
-                                bsKBRepository repository,
-                                bsKBMapper mapper,
-                                bsKBRepository bsKBRepository,
-                                BusinessRepository businessRepository,
-                                bsKBCategoryRepository bsKBCategoryRepository,
-                                bsKBPredicate bsKBPredicate
+        bsKBRepository repository,
+        bsKBMapper mapper,
+        bsKBRepository bsKBRepository,
+        BusinessRepository businessRepository,
+        bsKBCategoryRepository bsKBCategoryRepository,
+        bsKBPredicate bsKBPredicate
     ) {
         super(repository, mapper, bsKBPredicate);
         this.bsKBRepository = bsKBRepository;
         this.businessRepository = businessRepository;
         this.bsKBCategoryRepository = bsKBCategoryRepository;
-        this.bsKBPredicate = bsKBPredicate;
     }
 
     @Override
     public bsKBMiniDTO insert(bsKBForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
-        if (form == null || form.getBusiness() == null || form.getBsKBCategory() == null || form.getContent() == null || form.getTitle() == null) {
+        if (form == null || form.getCategory() == null || form.getContent() == null || form.getTitle() == null) {
             throw new InvalidInsertDeails("Invalid insert details");
         }
 
-        // Check if business exists
-        BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
-        // Check if bsKBCategory exists
-        bsKBCategoryEntity bsKBCategory = bsKBCategoryRepository.findById(form.getBsKBCategory()).orElseThrow(() -> new ElementNotFoundException("bsKBCategory not found"));
+        //Check if the doc already exists
+        if (bsKBRepository.findByTitle(form.getTitle()).size() > 0)
+            throw new ElementAlreadyExist("KB aldready exist");
 
-        //Check if a KB with the same title and the same business already exists
-        if (bsKBRepository.findByTitleAndBusiness(form.getTitle(), business).size() > 0) {
-            throw new ElementAlreadyExist("KB with the same title and the same business already exists");
-        }
-
+        //Get the entity to insert
         bsKBEntity toInsert = mapper.toEntity(form);
 
+        //Get entity's category
+        bsKBCategoryEntity category = bsKBCategoryRepository.findById(form.getCategory()).orElseThrow(ElementNotFoundException::new);
+        toInsert.setBsKBCategory(category);
+
+        //Get entity's business from category
+        BusinessEntity business = category.getBusiness();
         toInsert.setBusiness(business);
 
-        toInsert.setBsKBCategory(bsKBCategory);
-
+        //Add doc to business
         business.getBsKBs().add(toInsert);
 
-        bsKBCategory.getBsKBEntities().add(toInsert);
+        //Add kb to category
+        category.getBsKBEntities().add(toInsert);
 
         repository.save(toInsert);
 
         businessRepository.save(business);
-
-        bsKBCategoryRepository.save(bsKBCategory);
+        bsKBCategoryRepository.save(category);
 
         return mapper.toSmallDTO(toInsert);
+
+    }
+
+    @Override
+    public bsKBDTO update(Long id, bsKBForm form) throws ElementNotFoundException, InvalidInsertDeails {
+
+        if (form == null)
+            throw new InvalidInsertDeails("Invalid insert details");
+
+        bsKBEntity newEntityData = mapper.toEntity(form);
+
+        //Get the entity we are going to modify
+        bsKBEntity toUpdate = repository.findById(id).orElseThrow(ElementNotFoundException::new);
+
+        if (form.getTitle() != null){
+            toUpdate.setTitle(newEntityData.getTitle());
+        }
+
+        if (form.getContent() != null){
+            toUpdate.setContent(newEntityData.getContent());
+        }
+
+        if (form.getCategory() != null){
+            bsKBCategoryEntity category = bsKBCategoryRepository.findById(form.getCategory()).orElseThrow(ElementNotFoundException::new);
+            toUpdate.setBsKBCategory(category);
+            repository.save(toUpdate);
+            bsKBCategoryRepository.save(category);
+        }else {
+            repository.save(toUpdate);
+        }
+
+        return mapper.toDTO(toUpdate);
 
     }
 }
