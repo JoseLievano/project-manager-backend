@@ -84,9 +84,6 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
         //Get the entity we are going to modify
         bsDocEntity toUpdate = repository.findById(id).orElseThrow(ElementNotFoundException::new);
 
-        //Get toUpdate actual category
-        bsDocsCategoryEntity category = bsDocsCategoryRepository.findById(toUpdate.getBsDocsCategory().getId()).orElseThrow(ElementNotFoundException::new);
-
         if (form.getTitle() != null){
             toUpdate.setTitle(newEntityData.getTitle());
         }
@@ -96,14 +93,13 @@ public class bsDocServiceImplements extends DefaultServiceImplements <bsDocDTO, 
         }
 
         if (form.getCategory() != null) {
-            category = bsDocsCategoryRepository.findById(form.getCategory()).orElseThrow(ElementNotFoundException::new);
+            bsDocsCategoryEntity category = bsDocsCategoryRepository.findById(form.getCategory()).orElseThrow(ElementNotFoundException::new);
             toUpdate.setBsDocsCategory(category);
-        }
-
-        repository.save(toUpdate);
-
-        if (form.getCategory() != null)
+            repository.save(toUpdate);
             bsDocsCategoryRepository.save(category);
+        }else{
+            repository.save(toUpdate);
+        }
 
         return mapper.toDTO(toUpdate);
 
