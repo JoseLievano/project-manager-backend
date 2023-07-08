@@ -26,11 +26,13 @@ public class bsPrKBEntity {
     private String content;
 
     @ManyToOne (optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    private bsPrKBCategoryEntity category;
+
+    @ManyToOne (optional = false)
     @JoinColumn(name = "project_id", nullable = false)
     private bsProjectEntity project;
 
-    @ManyToOne (optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
-    private bsPrKBCategoryEntity category;
+
 
 }
