@@ -32,7 +32,7 @@ public class bsKBMapper implements DefaultMapper <bsKBDTO, bsKBMiniDTO, bsKBList
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
-                .bsKBCategory(bsKBCategoryMapper.toSmallDTO(entity.getBsKBCategory()))
+                .category(bsKBCategoryMapper.toSmallDTO(entity.getBsKBCategory()))
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
                 .build();
 
@@ -79,7 +79,7 @@ public class bsKBMapper implements DefaultMapper <bsKBDTO, bsKBMiniDTO, bsKBList
                 .id(bsKBEntity.getId())
                 .title(bsKBEntity.getTitle())
                 .content(bsKBEntity.getContent())
-                .bsKBCategory(bsKBCategoryMapper.toSmallDTO(bsKBEntity.getBsKBCategory()))
+                .category(bsKBCategoryMapper.toSmallDTO(bsKBEntity.getBsKBCategory()))
                 .business(businessMapper.toSmallDTO(bsKBEntity.getBusiness()))
                 .build();
 
