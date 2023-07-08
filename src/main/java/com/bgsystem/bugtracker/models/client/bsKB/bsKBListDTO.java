@@ -18,7 +18,7 @@ public class bsKBListDTO {
 
     private String content;
 
-    private bsKBCategoryMiniDTO bsKBCategory;
+    private bsKBCategoryMiniDTO category;
 
     private BusinessMiniDTO business;
 
