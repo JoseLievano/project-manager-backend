@@ -19,6 +19,6 @@ public class bsStatusListDTO {
 
     private BusinessMiniDTO business;
 
-    private Long taskCount;
+    private Long tasks;
 
 }
