@@ -63,7 +63,7 @@ public class bsPrTaskEntity {
     @JoinColumn(name = "bs_task_category", nullable = false)
     private bsTaskCategoryEntity category;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "bs_type_id", nullable = false)
     private bsTypeEntity type;
 
