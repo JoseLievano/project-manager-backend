@@ -85,7 +85,7 @@ public class bsPriorityMapper implements DefaultMapper <bsPriorityDTO, bsPriorit
                 .name(entity.getName())
                 .priorityOrder(entity.getPriorityOrder())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
-                .taskCount(entity.getTaskCount())
+                .tasks(entity.getTaskCount())
                 .build();
 
     }
