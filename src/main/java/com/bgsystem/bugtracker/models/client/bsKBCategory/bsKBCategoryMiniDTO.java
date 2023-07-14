@@ -14,4 +14,10 @@ public class bsKBCategoryMiniDTO {
 
     private String name;
 
+    private String description;
+
+    private Long level;
+
+    private Boolean isAParentCategory;
+
 }

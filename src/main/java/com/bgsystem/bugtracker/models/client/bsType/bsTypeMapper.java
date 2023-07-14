@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.bsType;
 
+import com.bgsystem.bugtracker.models.client.bsTaskCategory.bsTaskCategoryMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
@@ -16,11 +17,14 @@ public class bsTypeMapper implements DefaultMapper<bsTypeDTO, bsTypeMiniDTO, bsT
 
     private final bsPrTaskMapper bsPrTaskMapper;
 
+    private final bsTaskCategoryMapper bsTaskCategoryMapper;
+
     @Lazy
     @Autowired
-    public  bsTypeMapper(BusinessMapper businessMapper, bsPrTaskMapper bsPrTaskMapper) {
+    public  bsTypeMapper(BusinessMapper businessMapper, bsPrTaskMapper bsPrTaskMapper, bsTaskCategoryMapper bsTaskCategoryMapper) {
         this.businessMapper = businessMapper;
         this.bsPrTaskMapper = bsPrTaskMapper;
+        this.bsTaskCategoryMapper = bsTaskCategoryMapper;
     }
 
     @Override
@@ -34,6 +38,10 @@ public class bsTypeMapper implements DefaultMapper<bsTypeDTO, bsTypeMiniDTO, bsT
                 .id(entity.getId())
                 .name(entity.getName())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .taskCategories(entity.getTaskCategories().stream()
+                        .map(bsTaskCategoryMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
                 .tasks(entity.getTasks().stream()
                         .map(bsPrTaskMapper::toSmallDTO)
                         .collect(Collectors.toSet())
@@ -80,6 +88,7 @@ public class bsTypeMapper implements DefaultMapper<bsTypeDTO, bsTypeMiniDTO, bsT
                     .id(entity.getId())
                     .name(entity.getName())
                     .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                    .taskCategories(entity.getTaskCategoriesCount())
                     .taskCount(entity.getTaskCount())
                     .build();
 

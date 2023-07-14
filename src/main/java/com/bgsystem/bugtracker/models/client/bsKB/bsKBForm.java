@@ -17,7 +17,7 @@ public class bsKBForm {
 
     private String content;
 
-    private Long bsKBCategory;
+    private Long category;
 
     private Long business;
 

@@ -19,6 +19,8 @@ public class bsTaskCategoryForm {
 
     private Long business;
 
+    private Set<Long> types;
+
     private Set<Long> tasks;
 
 }

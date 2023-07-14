@@ -17,6 +17,8 @@ public class bsTaskCategoryListDTO {
 
     private BusinessMiniDTO business;
 
-    private Long taskCount;
+    private Long types;
+
+    private Long tasks;
 
 }
