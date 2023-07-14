@@ -87,7 +87,7 @@ public class bsStatusMapper implements DefaultMapper<bsStatusDTO, bsStatusMiniDT
                 .name(entity.getName())
                 .color(entity.getColor())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
-                .taskCount(entity.getTaskCount())
+                .tasks(entity.getTaskCount())
                 .build();
     }
 }
