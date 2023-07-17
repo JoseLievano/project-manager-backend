@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -42,17 +43,19 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
     @Override
     public bsClientMiniDTO insert(bsClientForm bsClientForm) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
-        if (bsClientForm == null || bsClientForm.getPassword() == null || bsClientForm.getEmail() == null || bsClientForm.getBusiness() == null) {
+        if (bsClientForm == null ||
+                bsClientForm.getPassword() == null ||
+                bsClientForm.getEmail() == null ||
+                bsClientForm.getBusiness() == null ||
+                bsClientForm.getUsername() == null) {
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new client");
         }
 
-        //Check if the user already exist in our DB
+        //Check if the user already exist in our DB by username and email
         Set<bsClientEntity> userExistenceCheck = bsClientRepository.findByUsername(bsClientForm.getUsername());
-
         userExistenceCheck.addAll(bsClientRepository.findByEmail(bsClientForm.getEmail()));
-
         if (userExistenceCheck.size() > 0) {
-            throw new ElementAlreadyExist();
+            throw new ElementAlreadyExist("The user already exist");
         }
 
         //Encode the password inside the form
@@ -60,6 +63,14 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
 
         //Converts form to an Admin Entity
         bsClientEntity toInsert = mapper.toEntity(bsClientForm);
+
+        //Set default values
+        toInsert.setIsActive(true);
+        toInsert.setDateCreated(new Date());
+        toInsert.setAccountNonExpired(true);
+        toInsert.setAccountNonLocked(true);
+        toInsert.setCredentialsNonExpired(true);
+        toInsert.setEnabled(true);
 
         //Set the role
         Set<String> roles = Set.of("ROLE_BS_CLIENT");
