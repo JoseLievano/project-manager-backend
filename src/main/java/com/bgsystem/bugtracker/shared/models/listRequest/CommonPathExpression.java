@@ -71,8 +71,6 @@ public abstract class CommonPathExpression <Entity> {
             throw new RuntimeException(e);
         }
 
-        System.out.println("Type: " + fieldType);
-
         for (FilterOperator operator : filter.getOperations()){
 
             if (Number.class.isAssignableFrom(fieldType)){
@@ -88,8 +86,6 @@ public abstract class CommonPathExpression <Entity> {
                 expression = this.addOrExpression(expression, this.getBooleanExpression(field, operator));
 
             }else{
-
-                System.out.println("Not anything");
 
                 expression = this.addOrExpression(expression, this.getStringExpression(field, operator));
 
@@ -290,6 +286,5 @@ public abstract class CommonPathExpression <Entity> {
         return Boolean.parseBoolean(value);
 
     }
-
 
 }
