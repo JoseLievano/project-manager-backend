@@ -40,4 +40,14 @@ public class bsClientListDTO {
 
     private Long invoices;
 
+    private String address;
+
+    private String website;
+
+    private String phone;
+
+    private String country;
+
+    private String companyName;
+
 }

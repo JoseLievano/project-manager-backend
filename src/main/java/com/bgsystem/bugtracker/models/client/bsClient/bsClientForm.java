@@ -40,4 +40,14 @@ public class bsClientForm {
 
     private Set<Long> invoices;
 
+    private String address;
+
+    private String website;
+
+    private String phone;
+
+    private String country;
+
+    private String companyName;
+
 }

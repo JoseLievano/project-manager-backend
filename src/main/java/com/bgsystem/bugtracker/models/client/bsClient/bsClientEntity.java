@@ -25,11 +25,26 @@ public class bsClientEntity extends User {
     @Column
     private Boolean isActive;
 
-    @Column
+    @Column(nullable = false)
     private Date dateCreated;
 
     @Column
     private Date lastLogin;
+
+    @Column
+    private String address;
+
+    @Column
+    private String website;
+
+    @Column
+    private String phone;
+
+    @Column
+    private String country;
+
+    @Column
+    private String companyName;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "business_entity_id", nullable = false)
@@ -48,22 +63,29 @@ public class bsClientEntity extends User {
     private Long invoicesCount;
 
     @Builder(builderMethodName = "bsClientBuilder")
-    public bsClientEntity(Long id,
-                          String firstName,
-                          String lastName,
-                          String email,
-                          Set<String> roles,
-                          String username,
-                          String password,
-                          Set<bsPrChannelEntity> channels,
-                          Set<bsPrChannelEntity> channelsAuthor,
-                          Set<bsPrCommentEntity> comments,
-                          Boolean isActive,
-                          Date dateCreated,
-                          Date lastLogin,
-                          BusinessEntity business,
-                          Set<bsProjectEntity> projects,
-                          Set <bsInvoiceEntity> invoices) {
+    public bsClientEntity(
+        Long id,
+        String firstName,
+        String lastName,
+        String email,
+        Set<String> roles,
+        String username,
+        String password,
+        Set<bsPrChannelEntity> channels,
+        Set<bsPrChannelEntity> channelsAuthor,
+        Set<bsPrCommentEntity> comments,
+        Boolean isActive,
+        Date dateCreated,
+        Date lastLogin,
+        BusinessEntity business,
+        Set<bsProjectEntity> projects,
+        Set <bsInvoiceEntity> invoices,
+        String address,
+        String website,
+        String phone,
+        String country,
+        String companyName
+    ) {
         super(id, firstName, lastName, email, roles, username, password, channels, channelsAuthor, comments);
     }
 
