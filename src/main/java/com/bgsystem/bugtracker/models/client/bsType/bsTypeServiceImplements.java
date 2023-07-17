@@ -12,9 +12,10 @@ import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class bsTypeServiceImplements extends DefaultServiceImplements <bsTypeDTO, bsTypeMiniDTO, bsTypeListDTO, bsTypeForm, bsTypeEntity, Long> {
@@ -26,12 +27,12 @@ public class bsTypeServiceImplements extends DefaultServiceImplements <bsTypeDTO
     private final bsTaskCategoryRepository bsTaskCategoryRepository;
     @Autowired
     public bsTypeServiceImplements(
-                                bsTypeRepository repository,
-                                bsTypeMapper mapper,
-                                bsTypeRepository bsTypeRepository,
-                                BusinessRepository businessRepository,
-                                bsTaskCategoryRepository bsTaskCategoryRepository,
-                                bsTypePredicate bsTypePredicate
+        bsTypeRepository repository,
+        bsTypeMapper mapper,
+        bsTypeRepository bsTypeRepository,
+        BusinessRepository businessRepository,
+        bsTaskCategoryRepository bsTaskCategoryRepository,
+        bsTypePredicate bsTypePredicate
     ) {
         super(repository, mapper, bsTypePredicate);
         this.bsTypeRepository = bsTypeRepository;
@@ -83,6 +84,57 @@ public class bsTypeServiceImplements extends DefaultServiceImplements <bsTypeDTO
     }
 
     @Override
+    public bsTypeDTO update(Long id, bsTypeForm form) throws ElementNotFoundException, InvalidInsertDeails {
+
+        if (form == null || form.getTaskCategories().size() == 0)
+            throw new InvalidInsertDeails();
+
+        bsTypeEntity toEdit = repository.findById(id).orElseThrow(ElementNotFoundException::new);
+
+        if (form.getName() != null && !form.getName().equals(toEdit.getName())){
+            toEdit.setName(form.getName());
+        }
+
+        Set<Long> originalTaskCats = toEdit.getTaskCategories().stream()
+                .map(bsTaskCategoryEntity::getId)
+                .collect(Collectors.toSet());
+
+        //Compare between originalTaskCats and new task cats from form.
+        Iterator<Long> oriIT = originalTaskCats.iterator();
+        Iterator<Long> newIT = form.getTaskCategories().iterator();
+
+        while (oriIT.hasNext()){
+            Long actualOriValue = oriIT.next();
+            while (newIT.hasNext()){
+                Long newITValue = newIT.next();
+                if (actualOriValue.equals(newITValue)){
+                    newIT.remove();
+                    oriIT.remove();
+                }
+            }
+        }
+
+        //All task categories in originalTaskCats should be unlinked from this type
+        for (Long taskCatID : originalTaskCats){
+            bsTaskCategoryEntity taskCatToUnLink = bsTaskCategoryRepository.findById(taskCatID).orElseThrow(() -> new ElementNotFoundException("Can't find task category"));
+            taskCatToUnLink.getTypes().remove(toEdit);
+            bsTaskCategoryRepository.save(taskCatToUnLink);
+        }
+
+        //All task in form.getTaskCategories should be linked to this type
+        for (Long newTaskCatID : form.getTaskCategories()){
+            bsTaskCategoryEntity taskToLink = bsTaskCategoryRepository.findById(newTaskCatID).orElseThrow(() -> new ElementNotFoundException("Can't find task category to add"));
+            taskToLink.getTypes().add(toEdit);
+            bsTaskCategoryRepository.save(taskToLink);
+            toEdit.getTaskCategories().add(taskToLink);
+        }
+
+        repository.save(toEdit);
+
+        return mapper.toDTO(toEdit);
+    }
+
+    @Override
     public bsTypeDTO delete(Long id) throws ElementNotFoundException, InvalidDeleteOperation {
 
         bsTypeEntity toDelete = repository.findById(id).orElseThrow(ElementNotFoundException::new);
@@ -93,7 +145,6 @@ public class bsTypeServiceImplements extends DefaultServiceImplements <bsTypeDTO
         Set<bsTaskCategoryEntity> taskCategories = toDelete.getTaskCategories();
 
         for (bsTaskCategoryEntity taskCategory : taskCategories){
-            System.out.println(taskCategory.getName());
             taskCategory.getTypes().remove(toDelete);
             bsTaskCategoryRepository.save(taskCategory);
         }
