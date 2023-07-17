@@ -41,6 +41,7 @@ public class PlanServiceImplements extends DefaultServiceImplements<PlanDTO, Pla
         }
 
         Set<PlanEntity> planExistenceCheck = planRepository.findByName(form.getName());
+
         if (form.getId() != null) {
             planExistenceCheck.add(repository.findById(form.getId()).orElseThrow(null));
         }

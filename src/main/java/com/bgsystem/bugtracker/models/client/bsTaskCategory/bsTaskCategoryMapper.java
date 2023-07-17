@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.bsTaskCategory;
 
+import com.bgsystem.bugtracker.models.client.bsType.bsTypeMapper;
 import com.bgsystem.bugtracker.models.client.business.BusinessMapper;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskMapper;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
@@ -16,11 +17,13 @@ public class bsTaskCategoryMapper implements DefaultMapper <bsTaskCategoryDTO, b
 
     private final bsPrTaskMapper bsPrTaskEntityMapper;
 
+    private final bsTypeMapper bsTypeMapper;
     @Lazy
     @Autowired
-    public bsTaskCategoryMapper(BusinessMapper businessMapper, bsPrTaskMapper bsPrTaskEntityMapper) {
+    public bsTaskCategoryMapper(BusinessMapper businessMapper, bsPrTaskMapper bsPrTaskEntityMapper, bsTypeMapper bsTypeMapper) {
         this.businessMapper = businessMapper;
         this.bsPrTaskEntityMapper = bsPrTaskEntityMapper;
+        this.bsTypeMapper = bsTypeMapper;
     }
 
     @Override
@@ -34,6 +37,11 @@ public class bsTaskCategoryMapper implements DefaultMapper <bsTaskCategoryDTO, b
                 .id(entity.getId())
                 .name(entity.getName())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
+                .types(entity.getTypes()
+                        .stream()
+                        .map(bsTypeMapper::toSmallDTO)
+                        .collect(Collectors.toSet())
+                )
                 .tasks(entity.getTasks()
                         .stream()
                         .map(bsPrTaskEntityMapper::toSmallDTO)
@@ -81,7 +89,8 @@ public class bsTaskCategoryMapper implements DefaultMapper <bsTaskCategoryDTO, b
                 .id(entity.getId())
                 .name(entity.getName())
                 .business(businessMapper.toSmallDTO(entity.getBusiness()))
-                .taskCount(entity.getTaskCount())
+                .types(entity.getTypesCount())
+                .tasks(entity.getTaskCount())
                 .build();
     }
 

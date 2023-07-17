@@ -36,8 +36,8 @@ public class bsClientListDTO {
 
     private BusinessMiniDTO business;
 
-    private Long projectsCount;
+    private Long projects;
 
-    private Long invoicesCount;
+    private Long invoices;
 
 }

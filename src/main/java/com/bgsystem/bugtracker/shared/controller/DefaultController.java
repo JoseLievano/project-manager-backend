@@ -1,9 +1,6 @@
 package com.bgsystem.bugtracker.shared.controller;
 
-import com.bgsystem.bugtracker.exeptions.BadOperator;
-import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
-import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
+import com.bgsystem.bugtracker.exeptions.*;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
 import com.bgsystem.bugtracker.shared.models.pageableRequest.PageableRequest;
 import com.bgsystem.bugtracker.shared.service.DefaultService;
@@ -12,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Time;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
@@ -35,17 +34,16 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
 
     @PostMapping
     public ResponseEntity<MINIDTO> insert (@Valid @RequestBody FORM form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
-
         return ResponseEntity.ok(service.insert(form));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DTO> update (@PathVariable ID id, @Valid @RequestBody FORM form) throws ElementNotFoundException {
+    public ResponseEntity<DTO> update (@PathVariable ID id, @Valid @RequestBody FORM form) throws ElementNotFoundException, InvalidInsertDeails {
         return ResponseEntity.ok(service.update(id, form));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DTO> delete (@PathVariable ID id) throws ElementNotFoundException {
+    public ResponseEntity<DTO> delete (@PathVariable ID id) throws ElementNotFoundException, InvalidDeleteOperation {
         return ResponseEntity.ok(service.delete(id));
     }
 
@@ -70,7 +68,6 @@ public abstract class DefaultController <DTO, MINIDTO, LISTDTO, FORM, ID>{
         }
 
     }
-
 
     @PostMapping("/page-list-view")
     public ResponseEntity<Page<LISTDTO>> getAllForListPageable(@RequestBody Optional<PageableRequest> pageableRequest) throws ElementNotFoundException, BadOperator {

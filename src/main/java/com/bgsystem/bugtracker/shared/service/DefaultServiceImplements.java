@@ -1,9 +1,6 @@
 package com.bgsystem.bugtracker.shared.service;
 
-import com.bgsystem.bugtracker.exeptions.BadOperator;
-import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
-import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
-import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
+import com.bgsystem.bugtracker.exeptions.*;
 import com.bgsystem.bugtracker.shared.mapper.DefaultMapper;
 import com.bgsystem.bugtracker.shared.models.listRequest.CommonPathExpression;
 import com.bgsystem.bugtracker.shared.models.listRequest.FilterRequest;
@@ -58,7 +55,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
     @Override
     @Transactional
-    public DTO update(ID id, FORM uform) throws ElementNotFoundException {
+    public DTO update(ID id, FORM uform) throws ElementNotFoundException, InvalidInsertDeails {
 
         ENTITY toUpdate = repository.findById(id).orElseThrow(ElementNotFoundException::new);
 
@@ -70,7 +67,7 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
     @Override
     @Transactional
-    public DTO delete(ID id) throws ElementNotFoundException {
+    public DTO delete(ID id) throws ElementNotFoundException, InvalidDeleteOperation {
 
         ENTITY toDelete = repository.findById(id).orElseThrow(ElementNotFoundException::new);
 
@@ -104,15 +101,10 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
 
             BooleanExpression expression = commonPathExpression.getExpression();
 
-            System.out.println(expression);
-
             return repository.findAll(expression, pr).map(mapper::toDTO);
 
         }else{
-
-            /*throw new IllegalArgumentException("Filter is not present");*/
             return repository.findAll(pr).map(mapper::toDTO);
-
         }
 
     }
@@ -142,6 +134,10 @@ public abstract class DefaultServiceImplements <DTO, MINIDTO, LISTDTO, FORM, ENT
         }else{
 
             Page<ENTITY> entities = repository.findAll(pr);
+
+            for (ENTITY entity : entities) {
+                updateListFields(entity);
+            }
 
             return entities.map(mapper::toListDTO);
 

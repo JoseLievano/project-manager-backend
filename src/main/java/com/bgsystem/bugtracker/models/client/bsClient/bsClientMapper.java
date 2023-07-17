@@ -111,8 +111,8 @@ public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniD
                 .isActive(bsClientEntity.getIsActive())
                 .dateCreated(bsClientEntity.getDateCreated())
                 .lastLoginDate(bsClientEntity.getLastLogin())
-                .projectsCount(bsClientEntity.getProjectsCount())
-                .invoicesCount(bsClientEntity.getInvoicesCount())
+                .projects(bsClientEntity.getProjectsCount())
+                .invoices(bsClientEntity.getInvoicesCount())
                 .build();
 
     }
