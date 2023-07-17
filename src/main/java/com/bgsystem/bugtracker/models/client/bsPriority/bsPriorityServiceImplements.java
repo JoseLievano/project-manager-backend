@@ -25,11 +25,11 @@ public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPri
     private final bsPriorityPredicate priorityPredicate;
     @Autowired
     public bsPriorityServiceImplements(
-                                        bsPriorityRepository repository,
-                                        bsPriorityMapper mapper,
-                                        BusinessRepository businessRepository,
-                                        bsPriorityRepository priorityRepository,
-                                        bsPriorityPredicate bsPriorityPredicate
+        bsPriorityRepository repository,
+        bsPriorityMapper mapper,
+        BusinessRepository businessRepository,
+        bsPriorityRepository priorityRepository,
+        bsPriorityPredicate bsPriorityPredicate
     ) {
         super( repository, mapper, bsPriorityPredicate );
         this.businessRepository = businessRepository;
@@ -64,7 +64,7 @@ public class bsPriorityServiceImplements extends DefaultServiceImplements <bsPri
         businessRepository.save(business);
 
         //Get how many priorities business already has
-        long amountOfPriorities = (long) business.getBsPriorities().size();
+        long amountOfPriorities = business.getBsPriorities().size();
         toInsert.setPriorityOrder((int) amountOfPriorities);
 
         //Save the priority
