@@ -48,8 +48,8 @@ public class bsKBCategoryServiceImplements extends DefaultServiceImplements <bsK
         bsKBCategoryEntity toInsert = mapper.toEntity(form);
 
         //Set parent KB Category
-        if (form.getParentKB() != null){
-            bsKBCategoryEntity parentCategory = repository.findById(form.getParentKB()).orElseThrow(() -> new ElementNotFoundException("KB Category not found"));
+        if (form.getParentCategory() != null){
+            bsKBCategoryEntity parentCategory = repository.findById(form.getParentCategory()).orElseThrow(() -> new ElementNotFoundException("KB Category not found"));
             toInsert.setParentKB(parentCategory);
             boolean isAParentCategory = parentCategory.getIsAParentKBCategory() != null && parentCategory.getIsAParentKBCategory();
             if (!isAParentCategory){
@@ -94,8 +94,8 @@ public class bsKBCategoryServiceImplements extends DefaultServiceImplements <bsK
         }
 
 
-        if (form.getParentKB() != null){
-            bsKBCategoryEntity parentCategory = repository.findById(form.getParentKB()).orElseThrow(() -> new ElementNotFoundException("KB Category not found"));
+        if (form.getParentCategory() != null){
+            bsKBCategoryEntity parentCategory = repository.findById(form.getParentCategory()).orElseThrow(() -> new ElementNotFoundException("KB Category not found"));
             if (Objects.equals(parentCategory.getId(), toUpdate.getId())){
                 throw new ElementNotFoundException("KB Category cannot be the parent of itself");
             }
