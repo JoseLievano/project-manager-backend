@@ -1,5 +1,6 @@
 package com.bgsystem.bugtracker.models.client.bsType;
 
+import com.bgsystem.bugtracker.models.client.bsTaskCategory.bsTaskCategoryEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.project.bsPrTask.bsPrTaskEntity;
 import lombok.*;
@@ -27,9 +28,16 @@ public class bsTypeEntity {
     @JoinColumn(name = "business_entity_id", nullable = false)
     private BusinessEntity business;
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "types")
+    private Set<bsTaskCategoryEntity> taskCategories;
+
+    @Column
+    private Long taskCategoriesCount;
+
     @OneToMany(mappedBy = "type")
     private Set<bsPrTaskEntity> tasks;
 
+    @Column
     private Long taskCount;
 
 }
