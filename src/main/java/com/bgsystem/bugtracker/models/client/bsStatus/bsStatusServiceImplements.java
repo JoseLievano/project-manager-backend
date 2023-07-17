@@ -2,6 +2,7 @@ package com.bgsystem.bugtracker.models.client.bsStatus;
 
 import com.bgsystem.bugtracker.exeptions.ElementAlreadyExist;
 import com.bgsystem.bugtracker.exeptions.ElementNotFoundException;
+import com.bgsystem.bugtracker.exeptions.InvalidDeleteOperation;
 import com.bgsystem.bugtracker.exeptions.InvalidInsertDeails;
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import com.bgsystem.bugtracker.models.client.business.BusinessRepository;
@@ -57,6 +58,42 @@ public class bsStatusServiceImplements extends DefaultServiceImplements <bsStatu
 
         return mapper.toSmallDTO(toInsert);
 
+    }
+
+    @Override
+    public bsStatusDTO update(Long id, bsStatusForm form) throws ElementNotFoundException, InvalidInsertDeails {
+
+        System.out.println(form.toString());
+
+        if (form == null)
+            throw new InvalidInsertDeails();
+
+        bsStatusEntity toUpdate = repository.findById(id).orElseThrow(ElementNotFoundException::new);
+
+        if (form.getColor() != null)
+            toUpdate.setColor(form.getColor());
+
+        if (form.getName() != null)
+            toUpdate.setName(form.getName());
+
+        repository.save(toUpdate);
+
+        return mapper.toDTO(toUpdate);
+
+    }
+
+    @Override
+    public bsStatusDTO delete(Long id) throws ElementNotFoundException, InvalidDeleteOperation {
+
+        bsStatusEntity toDelete = repository.findById(id).orElseThrow(ElementNotFoundException::new);
+
+        if (toDelete.getTasks().size() > 0){
+            throw new InvalidDeleteOperation("Can't delete a status with task linked");
+        }
+
+        repository.delete(toDelete);
+
+        return mapper.toDTO(toDelete);
     }
 
     @Override
