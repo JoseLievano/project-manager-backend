@@ -74,10 +74,16 @@ public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniD
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .email(entity.getEmail())
+                .roles(entity.getRoles())
                 .username(entity.getUsername())
                 .isActive(entity.getIsActive())
                 .dateCreated(entity.getDateCreated())
                 .lastLoginDate(entity.getLastLogin())
+                .address(entity.getAddress())
+                .website(entity.getWebsite())
+                .phone(entity.getPhone())
+                .country(entity.getCountry())
+                .companyName(entity.getCompanyName())
                 .build();
 
     }
@@ -98,6 +104,11 @@ public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniD
                 .isActive(form.getIsActive())
                 .dateCreated(form.getDateCreated())
                 .lastLogin(form.getLastLoginDate())
+                .address(form.getAddress())
+                .website(form.getWebsite())
+                .phone(form.getPhone())
+                .country(form.getCountry())
+                .companyName(form.getCompanyName())
                 .build();
     }
 
@@ -112,12 +123,19 @@ public class bsClientMapper implements DefaultMapper <bsClientDTO, bsClientMiniD
                 .firstName(bsClientEntity.getFirstName())
                 .lastName(bsClientEntity.getLastName())
                 .email(bsClientEntity.getEmail())
+                .roles(bsClientEntity.getRoles())
                 .username(bsClientEntity.getUsername())
                 .isActive(bsClientEntity.getIsActive())
                 .dateCreated(bsClientEntity.getDateCreated())
                 .lastLoginDate(bsClientEntity.getLastLogin())
                 .projects(bsClientEntity.getProjectsCount())
                 .invoices(bsClientEntity.getInvoicesCount())
+                .address(bsClientEntity.getAddress())
+                .website(bsClientEntity.getWebsite())
+                .phone(bsClientEntity.getPhone())
+                .country(bsClientEntity.getCountry())
+                .companyName(bsClientEntity.getCompanyName())
+                .business(businessMapper.toSmallDTO(bsClientEntity.getBusiness()))
                 .build();
 
     }

@@ -87,6 +87,17 @@ public class bsClientEntity extends User {
         String companyName
     ) {
         super(id, firstName, lastName, email, roles, username, password, channels, channelsAuthor, comments);
+        this.isActive = isActive;
+        this.dateCreated = dateCreated;
+        this.lastLogin = lastLogin;
+        this.business = business;
+        this.projects = projects;
+        this.invoices = invoices;
+        this.address = address;
+        this.website = website;
+        this.phone = phone;
+        this.country = country;
+        this.companyName = companyName;
     }
 
     @Override

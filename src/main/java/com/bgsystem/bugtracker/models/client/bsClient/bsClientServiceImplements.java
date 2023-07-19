@@ -43,11 +43,12 @@ public class bsClientServiceImplements extends DefaultServiceImplements<bsClient
     @Override
     public bsClientMiniDTO insert(bsClientForm bsClientForm) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
-        if (bsClientForm == null ||
-                bsClientForm.getPassword() == null ||
-                bsClientForm.getEmail() == null ||
-                bsClientForm.getBusiness() == null ||
-                bsClientForm.getUsername() == null) {
+        if (
+            bsClientForm == null ||
+            bsClientForm.getPassword() == null ||
+            bsClientForm.getEmail() == null ||
+            bsClientForm.getBusiness() == null ||
+            bsClientForm.getUsername() == null) {
             throw new InvalidInsertDeails("The form is not complete, is not possible to register a new client");
         }
 
