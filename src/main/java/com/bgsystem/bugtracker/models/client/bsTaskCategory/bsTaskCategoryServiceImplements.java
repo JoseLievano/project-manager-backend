@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <bsTaskCategoryDTO, bsTaskCategoryMiniDTO, bsTaskCategoryListDTO, bsTaskCategoryForm, bsTaskCategoryEntity, Long> {
@@ -122,6 +124,11 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
 
         return mapper.toDTO(toDelete);
 
+    }
+
+    public Boolean taskCatIsEmpty(){
+        Set<bsTaskCategoryEntity> taskCategoryEntities = new HashSet<>(repository.findAll());
+        return taskCategoryEntities.isEmpty();
     }
 
     @Override
