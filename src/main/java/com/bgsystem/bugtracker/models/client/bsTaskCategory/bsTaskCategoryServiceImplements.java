@@ -75,8 +75,9 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
     @Override
     public bsTaskCategoryDTO update(Long id, bsTaskCategoryForm form) throws ElementNotFoundException, InvalidInsertDeails {
 
-        if (form == null || form.getName() == null)
-            throw new InvalidInsertDeails();
+        if (form == null || form.getName() == null || form.getName().equals("")){
+            throw new InvalidInsertDeails("Invalid update details");
+        }
 
         bsTaskCategoryEntity toEdit = repository.findById(id).orElseThrow(ElementNotFoundException::new);
 
