@@ -12,10 +12,8 @@ import com.bgsystem.bugtracker.shared.service.DefaultServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <bsTaskCategoryDTO, bsTaskCategoryMiniDTO, bsTaskCategoryListDTO, bsTaskCategoryForm, bsTaskCategoryEntity, Long> {
@@ -44,14 +42,14 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
     public bsTaskCategoryMiniDTO insert(bsTaskCategoryForm form) throws ElementNotFoundException, ElementAlreadyExist, InvalidInsertDeails {
 
         //Validate form
-        if(form == null || form.getBusiness() == null || form.getName() == null || form.getName().equals("")){
+        if(form == null || form.getBusiness() == null || form.getName() == null || form.getName().isEmpty()){
             throw new InvalidInsertDeails("Invalid insert details");
         }
 
         //Check if category with same name and business already exist
         BusinessEntity business = businessRepository.findById(form.getBusiness()).orElseThrow(() -> new ElementNotFoundException("Business not found"));
 
-        if (bsTaskCategoryRepository.findByNameAndBusiness(form.getName(), business).size() > 0){
+        if (!bsTaskCategoryRepository.findByNameAndBusiness(form.getName(), business).isEmpty()){
             throw new ElementAlreadyExist("Category with same name and business already exist");
         }
 
@@ -75,7 +73,7 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
     @Override
     public bsTaskCategoryDTO update(Long id, bsTaskCategoryForm form) throws ElementNotFoundException, InvalidInsertDeails {
 
-        if (form == null || form.getName() == null || form.getName().equals("")){
+        if (form == null || form.getName() == null || form.getName().isEmpty()){
             throw new InvalidInsertDeails("Invalid update details");
         }
 
@@ -95,12 +93,12 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
         bsTaskCategoryEntity toDelete = repository.findById(ID).orElseThrow(ElementNotFoundException::new);
 
         //Check if bsTaskCategory has Tasks assigned
-        if (toDelete.getTasks().size() > 0)
+        if (!toDelete.getTasks().isEmpty())
             throw new InvalidDeleteOperation("The task category has " + toDelete.getTasks().size() + " tasks assigned, can't delete a task category with task assigned");
 
         //Check each type this bsTaskCategory has assigned
         Set<bsTypeEntity> types = toDelete.getTypes();
-        if (types.size() > 0){
+        if (!types.isEmpty()){
             for (bsTypeEntity type : types){
                 if (type.getTaskCategories().size() < 2){
                     throw new InvalidDeleteOperation("Type: " + type.getName() + " has only this task category assigned." + " You should add one more task category to type " + type.getName() + " before deleting " + toDelete.getName() + " task category");
@@ -119,7 +117,7 @@ public class bsTaskCategoryServiceImplements extends DefaultServiceImplements <b
 
         businessRepository.save(business);
 
-        if (types.size() > 0){
+        if (!types.isEmpty()){
             bsTypeRepository.saveAll(types);
         }
 
