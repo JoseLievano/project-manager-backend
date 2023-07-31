@@ -19,6 +19,7 @@ public class bsClientPredicate extends CommonPathExpression<bsClientEntity> {
         this.entityFields.add("invoices");
         this.entityFields.add("business");
         this.entityFields.add("email");
+        this.entityFields.add("username");
 
     }
 
@@ -29,19 +30,32 @@ public class bsClientPredicate extends CommonPathExpression<bsClientEntity> {
             case "invoices" -> getInvoicesExpression(filter);
             case "business" -> getBusinessExpression(filter);
             case "email" -> getEmailExpression(filter);
+            case "username" -> getUsernameExpression(filter);
             default -> throw new IllegalArgumentException("Invalid field: " + filter.getField());
         };
+    }
+
+    private BooleanExpression getUsernameExpression(FilterRequest filter) throws BadOperator{
+        BooleanExpression usernameExpression = null;
+        for (FilterOperator operation : filter.getOperations()){
+            if (operation.getField().equals("username")) {
+                StringPath stringPath = bsClientEntity.username;
+                usernameExpression = addOrExpression(usernameExpression, getStringPathBooleanExpression(stringPath, operation));
+            } else {
+                throw new IllegalArgumentException("Invalid field: " + operation.getField());
+            }
+        }
+        return usernameExpression;
     }
 
     private BooleanExpression getEmailExpression(FilterRequest filter) throws BadOperator {
         BooleanExpression emailExpression = null;
         for (FilterOperator operation : filter.getOperations()){
-            switch (operation.getField()){
-                case "email" -> {
-                    StringPath emailPath = bsClientEntity.email;
-                    emailExpression = addOrExpression(emailExpression, getStringPathBooleanExpression(emailPath, operation));
-                }
-                default -> throw new IllegalArgumentException("Invalid field: " + operation.getField());
+            if (operation.getField().equals("email")) {
+                StringPath emailPath = bsClientEntity.email;
+                emailExpression = addOrExpression(emailExpression, getStringPathBooleanExpression(emailPath, operation));
+            } else {
+                throw new IllegalArgumentException("Invalid field: " + operation.getField());
             }
         }
         return emailExpression;
