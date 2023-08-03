@@ -91,4 +91,5 @@ public class bsProjectEntity {
 
     @Column
     private Long kbCount;
+
 }
