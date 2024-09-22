@@ -106,7 +106,7 @@ public class BusinessServiceImplements extends DefaultServiceImplements<Business
     }
 
     @Override
-    protected BusinessEntity updateListFields(BusinessEntity business){
+    public BusinessEntity updateListFields(BusinessEntity business){
 
         business.setInvoiceCount(business.getInvoices() == null ? 0 : (long) business.getInvoices().size());
         business.setBsClientCount(business.getBsClients() == null ? 0 : (long) business.getBsClients().size());

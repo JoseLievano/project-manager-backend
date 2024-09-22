@@ -1,6 +1,5 @@
 package com.bgsystem.bugtracker.models.client.bsGeneralSettings;
 
-
 import com.bgsystem.bugtracker.models.client.business.BusinessEntity;
 import lombok.*;
 

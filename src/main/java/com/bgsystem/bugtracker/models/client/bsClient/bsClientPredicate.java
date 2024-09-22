@@ -20,7 +20,6 @@ public class bsClientPredicate extends CommonPathExpression<bsClientEntity> {
         this.entityFields.add("business");
         this.entityFields.add("email");
         this.entityFields.add("username");
-
     }
 
     @Override
